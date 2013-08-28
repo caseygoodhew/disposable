@@ -11,12 +11,31 @@ Sub Main
 			Exit Sub
 	End If
 
+	TableNamesToUpper
 	SetTableOwner
 	NamePrimaryConstraints
 	NameForeignConstraints
 	ValidateIdentityColumnPositions
 	
 	MsgBox("Done")
+End Sub
+
+'DO NOT MODIFY THIS FILE DIRECTLY
+Sub TableNamesToUpper
+	Dim MyDiagram As Diagram
+	Dim MyModel As Model
+	Dim MyEntity As Entity
+	Dim DefaultOwner As String
+
+	DefaultOwner = "DISPOSABLE"
+
+	Set MyDiagram = DiagramManager.ActiveDiagram
+	Set MyModel = MyDiagram.ActiveModel
+
+	For Each MyEntity In MyModel.Entities
+		MyEntity.EntityName = UCase(MyEntity.EntityName)
+		MyEntity.TableName = UCase(MyEntity.TableName)
+	Next MyEntity
 End Sub
 
 'DO NOT MODIFY THIS FILE DIRECTLY

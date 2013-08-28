@@ -1,4 +1,5 @@
-'DO NOT MODIFY THIS FILE DIRECTLY
+Option Explicit
+
 Sub Main
 	Dim MyDiagram As Diagram
 	Dim MyModel As Model
@@ -7,32 +8,15 @@ Sub Main
 	Set MyModel = MyDiagram.ActiveModel
 
 	If MyModel.Name <> "MYSQL" Then
-			'Err.Raise vbObjectError+1, "", "This can only be applied when the physical model is active"
 			MsgBox("This can only be applied when the physical model is active")
 			Exit Sub
 	End If
 	
-	SetAllTableTypesToInnoDB
 	SetAllIntIdentityColumnsToUnsigned
 	
 	MsgBox("Done")
 End Sub
 
-'DO NOT MODIFY THIS FILE DIRECTLY
-Sub SetAllTableTypesToInnoDB
-	Dim MyDiagram As Diagram
-	Dim MyModel As Model
-	Dim MyEntity As Entity
-
-	Set MyDiagram = DiagramManager.ActiveDiagram
-	Set MyModel = MyDiagram.ActiveModel
-
-	For Each MyEntity In MyModel.Entities
-		MyEntity.MySQLTableType = "INNODB"
-	Next
-End Sub
-
-'DO NOT MODIFY THIS FILE DIRECTLY
 Sub SetAllIntIdentityColumnsToUnsigned
 
 	Const MAXLOOPS = 20
@@ -96,7 +80,7 @@ Sub SetAllIntIdentityColumnsToUnsigned
 	End If
 
 End Sub
-'DO NOT MODIFY THIS FILE DIRECTLY
+
 Sub SetAllIntIdentityColumnsToUnsigned_SetUnsigned(ByRef ColumnsFollowed() As Integer, ByRef ToSet() As String, MyModel As Model, MyEntity As Entity, MyColumn As AttributeObj)
 
 	Dim MyRelationship As Relationship
@@ -145,8 +129,23 @@ Sub SetAllIntIdentityColumnsToUnsigned_SetUnsigned(ByRef ColumnsFollowed() As In
 	Next
 
 End Sub
-'DO NOT MODIFY THIS FILE DIRECTLY
+
 Function SetAllIntIdentityColumnsToUnsigned_GenerateQualifiedName(MyEntity As Entity, MyColumn As AttributeObj)
 	SetAllIntIdentityColumnsToUnsigned_GenerateQualifiedName = Chr(34) & MyEntity.Owner & Chr(34) & "." & Chr(34) & MyEntity.EntityName & Chr(34) & "." & Chr(34) & MyColumn.RoleName & Chr(34)
 End Function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
