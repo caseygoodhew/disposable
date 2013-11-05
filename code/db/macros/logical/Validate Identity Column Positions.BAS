@@ -62,7 +62,7 @@ Sub ValidateIdentityColumnPositions
 	Next MyEntity
 
 	If InvalidTablesIndx <> 0 Then
-		Msg = "The following table(s) have Identiy columns where were not in the first postion of their primary keys:" & vbCrLf
+		Msg = "The following table(s) have Identiy columns that are not in the first position of their primary keys:" & vbCrLf
 		For i = 1 To InvalidTablesIndx
 			Msg = Msg & vbCrLf  & InvalidTables(i)
 		Next i
