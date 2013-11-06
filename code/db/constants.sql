@@ -1,5 +1,7 @@
 DELIMITER $$ 
+
 DROP FUNCTION IF EXISTS disposable.Constants$$
+
 CREATE FUNCTION disposable.Constants(in_section VARCHAR(30), in_name VARCHAR(100)) 
 RETURNS INT 
 READS SQL DATA 
@@ -19,4 +21,5 @@ BEGIN
     
     RETURN v_id;
 END$$
+
 DELIMITER ;

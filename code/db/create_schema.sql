@@ -4,7 +4,7 @@
 -- Project :      disposable.dm1
 -- Author :       Casey
 --
--- Date Created : Monday, November 04, 2013 23:47:23
+-- Date Created : Wednesday, November 06, 2013 21:36:57
 -- Target DBMS : MySQL 5.x
 --
 
@@ -117,6 +117,8 @@ CREATE TABLE DISPOSABLE.CONSTANT(
     SECTION    VARCHAR(100)    NOT NULL,
     NAME       VARCHAR(100)    NOT NULL,
     ID         INT UNSIGNED    NOT NULL,
+    CONSTRAINT CHK_CONSTANT_SECTION CHECK (SECTION = UPPER(SECTION)),
+    CONSTRAINT CHK_CONSTANT_NAME CHECK (NAME = UPPER(NAME)),
     PRIMARY KEY (SECTION, NAME)
 )ENGINE=INNODB
 ;
