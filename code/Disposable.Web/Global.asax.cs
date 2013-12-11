@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Disposable.Common;
+using Disposable.Common.ServiceLocator;
 
 namespace Disposable.Web
 {
@@ -22,6 +23,10 @@ namespace Disposable.Web
 			AuthConfig.RegisterAuth();
 
 		    DisposableCore.Initialize();
+
+		    var locator = Locator.Current as Locator;
+            
+            locator.Register<IApplication>(() => new Application("DISPOSABLE APP NAME", "DISPOSABLE APP DESCRIPTION"));
 		}
 	}
 }

@@ -1,0 +1,68 @@
+﻿// Just some notes to remind me where this stuff maps to
+
+ISystemMembershipProvider m;
+ISystemMembershipUser u;
+
+// APPLICATION
+m.ApplicationName;
+m.Description;
+            
+// USERS MANAGEMENT
+m.CreateUser();
+m.UpdateUser();
+m.DeleteUser();
+m.FindUsersByEmail();
+m.FindUsersByName();
+m.GetAllUsers();
+m.GetUser();
+m.GetUserNameByEmail();
+m.UnlockUser();
+u.UnlockUser();
+m.ChangePassword();
+m.ResetPassword();
+u.ChangePassword();
+u.ResetPassword();
+            
+// USER ACCOUNT MANAGEMENT
+u.CreationDate;
+u.Email;
+u.IsApproved;
+u.IsLockedOut;
+u.LastActivityDate;
+u.LastLockoutDate;
+u.LastLoginDate;
+u.LastPasswordChangedDate;
+            
+// AUTHENTICATION
+m.ValidateUser();
+            
+// PASSWORD POLICY
+m.MaxInvalidPasswordAttempts;
+m.MinRequiredNonAlphanumericCharacters;
+m.MinRequiredPasswordLength;
+m.PasswordAttemptWindow;
+m.PasswordStrengthRegularExpression;
+            
+            
+// WILL NOT SUPPORTED
+m.ChangePasswordQuestionAndAnswer();
+m.EnablePasswordRetrieval;
+m.GetNumberOfUsersOnline();
+m.GetPassword();
+m.RequiresQuestionAndAnswer;
+u.ChangePasswordQuestionAndAnswer();
+u.Comment;
+u.GetPassword();
+u.IsOnline;
+u.PasswordQuestion;
+            
+// NO PLATFORM SUPPORT REQUIRED
+m.Initialize();
+m.PasswordFormat;
+            
+// UNDETERMINED
+m.EnablePasswordReset;
+m.Name;
+u.ProviderName;
+u.ProviderUserKey;
+m.RequiresUniqueEmail;

@@ -39,10 +39,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\IUser.cs" />
     <Compile Include="Authentication\AuthenticationResult.cs" />
     <Compile Include="Authentication\AuthenticationStatus.cs" />
     <Compile Include="Authentication\Authentication.cs" />
     <Compile Include="Authentication\IAuthentication.cs" />
+    <Compile Include="Account\IAccountManager.cs" />
+    <Compile Include="Policies\IPasswordPolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
