@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Disposable.Common.ServiceLocator;
 using Disposable.Common.Services;
+using Disposable.DataAccess.Security.Accounts;
+using Disposable.Security.Accounts;
+using Disposable.Security.Authentication;
 
-namespace Disposable.Common
+namespace Disposable.Initialization
 {
     /// <summary>
     /// 
@@ -26,6 +25,14 @@ namespace Disposable.Common
 
             var registrar = locator.BaseRegistrar;
 
+            // repositories
+            registrar.Register<IAccountRepository>(() => new AccountRepository());
+            
+            // business layer
+            registrar.Register<IAuthentication>(() => new Authentication());
+            registrar.Register<IAccountManager>(() => new AccountManager());
+            
+            // misc
             registrar.Register<ITimeSource>(() => new LocalTimeSource());
         }
 

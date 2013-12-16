@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.Web.Security;
+using Disposable.Common.ServiceLocator;
+using Disposable.Security.Accounts;
+using Disposable.Security.Authentication;
 using Disposable.Web.Security.System;
+using WebMatrix.WebData;
 
 namespace Disposable.Web.Security
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class WebMembershipProvider : MembershipProvider, ISystemMembershipProvider
+    public class WebExtendedMembershipProvider : ExtendedMembershipProvider, ISystemExtendedMembershipProvider
     {
+        private Lazy<IAccountManager> _accountManager = new Lazy<IAccountManager>(() => Locator.Current.Instance<IAccountManager>());
+
+        private Lazy<IAuthentication> _authentication = new Lazy<IAuthentication>(() => Locator.Current.Instance<IAuthentication>());
+        
         /// <summary>
         /// Gets or sets the name of the application using the custom membership provider.
         /// </summary>
@@ -19,25 +24,17 @@ namespace Disposable.Web.Security
         public override string ApplicationName { get; set; }
 
         /// <summary>
-        /// Gets a brief, friendly description suitable for display in administrative tools or other user interfaces (UIs).
-        /// </summary>
-        /// <returns>
-        /// A brief, friendly description suitable for display in administrative tools or other UIs.
-        /// </returns>
-        public override string Description
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        /// <summary>
         /// Gets a value indicating whether the membership provider is configured to allow users to reset their passwords.
         /// </summary>
         /// <returns>
         /// true if the membership provider supports password reset; otherwise, false. The default is true.
         /// </returns>
-        public override bool EnablePasswordReset
+        public override bool EnablePasswordReset 
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>
@@ -46,9 +43,12 @@ namespace Disposable.Web.Security
         /// <returns>
         /// true if the membership provider is configured to support password retrieval; otherwise, false. The default is false.
         /// </returns>
-        public override bool EnablePasswordRetrieval
+        public override bool EnablePasswordRetrieval 
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>
@@ -57,9 +57,12 @@ namespace Disposable.Web.Security
         /// <returns>
         /// The number of invalid password or password-answer attempts allowed before the membership user is locked out.
         /// </returns>
-        public override int MaxInvalidPasswordAttempts
+        public override int MaxInvalidPasswordAttempts 
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>
@@ -68,31 +71,26 @@ namespace Disposable.Web.Security
         /// <returns>
         /// The minimum number of special characters that must be present in a valid password.
         /// </returns>
-        public override int MinRequiredNonAlphanumericCharacters
+        public override int MinRequiredNonAlphanumericCharacters 
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>
         /// Gets the minimum length required for a password.
         /// </summary>
         /// <returns>
-        /// The minimum length required for a password.
+        /// The minimum length required for a password. 
         /// </returns>
-        public override int MinRequiredPasswordLength
+        public override int MinRequiredPasswordLength 
         {
-            get { throw new NotImplementedException(); }
-        }
-
-        /// <summary>
-        /// Gets the friendly name used to refer to the provider during configuration.
-        /// </summary>
-        /// <returns>
-        /// The friendly name used to refer to the provider during configuration.
-        /// </returns>
-        public override string Name
-        {
-            get { return "DisposableWebMembershipProvider"; }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>
@@ -101,9 +99,12 @@ namespace Disposable.Web.Security
         /// <returns>
         /// The number of minutes in which a maximum number of invalid password or password-answer attempts are allowed before the membership user is locked out.
         /// </returns>
-        public override int PasswordAttemptWindow
+        public override int PasswordAttemptWindow 
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>
@@ -112,9 +113,12 @@ namespace Disposable.Web.Security
         /// <returns>
         /// One of the <see cref="T:System.Web.Security.MembershipPasswordFormat"/> values indicating the format for storing passwords in the data store.
         /// </returns>
-        public override MembershipPasswordFormat PasswordFormat
+        public override MembershipPasswordFormat PasswordFormat 
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>
@@ -123,9 +127,12 @@ namespace Disposable.Web.Security
         /// <returns>
         /// A regular expression used to evaluate a password.
         /// </returns>
-        public override string PasswordStrengthRegularExpression
+        public override string PasswordStrengthRegularExpression 
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>
@@ -134,9 +141,12 @@ namespace Disposable.Web.Security
         /// <returns>
         /// true if a password answer is required for password reset and retrieval; otherwise, false. The default is true.
         /// </returns>
-        public override bool RequiresQuestionAndAnswer
+        public override bool RequiresQuestionAndAnswer 
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>
@@ -145,9 +155,12 @@ namespace Disposable.Web.Security
         /// <returns>
         /// true if the membership provider requires a unique e-mail address; otherwise, false. The default is true.
         /// </returns>
-        public override bool RequiresUniqueEmail
+        public override bool RequiresUniqueEmail 
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>
@@ -174,7 +187,62 @@ namespace Disposable.Web.Security
         /// <returns>
         /// true if the password question and answer are updated successfully; otherwise, false.
         /// </returns>
-        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)
+        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion,
+            string newPasswordAnswer)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Activates a pending membership account for the specified user.
+        /// </summary>
+        /// <param name="userName">The user name.</param>
+        /// <param name="accountConfirmationToken">A confirmation token to pass to the authentication provider.</param>
+        /// <returns>
+        /// true if the account is confirmed; otherwise, false.
+        /// </returns>
+        public override bool ConfirmAccount(string userName, string accountConfirmationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Activates a pending membership account.
+        /// </summary>
+        /// <param name="accountConfirmationToken">A confirmation token to pass to the authentication provider.</param>
+        /// <returns>
+        /// true if the account is confirmed; otherwise, false.
+        /// </returns>
+        public override bool ConfirmAccount(string accountConfirmationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// When overridden in a derived class, creates a new user account using the specified user name and password, optionally requiring that the new account must be confirmed before the account is available for use.
+        /// </summary>
+        /// <param name="userName">The user name.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="requireConfirmationToken">(Optional) true to specify that the account must be confirmed; otherwise, false. The default is false.</param>
+        /// <returns>
+        /// A token that can be sent to the user to confirm the account.
+        /// </returns>
+        public override string CreateAccount(string userName, string password, bool requireConfirmationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// When overridden in a derived class, creates a new user profile and a new membership account.
+        /// </summary>
+        /// <param name="userName">The user name.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="requireConfirmation">(Optional) true to specify that the user account must be confirmed; otherwise, false. The default is false.</param>
+        /// <param name="values">(Optional) A dictionary that contains additional user attributes to store in the user profile. The default is null.</param>
+        /// <returns>
+        /// A token that can be sent to the user to confirm the user account.
+        /// </returns>
+        public override string CreateUserAndAccount(string userName, string password, bool requireConfirmation, IDictionary<string, object> values)
         {
             throw new NotImplementedException();
         }
@@ -193,13 +261,26 @@ namespace Disposable.Web.Security
         /// <returns>
         /// A <see cref="T:System.Web.Security.MembershipUser"/> object populated with the information for the newly created user.
         /// </returns>
-        public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
+        public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
+            bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// Removes a user from the membership data source.
+        /// When overridden in a derived class, deletes the specified membership account.
+        /// </summary>
+        /// <param name="userName">The user name.</param>
+        /// <returns>
+        /// true if the user account was deleted; otherwise, false.
+        /// </returns>
+        public override bool DeleteAccount(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Removes a user from the membership data source. 
         /// </summary>
         /// <param name="username">The name of the user to delete.</param>
         /// <param name="deleteAllRelatedData">true to delete data related to the user from the database; false to leave data related to the user in the database.</param>
@@ -242,6 +323,31 @@ namespace Disposable.Web.Security
         }
 
         /// <summary>
+        /// When overridden in a derived class, generates a password reset token that can be sent to a user in email.
+        /// </summary>
+        /// <param name="userName">The user name.</param>
+        /// <param name="tokenExpirationInMinutesFromNow">(Optional) The time, in minutes, until the password reset token expires. The default is 1440 (24 hours).</param>
+        /// <returns>
+        /// A token to send to the user.
+        /// </returns>
+        public override string GeneratePasswordResetToken(string userName, int tokenExpirationInMinutesFromNow)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// When overridden in a derived class, returns all OAuth membership accounts associated with the specified user name.
+        /// </summary>
+        /// <param name="userName">The user name.</param>
+        /// <returns>
+        /// A list of all OAuth membership accounts associated with the specified user name.
+        /// </returns>
+        public override ICollection<OAuthAccountData> GetAccountsForUser(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Gets a collection of all the users in the data source in pages of data.
         /// </summary>
         /// <param name="pageIndex">The index of the page of results to return. <paramref name="pageIndex"/> is zero-based.</param>
@@ -251,6 +357,30 @@ namespace Disposable.Web.Security
         /// A <see cref="T:System.Web.Security.MembershipUserCollection"/> collection that contains a page of <paramref name="pageSize"/><see cref="T:System.Web.Security.MembershipUser"/> objects beginning at the page specified by <paramref name="pageIndex"/>.
         /// </returns>
         public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// When overridden in a derived class, returns the date and time when the specified user account was created.
+        /// </summary>
+        /// <param name="userName">The user name of the account.</param>
+        /// <returns>
+        /// The date and time the account was created, or <see cref="F:System.DateTime.MinValue"/> if the account creation date is not available.
+        /// </returns>
+        public override DateTime GetCreateDate(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// When overridden in a derived class, returns the date and time when an incorrect password was most recently entered for the specified user account.
+        /// </summary>
+        /// <param name="userName">The user name of the account.</param>
+        /// <returns>
+        /// The date and time when an incorrect password was most recently entered for this user account, or <see cref="F:System.DateTime.MinValue"/> if an incorrect password has not been entered for this user account.
+        /// </returns>
+        public override DateTime GetLastPasswordFailureDate(string userName)
         {
             throw new NotImplementedException();
         }
@@ -280,14 +410,25 @@ namespace Disposable.Web.Security
         }
 
         /// <summary>
-        /// Gets information from the data source for a user. Provides an option to update the last-activity date/time stamp for the user.
+        /// When overridden in a derived class, returns the date and time when the password was most recently changed for the specified membership account.
         /// </summary>
-        /// <param name="username">The name of the user to get information for. </param>
-        /// <param name="userIsOnline">true to update the last-activity date/time stamp for the user; false to return user information without updating the last-activity date/time stamp for the user. </param>
+        /// <param name="userName">The user name of the account.</param>
         /// <returns>
-        /// A <see cref="T:System.Web.Security.MembershipUser"/> object populated with the specified user's information from the data source.
+        /// The date and time when the password was more recently changed for membership account, or <see cref="F:System.DateTime.MinValue"/> if the password has never been changed for this user account.
         /// </returns>
-        public override MembershipUser GetUser(string username, bool userIsOnline)
+        public override DateTime GetPasswordChangedDate(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// When overridden in a derived class, returns the number of times that the password for the specified user account was incorrectly entered since the most recent successful login or since the user account was created.
+        /// </summary>
+        /// <param name="userName">The user name of the account.</param>
+        /// <returns>
+        /// The count of failed password attempts for the specified user account.
+        /// </returns>
+        public override int GetPasswordFailuresSinceLastSuccess(string userName)
         {
             throw new NotImplementedException();
         }
@@ -306,6 +447,31 @@ namespace Disposable.Web.Security
         }
 
         /// <summary>
+        /// Gets information from the data source for a user. Provides an option to update the last-activity date/time stamp for the user.
+        /// </summary>
+        /// <param name="username">The name of the user to get information for. </param>
+        /// <param name="userIsOnline">true to update the last-activity date/time stamp for the user; false to return user information without updating the last-activity date/time stamp for the user. </param>
+        /// <returns>
+        /// A <see cref="T:System.Web.Security.MembershipUser"/> object populated with the specified user's information from the data source.
+        /// </returns>
+        public override MembershipUser GetUser(string username, bool userIsOnline)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// When overridden in a derived class, returns an ID for a user based on a password reset token.
+        /// </summary>
+        /// <param name="token">The password reset token.</param>
+        /// <returns>
+        /// The user ID.
+        /// </returns>
+        public override int GetUserIdFromPasswordResetToken(string token)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Gets the user name associated with the specified e-mail address.
         /// </summary>
         /// <param name="email">The e-mail address to search for. </param>
@@ -318,13 +484,15 @@ namespace Disposable.Web.Security
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Configuration.Provider.ProviderBase"/> class.
+        /// When overridden in a derived class, returns a value that indicates whether the user account has been confirmed by the provider.
         /// </summary>
-        /// <param name="name">The friendly name of the provider.</param>
-        /// <param name="config">A collection of the name/value pairs representing the provider-specific attributes specified in the configuration for this provider.</param>
-        public override void Initialize(string name, NameValueCollection config)
+        /// <param name="userName">The user name.</param>
+        /// <returns>
+        /// true if the user is confirmed; otherwise, false.
+        /// </returns>
+        public override bool IsConfirmed(string userName)
         {
-            base.Initialize(name, config);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -336,6 +504,19 @@ namespace Disposable.Web.Security
         /// The new password for the specified user.
         /// </returns>
         public override string ResetPassword(string username, string answer)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// When overridden in a derived class, resets a password after verifying that the specified password reset token is valid.
+        /// </summary>
+        /// <param name="token">A password reset token.</param>
+        /// <param name="newPassword">The new password.</param>
+        /// <returns>
+        /// true if the password was changed; otherwise, false.
+        /// </returns>
+        public override bool ResetPasswordWithToken(string token, string newPassword)
         {
             throw new NotImplementedException();
         }
@@ -371,7 +552,7 @@ namespace Disposable.Web.Security
         /// </returns>
         public override bool ValidateUser(string username, string password)
         {
-            throw new NotImplementedException();
+            return _authentication.Value.Authenticate(username, password, Guid.Empty).Status == AuthenticationStatus.Succeeded;
         }
     }
 }

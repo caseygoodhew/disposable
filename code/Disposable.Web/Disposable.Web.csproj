@@ -313,6 +313,14 @@
       <Project>{1ff2cbdd-7f6e-4dde-91d1-ebd5763e8018}</Project>
       <Name>Disposable.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Disposable.Initialization\Disposable.Initialization.csproj">
+      <Project>{AD0557DC-5DC6-438D-977D-D7771E99CEF5}</Project>
+      <Name>Disposable.Initialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Disposable.Web.Security\Disposable.Web.Security.csproj">
+      <Project>{5cbc8c39-de0f-4cff-a902-4b0c3991641a}</Project>
+      <Name>Disposable.Web.Security</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

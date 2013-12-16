@@ -4,6 +4,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Disposable.Common;
 using Disposable.Common.ServiceLocator;
+using Disposable.Initialization;
 
 namespace Disposable.Web
 {

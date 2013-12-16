@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Disposable.Security.Account
+namespace Disposable.Security.Accounts
 {
     public interface IUser
     {
@@ -10,7 +10,7 @@ namespace Disposable.Security.Account
         
         string IsApproved { get; }
         
-        string IsLockedOut { get; }
+        string IsLocked { get; }
         
         DateTime LastActivityDate { get; }
         

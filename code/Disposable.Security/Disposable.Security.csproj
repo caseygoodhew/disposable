@@ -39,14 +39,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account\IUser.cs" />
+    <Compile Include="Accounts\AccountManager.cs" />
+    <Compile Include="Accounts\IUser.cs" />
     <Compile Include="Authentication\AuthenticationResult.cs" />
     <Compile Include="Authentication\AuthenticationStatus.cs" />
     <Compile Include="Authentication\Authentication.cs" />
     <Compile Include="Authentication\IAuthentication.cs" />
-    <Compile Include="Account\IAccountManager.cs" />
+    <Compile Include="Accounts\IAccountManager.cs" />
     <Compile Include="Policies\IPasswordPolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Disposable.Common\Disposable.Common.csproj">
+      <Project>{1FF2CBDD-7F6E-4DDE-91D1-EBD5763E8018}</Project>
+      <Name>Disposable.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Disposable.DataAccess.Security\Disposable.DataAccess.Security.csproj">
+      <Project>{803C1789-CA8F-46F4-86DF-164524353639}</Project>
+      <Name>Disposable.DataAccess.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Disposable.DataAccess\Disposable.DataAccess.csproj">
+      <Project>{818C082C-4696-44F2-AE09-97B1A6886191}</Project>
+      <Name>Disposable.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

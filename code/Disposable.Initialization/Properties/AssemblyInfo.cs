@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Disposable.Common")]
+[assembly: AssemblyTitle("Disposable.Initialization")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Disposable.Common")]
+[assembly: AssemblyProduct("Disposable.Initialization")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("056bd942-577b-4287-bde7-5714b1d45965")]
+[assembly: Guid("68002a92-4770-443b-afef-a367b280db4e")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -34,9 +34,3 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-
-[assembly: InternalsVisibleTo("Disposable.Initialization")]
-
-[assembly: InternalsVisibleTo("Disposable.Test")]
-[assembly: InternalsVisibleTo("Disposable.Common.Test")]
-[assembly: InternalsVisibleTo("InternalsVisible.ToDynamicProxyGenAssembly2")]

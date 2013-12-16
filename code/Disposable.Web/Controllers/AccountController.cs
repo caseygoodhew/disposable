@@ -14,7 +14,6 @@ using Disposable.Web.Models;
 namespace Disposable.Web.Controllers
 {
 	[Authorize]
-	[InitializeSimpleMembership]
 	public class AccountController : Controller
 	{
 		//
