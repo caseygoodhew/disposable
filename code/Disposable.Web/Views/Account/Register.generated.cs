@@ -83,20 +83,6 @@ Write(Html.AntiForgeryToken());
             
             #line 13 "..\..\Views\Account\Register.cshtml"
                             
-    
-            
-            #line default
-            #line hidden
-            
-            #line 14 "..\..\Views\Account\Register.cshtml"
-Write(Html.ValidationSummary());
-
-            
-            #line default
-            #line hidden
-            
-            #line 14 "..\..\Views\Account\Register.cshtml"
-                             
 
 
             
@@ -108,8 +94,19 @@ WriteLiteral("    <fieldset>\r\n        <legend>Registration Form</legend>\r\n  
 WriteLiteral("                ");
 
             
+            #line 19 "..\..\Views\Account\Register.cshtml"
+           Write(Html.FormattedLabelFor(m => m.Email, new { autocomplete="off" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
             #line 20 "..\..\Views\Account\Register.cshtml"
-           Write(Html.FormattedLabelFor(m => m.Email));
+           Write(Html.TextBoxFor(m => m.Email));
 
             
             #line default
@@ -120,7 +117,7 @@ WriteLiteral("                ");
 
             
             #line 21 "..\..\Views\Account\Register.cshtml"
-           Write(Html.TextBoxFor(m => m.Email));
+           Write(Html.ValidationMessageFor(m => m.Email));
 
             
             #line default
@@ -131,7 +128,7 @@ WriteLiteral("                ");
 
             
             #line 24 "..\..\Views\Account\Register.cshtml"
-           Write(Html.FormattedLabelFor(m => m.Password));
+           Write(Html.FormattedLabelFor(m => m.Password, new { autocomplete="off" }));
 
             
             #line default
@@ -147,13 +144,24 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 26 "..\..\Views\Account\Register.cshtml"
+           Write(Html.ValidationMessageFor(m => m.Password));
+
+            
+            #line default
+            #line hidden
 WriteLiteral("\r\n            </li>\r\n            <li>\r\n");
 
 WriteLiteral("                ");
 
             
-            #line 28 "..\..\Views\Account\Register.cshtml"
-           Write(Html.FormattedLabelFor(m => m.ConfirmPassword));
+            #line 29 "..\..\Views\Account\Register.cshtml"
+           Write(Html.FormattedLabelFor(m => m.ConfirmPassword, new { autocomplete="off" }));
 
             
             #line default
@@ -163,8 +171,19 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 29 "..\..\Views\Account\Register.cshtml"
+            #line 30 "..\..\Views\Account\Register.cshtml"
            Write(Html.PasswordFor(m => m.ConfirmPassword));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 31 "..\..\Views\Account\Register.cshtml"
+           Write(Html.ValidationMessageFor(m => m.ConfirmPassword));
 
             
             #line default
@@ -178,7 +197,7 @@ WriteLiteral(" value=\"Register\"");
 WriteLiteral(" />\r\n    </fieldset>\r\n");
 
             
-            #line 34 "..\..\Views\Account\Register.cshtml"
+            #line 36 "..\..\Views\Account\Register.cshtml"
 }
 
             
@@ -193,7 +212,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 37 "..\..\Views\Account\Register.cshtml"
+            #line 39 "..\..\Views\Account\Register.cshtml"
 Write(Scripts.Render("~/bundles/jqueryval"));
 
             

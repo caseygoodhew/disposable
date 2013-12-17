@@ -11,22 +11,24 @@
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
 
     <fieldset>
         <legend>Registration Form</legend>
         <ol>
             <li>
-                @Html.FormattedLabelFor(m => m.Email)
+                @Html.FormattedLabelFor(m => m.Email, new { autocomplete="off" })
                 @Html.TextBoxFor(m => m.Email)
+                @Html.ValidationMessageFor(m => m.Email)
             </li>
             <li>
-                @Html.FormattedLabelFor(m => m.Password)
+                @Html.FormattedLabelFor(m => m.Password, new { autocomplete="off" })
                 @Html.PasswordFor(m => m.Password)
+                @Html.ValidationMessageFor(m => m.Password)
             </li>
             <li>
-                @Html.FormattedLabelFor(m => m.ConfirmPassword)
+                @Html.FormattedLabelFor(m => m.ConfirmPassword, new { autocomplete="off" })
                 @Html.PasswordFor(m => m.ConfirmPassword)
+                @Html.ValidationMessageFor(m => m.ConfirmPassword)
             </li>
         </ol>
         <input type="submit" value="Register" />

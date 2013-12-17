@@ -8,7 +8,9 @@ namespace Disposable.Security.Policies
 
         private readonly static int MinPasswordLength = 8;
 
-        private readonly static string PasswordRegEx = @"^.*(?=.{6,})(?=.*\d).*$";
+        private readonly static int MinSpecialCharcters = 2;
+
+        private readonly static string PasswordRegEx = @"^.*(?=.{8,})(?=.*\d)(?=.*\d).*$";
         
         /// <summary>
         /// Gets the time window between which consecutive failed attempts to provide a valid password or password answer are tracked.
@@ -46,7 +48,7 @@ namespace Disposable.Security.Policies
         /// </summary>
         public int MinRequiredNonAlphanumericCharacters
         {
-            get { throw new NotImplementedException(); }
+            get { return MinSpecialCharcters; }
         }
 
         /// <summary>
