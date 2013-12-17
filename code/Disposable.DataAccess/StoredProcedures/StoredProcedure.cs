@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Disposable.Common;
-using Disposable.Common.Linq;
+using Disposable.Common.Extensions;
 using MySql.Data.MySqlClient;
 
 namespace Disposable.DataAccess.StoredProcedures

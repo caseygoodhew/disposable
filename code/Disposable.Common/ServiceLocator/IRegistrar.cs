@@ -5,7 +5,7 @@ namespace Disposable.Common.ServiceLocator
     /// <summary>
     /// Service locator function registration services
     /// </summary>
-    public interface IRegistrar : ILocator
+    public interface IRegistrar
     {
         /// <summary>
         /// Registers a locator function for type T
@@ -20,5 +20,12 @@ namespace Disposable.Common.ServiceLocator
         /// <typeparam name="T">The generic type to look for</typeparam>
         /// <returns></returns>
         bool IsRegistered<T>() where T : class;
+
+        /// <summary>
+        /// Checks to see if a locator function for given <see cref="Type"/> is already registered
+        /// </summary>
+        /// <param name="type">The type to look for</param>
+        /// <returns></returns>
+        bool IsRegistered(Type type);
     }
 }

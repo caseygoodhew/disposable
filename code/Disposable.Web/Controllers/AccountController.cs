@@ -5,6 +5,7 @@ using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Disposable.ViewModels.Registration;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
@@ -71,15 +72,15 @@ namespace Disposable.Web.Controllers
 		[HttpPost]
 		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
-		public ActionResult Register(RegisterModel model)
+        public ActionResult Register(RegistrationViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
 				// Attempt to register the user
 				try
 				{
-					WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-					WebSecurity.Login(model.UserName, model.Password);
+					WebSecurity.CreateUserAndAccount(model.Email, model.Password, null, true);
+					WebSecurity.Login(model.Email, model.Password);
 					return RedirectToAction("Index", "Home");
 				}
 				catch (MembershipCreateUserException e)

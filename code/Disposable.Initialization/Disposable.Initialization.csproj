@@ -55,6 +55,10 @@
       <Project>{EF86A53A-1A9A-45F9-8D77-BE0FD92E16CA}</Project>
       <Name>Disposable.Security</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Disposable.Validation\Disposable.Validation.csproj">
+      <Project>{89764B07-6937-4F2C-B876-991E1C879C44}</Project>
+      <Name>Disposable.Validation</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -47,7 +47,9 @@
     <Compile Include="Authentication\IAuthentication.cs" />
     <Compile Include="Accounts\IAccountManager.cs" />
     <Compile Include="Policies\IPasswordPolicy.cs" />
+    <Compile Include="Policies\PasswordPolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Disposable.Common\Disposable.Common.csproj">

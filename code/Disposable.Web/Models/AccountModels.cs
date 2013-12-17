@@ -70,7 +70,7 @@ namespace Disposable.Web.Models
 		public bool RememberMe { get; set; }
 	}
 
-	public class RegisterModel
+	/*public class RegisterModel
 	{
 		[Required]
 		[Display(Name = "User name")]
@@ -86,7 +86,7 @@ namespace Disposable.Web.Models
 		[Display(Name = "Confirm password")]
 		[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
 		public string ConfirmPassword { get; set; }
-	}
+	}*/
 
 	public class ExternalLogin
 	{

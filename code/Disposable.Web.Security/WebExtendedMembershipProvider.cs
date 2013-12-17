@@ -14,14 +14,25 @@ namespace Disposable.Web.Security
         private Lazy<IAccountManager> _accountManager = new Lazy<IAccountManager>(() => Locator.Current.Instance<IAccountManager>());
 
         private Lazy<IAuthentication> _authentication = new Lazy<IAuthentication>(() => Locator.Current.Instance<IAuthentication>());
-        
+
         /// <summary>
         /// Gets or sets the name of the application using the custom membership provider.
         /// </summary>
         /// <returns>
         /// The name of the application using the custom membership provider.
         /// </returns>
-        public override string ApplicationName { get; set; }
+        public override string ApplicationName
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether the membership provider is configured to allow users to reset their passwords.

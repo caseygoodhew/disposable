@@ -44,8 +44,13 @@
     <Compile Include="Accounts\IAccountRepository.cs" />
     <Compile Include="Accounts\StoredProcedures\AuthenticateUserProcedure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DataAccessSecurity.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Disposable.Common\Disposable.Common.csproj">
+      <Project>{1FF2CBDD-7F6E-4DDE-91D1-EBD5763E8018}</Project>
+      <Name>Disposable.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Disposable.DataAccess\Disposable.DataAccess.csproj">
       <Project>{818C082C-4696-44F2-AE09-97B1A6886191}</Project>
       <Name>Disposable.DataAccess</Name>

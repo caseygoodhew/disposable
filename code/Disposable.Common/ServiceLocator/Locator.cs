@@ -27,19 +27,51 @@ namespace Disposable.Common.ServiceLocator
         }
 
         // set intentionally left internal for unit testing
-        internal IRegistrar BaseRegistrar { get; set; }
+        internal BaseRegistrar BaseRegistrar { get; set; }
 
         // set intentionally left internal for unit testing
-        internal IRegistrar OverrideRegistrar { get; set; }
+        internal BaseRegistrar OverrideRegistrar { get; set; }
 
         /// <summary>
         /// Gets the implementation of type T
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">The type to retrieve</typeparam>
+        /// <returns>The type instance</returns>
         public T Instance<T>() where T : class
         {
             return OverrideRegistrar.Instance<T>();
+        }
+
+        /// <summary>
+        /// Gets the implementation of a given <see cref="Type"/>
+        /// </summary>
+        /// <param name="type">The type to retrieve</param>
+        /// <returns>The type instance</returns>
+        public object Instance(Type type)
+        {
+            return OverrideRegistrar.Instance(type);
+        }
+
+        /// <summary>
+        /// Tries to get the implementation of type T
+        /// </summary>
+        /// <typeparam name="T">The type to try to retrieve</typeparam>
+        /// <param name="instance">The type instance if found</param>
+        /// <returns>true if the type is found, otherwise false</returns>
+        public bool TryGetInstance<T>(out T instance) where T : class
+        {
+            return OverrideRegistrar.TryGetInstance<T>(out instance);
+        }
+
+        /// <summary>
+        /// Tries to get the implementation of a given <see cref="Type"/>
+        /// </summary>
+        /// <param name="type">The type to retrieve</param>
+        /// <param name="instance">he type instance if found</param>
+        /// <returns>true if the type is found, otherwise false</returns>
+        public bool TryGetInstance(Type type, out object instance)
+        {
+            return OverrideRegistrar.TryGetInstance(type, out instance);
         }
 
         /// <summary>

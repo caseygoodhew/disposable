@@ -1,4 +1,5 @@
-﻿@model Disposable.Web.Models.RegisterModel
+﻿@using Disposable.Web.MvcExtensions
+@model Disposable.ViewModels.Registration.RegistrationViewModel
 @{
     ViewBag.Title = "Register";
 }
@@ -16,15 +17,15 @@
         <legend>Registration Form</legend>
         <ol>
             <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
+                @Html.FormattedLabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email)
             </li>
             <li>
-                @Html.LabelFor(m => m.Password)
+                @Html.FormattedLabelFor(m => m.Password)
                 @Html.PasswordFor(m => m.Password)
             </li>
             <li>
-                @Html.LabelFor(m => m.ConfirmPassword)
+                @Html.FormattedLabelFor(m => m.ConfirmPassword)
                 @Html.PasswordFor(m => m.ConfirmPassword)
             </li>
         </ol>
