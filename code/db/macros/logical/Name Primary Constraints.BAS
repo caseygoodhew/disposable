@@ -29,7 +29,7 @@ Sub NamePrimaryConstraints
 
 			' make sure index/constraint is a primary key
 			If MyIndex.IsPK = True Then
-				MyIndex.Name = "PK_" + MyEntity.TableName
+				MyIndex.Name = Mid("PK_" + MyEntity.TableName, 1, 30)
 			End If
 
 		Next MyIndex

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Disposable.Common;
 using Disposable.Common.Extensions;
-using MySql.Data.MySqlClient;
 
 namespace Disposable.DataAccess.StoredProcedures
 {
@@ -67,24 +67,24 @@ namespace Disposable.DataAccess.StoredProcedures
             return string.Format("{0}.{1}_{2}", Schemas.Disposable, _definition.Package, _definition.Procedure);
         }
 
-        internal IEnumerable<MySqlParameter> InputParameters()
+        internal IEnumerable<SqlParameter> InputParameters()
         {
-            return _parameters.Select(x => new MySqlParameter
+            return _parameters.Select(x => new SqlParameter
             {
-                MySqlDbType = x.Key.DataType,
+                DbType = x.Key.DataType,
                 Direction = ParameterDirection.Input,
                 ParameterName = x.Key.Name,
                 Value = x.Value
             });
         }
 
-        internal MySqlParameter OutputParameter()
+        internal SqlParameter OutputParameter()
         {
             if (_definition.OutputParameter != null)
             {
-                return new MySqlParameter
+                return new SqlParameter
                 {
-                    MySqlDbType = _definition.OutputParameter.DataType,
+                    DbType = _definition.OutputParameter.DataType,
                     Direction = ParameterDirection.Output,
                     ParameterName = _definition.OutputParameter.Name
                 };
@@ -93,7 +93,7 @@ namespace Disposable.DataAccess.StoredProcedures
             return null;
         }
 
-        internal MySqlDbType GetReturnDataType()
+        internal DbType GetReturnDataType()
         {
             if (_definition.OutputParameter == null)
             {

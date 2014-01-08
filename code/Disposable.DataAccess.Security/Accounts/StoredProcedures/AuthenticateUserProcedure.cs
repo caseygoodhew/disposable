@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using Disposable.DataAccess.StoredProcedures;
-using MySql.Data.MySqlClient;
 
 namespace Disposable.DataAccess.Security.Accounts.StoredProcedures
 {
@@ -26,11 +26,12 @@ namespace Disposable.DataAccess.Security.Accounts.StoredProcedures
             
             InputParameters = new List<InputParameter>
             {
-                new InputParameter(UsernameArgumentName, MySqlDbType.String),
-                new InputParameter(PasswordArgumentName, MySqlDbType.String)
+                new InputParameter(UsernameArgumentName, DbType.String),
+                new InputParameter(PasswordArgumentName, DbType.String)
             };
 
-            OutputParameter = new OutputParameter(ResultArgumentName, MySqlDbType.Bit);
+            // TODO: this may not work -> DT was mysqldatatype.bit
+            OutputParameter = new OutputParameter(ResultArgumentName, DbType.Binary);
         }
 
         /// <summary>

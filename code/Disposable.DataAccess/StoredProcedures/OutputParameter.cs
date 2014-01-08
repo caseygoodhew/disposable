@@ -1,10 +1,10 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data;
 
 namespace Disposable.DataAccess.StoredProcedures
 {
     public class OutputParameter : Parameter
     {
-        public OutputParameter(string name, MySqlDbType dataType) : base(name, dataType)
+        public OutputParameter(string name, DbType dataType) : base(name, dataType)
         {
         }
     }

@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data;
 
 namespace Disposable.DataAccess.StoredProcedures
 {
@@ -6,7 +6,7 @@ namespace Disposable.DataAccess.StoredProcedures
     {
         internal readonly bool Required;
 
-        public InputParameter(string name, MySqlDbType dataType, bool required = true) : base(name, dataType)
+        public InputParameter(string name, DbType dataType, bool required = true) : base(name, dataType)
         {
             Required = required;
         }

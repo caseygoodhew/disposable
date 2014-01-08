@@ -5,7 +5,6 @@ using System;
 using System.Data;
 using System.Linq;
 using Disposable.DataAccess.StoredProcedures;
-using MySql.Data.MySqlClient;
 
 namespace Disposable.DataAccess
 {
@@ -15,11 +14,11 @@ namespace Disposable.DataAccess
     public class DbHelper : IDbHelper
 	{
         // ReSharper disable once ConvertToConstant.Local
-	    private static readonly string ConnectionString = "Server=localhost;Database=disposable;Uid=root;Pwd=manager;";
+	    //private static readonly string ConnectionString = "Server=localhost;Database=disposable;Uid=root;Pwd=manager;";
 
-	    private MySqlConnection _connection;
+        private IDbConnection _connection;
 
-	    private MySqlConnection Connection
+        private IDbConnection Connection
 	    {
 	        get
 	        {
@@ -31,7 +30,7 @@ namespace Disposable.DataAccess
                 
                 if (_connection == null)
 	            {
-	                _connection = new MySqlConnection(ConnectionString);
+	                //_connection = new MySqlConnection(ConnectionString);
                     _connection.Open();
 	            }
 
@@ -41,7 +40,7 @@ namespace Disposable.DataAccess
         
         private string TestDirect()
 		{
-            var db = new MySqlConnection(ConnectionString);
+            /*var db = new MySqlConnection(ConnectionString);
 			db.Open();
 
 			var cmd = new MySqlCommand("Select * from disposable.class_type where class_type_id = 1", db);
@@ -52,12 +51,13 @@ namespace Disposable.DataAccess
 			
 			db.Close();
 			
-			return value;
+			return value;*/
+            return string.Empty;
 		}
 
         private string TestDapper()
 		{
-			var db = new MySqlConnection("Server=localhost;Database=disposable;Uid=root;Pwd=manager;");
+			/*var db = new MySqlConnection("Server=localhost;Database=disposable;Uid=root;Pwd=manager;");
 			
             db.Open();
             
@@ -65,14 +65,15 @@ namespace Disposable.DataAccess
             return
                 db.Query<DbHelper>("select * from disposable.class_type where class_type_id = @ClassTypeId", new { ClassTypeId = 1 })
 					.First()
-					.ToString();
+					.ToString();*/
 
+            return string.Empty;
 		}
         
         public bool ReturnBool<T>(IDictionary<string, object> parameters) where T : IStoredProcedureDefinition, new()
         {
             var storedProcedure = StoredProcedure.Create<T>(parameters);
-            
+            /*
             var cmd = new MySqlCommand(storedProcedure.CommandText(), Connection)
             {
                 CommandType = CommandType.StoredProcedure
@@ -84,8 +85,9 @@ namespace Disposable.DataAccess
             
             cmd.ExecuteNonQuery();
 
-            return Convert.ToBoolean(outputParam.Value);
-	    }
+            return Convert.ToBoolean(outputParam.Value);*/
+            return true;
+        }
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

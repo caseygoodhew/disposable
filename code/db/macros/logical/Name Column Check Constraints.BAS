@@ -3,11 +3,11 @@ Sub Main
 	Dim MyModel As Model
 	
 	Set MyDiagram = DiagramManager.ActiveDiagram
-		Set MyModel = MyDiagram.ActiveModel
-	
-		If MyModel.Name <> "Logical" Then
-			MsgBox("This can only be applied when the logical model is active")
-			Exit Sub
+	Set MyModel = MyDiagram.ActiveModel
+
+	If MyModel.Name <> "Logical" Then
+		MsgBox("This can only be applied when the logical model is active")
+		Exit Sub
 	End If
 
 	NameColumnCheckConstraints
@@ -30,6 +30,8 @@ Sub NameColumnCheckConstraints
 			' make sure index/constraint is a primary key
 			If MyColumn.CheckConstraint = "" Then
 				MyColumn.CheckConstraintName = ""
+			ElseIf Left(MyColumn.CheckConstraintName, 4) = "CHK_" Then
+				' do nothing
 			Else
 				MyColumn.CheckConstraintName = "CHK_" & MyEntity.EntityName & "_" & MyColumn.RoleName
 			End If

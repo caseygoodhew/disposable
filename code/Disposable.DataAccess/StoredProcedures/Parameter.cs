@@ -1,4 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿//using MySql.Data.MySqlClient;
+
+using System.Data;
 
 namespace Disposable.DataAccess.StoredProcedures
 {
@@ -6,9 +8,9 @@ namespace Disposable.DataAccess.StoredProcedures
     {
         internal readonly string Name;
 
-        internal readonly MySqlDbType DataType;
+        internal readonly DbType DataType;
 
-        protected Parameter(string name, MySqlDbType dataType)
+        protected Parameter(string name, DbType dataType)
         {
             Name = name;
             DataType = dataType;
