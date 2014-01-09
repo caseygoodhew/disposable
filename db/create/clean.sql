@@ -42,5 +42,5 @@ END;
 
 
 set term on
-@create_schema
+@schema
 
