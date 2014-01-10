@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data.OracleClient;
 using Dapper;
 using System;
 using System.Data;
@@ -13,8 +14,7 @@ namespace Disposable.DataAccess
 	/// </summary>
     public class DbHelper : IDbHelper
 	{
-        // ReSharper disable once ConvertToConstant.Local
-	    //private static readonly string ConnectionString = "Server=localhost;Database=disposable;Uid=root;Pwd=manager;";
+        private static readonly string WebConnectionString = "Password=upd;Persist Security Info=True;User ID=upd;Data Source=disposable;";
 
         private IDbConnection _connection;
 
@@ -30,7 +30,7 @@ namespace Disposable.DataAccess
                 
                 if (_connection == null)
 	            {
-	                //_connection = new MySqlConnection(ConnectionString);
+                    _connection = new OracleConnection(WebConnectionString);
                     _connection.Open();
 	            }
 
