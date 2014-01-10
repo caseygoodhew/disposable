@@ -1,3 +1,4 @@
+set define off
 set define &
 set echo off
 set term on

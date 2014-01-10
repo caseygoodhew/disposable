@@ -13,19 +13,25 @@ DECLARE
 	v_users t_users;
 	v_exists NUMBER;
 BEGIN
+	
 	v_users := t_users(
-		'DISPOSABLE', 
+		'DISPOSABLE',
 		'WEB_USER'
 	);	
+	
 	FOR i IN 1 .. v_users.COUNT LOOP
+		
 		SELECT COUNT(*)
 		  INTO v_exists
 		  FROM all_users
 		 WHERE username = v_users(i);
+		
 		IF v_exists <> 0 THEN
 			EXECUTE IMMEDIATE 'DROP USER '||v_users(i)||' CASCADE';
 		END IF;
+	
 		EXECUTE IMMEDIATE 'CREATE USER '||v_users(i)||' IDENTIFIED BY '||LOWER(v_users(i))||' QUOTA UNLIMITED ON USERS';
+	
 	END LOOP;
 	
 	
@@ -39,8 +45,53 @@ END;
 /
 
 @prompt "Creating DISPOSABLE"
-
-
-set term on
 @schema
 
+@prompt "Creating CONSTANTS"
+@..\constants
+create or replace synonym constants for disposable.constants;
+
+@prompt "Inserting BASEDATA"
+@basedata
+
+
+
+-- NOT TO BE USED FOR LIVE DEVELOPMENT
+@prompt "Local - views"
+@local\views
+
+@prompt "Local - users"
+@local\users
+
+@prompt " "
+@prompt " "
+
+set echo off
+set term on
+set serveroutput on
+
+BEGIN
+	dbms_output.put_line('-------------------------------------');
+	dbms_output.put_line('TEXTPAD SQL SYN');
+	dbms_output.put_line('-------------------------------------');
+	FOR r IN (
+		SELECT result
+		  FROM disposable.v$textpad_syn
+		 ORDER BY result
+	) LOOP
+		dbms_output.put_line(r.result);
+	END LOOP;
+	dbms_output.put_line('-------------------------------------');
+END;
+/
+
+set term off
+
+@prompt " "
+@prompt " "
+@prompt "*** Clean COMPLETED ***"
+@prompt " "
+@prompt " "
+@prompt " "
+
+exit;
