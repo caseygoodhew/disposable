@@ -8,9 +8,6 @@ namespace Disposable.DataAccess
     /// </summary>
     internal class DbConnection : IDbConnection
     {
-        /// <summary>
-        /// The underlying database connection
-        /// </summary>
         private readonly OracleConnection _oracleConnection;
 
         /// <summary>

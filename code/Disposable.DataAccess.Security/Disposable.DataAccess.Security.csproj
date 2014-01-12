@@ -41,7 +41,6 @@
   <ItemGroup>
     <Compile Include="Accounts\AccountRepository.cs" />
     <Compile Include="Accounts\IAccountRepository.cs" />
-    <Compile Include="Accounts\StoredProcedures\AuthenticateUserProcedure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataAccessSecurity.cs" />
   </ItemGroup>

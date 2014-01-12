@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Disposable.Common;
 using Disposable.Common.Extensions;
 
-namespace Disposable.DataAccess.StoredProcedures
+namespace Disposable.Packages.Core
 {
     internal class StoredProcedure
     {

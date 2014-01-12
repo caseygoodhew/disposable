@@ -1,75 +1,44 @@
-﻿using System.Collections;
+﻿using Disposable.DataAccess.StoredProcedures;
 using System.Collections.Generic;
-using System.Data.OracleClient;
-using Dapper;
-using System;
 using System.Data;
-using System.Linq;
-using Disposable.DataAccess.StoredProcedures;
 
 namespace Disposable.DataAccess
 {
-	/// <summary>
-	/// 
-	/// </summary>
+    /// <summary>
+    /// Wrapper to manage a <see cref="DbConnection"/>
+    /// </summary>
     public class DbHelper : IDbHelper
-	{
+    {
         private static readonly string WebConnectionString = "Password=upd;Persist Security Info=True;User ID=upd;Data Source=disposable;";
 
         private IDbConnection _connection;
 
         private IDbConnection Connection
-	    {
-	        get
-	        {
-	            if (_connection != null && _connection.State == ConnectionState.Closed)
-	            {
-	                _connection.Dispose();
-	                _connection = null;
-	            }
+        {
+            get
+            {
+                if (_connection != null && _connection.State == ConnectionState.Closed)
+                {
+                    _connection.Dispose();
+                    _connection = null;
+                }
                 
                 if (_connection == null)
-	            {
-                    _connection = new OracleConnection(WebConnectionString);
+                {
+                    _connection = new DbConnection(WebConnectionString);
                     _connection.Open();
-	            }
+                }
 
-	            return _connection;
-	        }
-	    }
+                return _connection;
+            }
+        }
         
-        private string TestDirect()
-		{
-            /*var db = new MySqlConnection(ConnectionString);
-			db.Open();
-
-			var cmd = new MySqlCommand("Select * from disposable.class_type where class_type_id = 1", db);
-			IDataReader rdr = cmd.ExecuteReader();
-			
-			rdr.Read();
-			string value = rdr[rdr.GetOrdinal("description")].ToString();
-			
-			db.Close();
-			
-			return value;*/
-            return string.Empty;
-		}
-
-        private string TestDapper()
-		{
-			/*var db = new MySqlConnection("Server=localhost;Database=disposable;Uid=root;Pwd=manager;");
-			
-            db.Open();
-            
-			
-            return
-                db.Query<DbHelper>("select * from disposable.class_type where class_type_id = @ClassTypeId", new { ClassTypeId = 1 })
-					.First()
-					.ToString();*/
-
-            return string.Empty;
-		}
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public bool ReturnBool<T>(IDictionary<string, object> parameters) where T : IStoredProcedureDefinition, new()
         {
             var storedProcedure = StoredProcedure.Create<T>(parameters);
@@ -105,5 +74,5 @@ namespace Disposable.DataAccess
                 _connection.Dispose();
             }
         }
-	}
+    }
 }

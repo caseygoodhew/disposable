@@ -45,18 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess.cs" />
     <Compile Include="DbConnection.cs" />
     <Compile Include="IDbConnection.cs" />
-    <Compile Include="Schemas.cs" />
     <Compile Include="DbHelper.cs" />
     <Compile Include="IDbHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Packages.cs" />
-    <Compile Include="StoredProcedures\OutputParameter.cs" />
-    <Compile Include="StoredProcedures\InputParameter.cs" />
-    <Compile Include="StoredProcedures\StoredProcedure.cs" />
-    <Compile Include="StoredProcedures\IStoredProcedureDefinition.cs" />
-    <Compile Include="StoredProcedures\Parameter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Disposable.Common\Disposable.Common.csproj">

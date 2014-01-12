@@ -1,8 +1,6 @@
-﻿//using MySql.Data.MySqlClient;
+﻿using System.Data;
 
-using System.Data;
-
-namespace Disposable.DataAccess.StoredProcedures
+namespace Disposable.Packages.Core
 {
     public abstract class Parameter
     {

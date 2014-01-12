@@ -1,17 +1,14 @@
 ﻿using System.Collections.Generic;
 
-namespace Disposable.DataAccess.StoredProcedures
+namespace Disposable.Packages.Core
 {
     /// <summary>
     /// Defines the required attributes to call a stored procedure
     /// </summary>
-    public interface IStoredProcedureDefinition
+    internal interface IStoredProcedureDefinition
     {
-        /// <summary>
-        /// Gets the package name where the procedure resides
-        /// </summary>
-        string Package { get; }
-
+        IPackage Package { get; }
+        
         /// <summary>
         /// Gets the name of the procedure
         /// </summary>
@@ -20,11 +17,17 @@ namespace Disposable.DataAccess.StoredProcedures
         /// <summary>
         /// Gets the input parameters expected by the procedure
         /// </summary>
-        IEnumerable<InputParameter> InputParameters { get; }
+        IList<InputParameter> InputParameters { get; }
 
         /// <summary>
         /// Gets the output parameter provided by the procedure
         /// </summary>
         OutputParameter OutputParameter { get; }
+
+        /// <summary>
+        /// Gets the parameters that will be used to call the stored procedure
+        /// </summary>
+        /// <returns></returns>
+        IDictionary<string, object> GetParameters();
     }
 }
