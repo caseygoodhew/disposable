@@ -8,8 +8,8 @@ using Disposable.Packages.Core;
 
 namespace Disposable.Packages.User
 {
-    internal interface IUserPackage : IPackage
+    public interface IUserPackage : IPackage
     {
-        AuthenticateUserProcedure AuthenticateUser(string username, string password);
+        IStoredProcedure AuthenticateUser(string username, string password);
     }
 }

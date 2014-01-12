@@ -1,104 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using Disposable.Common;
 using Disposable.Common.Extensions;
 
 namespace Disposable.Packages.Core
 {
-    internal class StoredProcedure
+    internal abstract class StoredProcedure : IStoredProcedure
     {
-        private readonly IStoredProcedureDefinition _definition;
+        private IDictionary<InputParameter, object> _parameters = null;
 
-        private readonly IDictionary<InputParameter, object> _parameters;
+        public IPackage Package { get; private set; }
 
-        private StoredProcedure(IStoredProcedureDefinition definition, IDictionary<string, object> inputParameters)
+        public string Name { get; private set; }
+        
+        public IList<InputParameter> InputParameters { get; private set; }
+
+        public OutputParameter OutputParameter { get; private set; }
+
+        protected StoredProcedure(IPackage package, string name, params InputParameter[] inputParameters)
+            : this(package, name, null, inputParameters)
         {
-            Guard.ArgumentNotNull(definition, "definition");
+            
+        }
 
-            _definition = definition;
+        protected StoredProcedure(IPackage package, string name, OutputParameter outputParameter, params InputParameter[] inputParameters)
+        {
+            Package = package;
+            Name = name;
+            OutputParameter = outputParameter;
+            InputParameters = inputParameters.ToList();
+        }
 
-            var defintionInputParameters = (definition.InputParameters ?? Enumerable.Empty<InputParameter>()).ToList();
+        protected void SetParameterValues(IDictionary<string, object> parameterValues)
+        {
+            var inputParameters = (InputParameters ?? Enumerable.Empty<InputParameter>()).ToList();
 
-            if (defintionInputParameters.IsNullOrEmpty() && inputParameters.IsNullOrEmpty())
+            if (inputParameters.IsNullOrEmpty() && parameterValues.IsNullOrEmpty())
             {
                 _parameters = new Dictionary<InputParameter, object>();
             }
             else
             {
-                var inputDictionary = (inputParameters ?? new Dictionary<string, object>()).ToDictionary(x => x.Key, x => x.Value, StringComparer.InvariantCultureIgnoreCase);
+                var valueDictionary = (parameterValues ?? new Dictionary<string, object>()).ToDictionary(x => x.Key, x => x.Value, StringComparer.InvariantCultureIgnoreCase);
 
-                var defintionInputDictionary = defintionInputParameters.ToDictionary(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
+                var parameterDictionary = inputParameters.ToDictionary(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
 
-                var requiredParameters = defintionInputDictionary.Where(x => x.Value.Required).Select(x => x.Key).ToList();
-                var missingParameters = requiredParameters.Where(x => !inputDictionary.ContainsKey(x)).ToList();
+                var requiredParameters = parameterDictionary.Where(x => x.Value.Required).Select(x => x.Key).ToList();
+                var missingParameters = requiredParameters.Where(x => !valueDictionary.ContainsKey(x)).ToList();
 
                 if (missingParameters.Any())
                 {
-                    var message = string.Format("The following inputParameters are required but were not supplied: {0}", string.Join(", ", missingParameters));
-                    throw new ArgumentException(message, "inputParameters");
+                    var message = string.Format("The following parameterValues are required but were not supplied: {0}", string.Join(", ", missingParameters));
+                    throw new ArgumentException(message, "parameterValues");
                 }
 
-                var allParameters = defintionInputDictionary.Select(x => x.Key);
-                var extraParameters = inputDictionary.Where(x => !allParameters.Contains(x.Key)).ToList();
+                var allParameters = parameterDictionary.Select(x => x.Key);
+                var extraParameters = valueDictionary.Where(x => !allParameters.Contains(x.Key)).ToList();
 
                 if (extraParameters.Any())
                 {
-                    var message = string.Format("The following supplied inputParameters are not defined: {0}", string.Join(", ", extraParameters));
-                    throw new ArgumentException(message, "inputParameters");
+                    var message = string.Format("The following supplied parameterValues are not defined: {0}", string.Join(", ", extraParameters));
+                    throw new ArgumentException(message, "parameterValues");
                 }
 
-                _parameters = inputDictionary.ToDictionary(x => defintionInputDictionary[x.Key], x => x.Value);
+                _parameters = valueDictionary.ToDictionary(x => parameterDictionary[x.Key], x => x.Value);
             }
         }
 
-        internal static StoredProcedure Create<T>(IDictionary<string, object> parameters)
-            where T : IStoredProcedureDefinition, new()
+        public IDictionary<InputParameter, object> GetParameters()
         {
-            return new StoredProcedure(new T(), parameters);
-        }
+            var parameters = _parameters;
 
-        internal string CommandText()
-        {
-            return string.Format("{0}.{1}_{2}", Schemas.Disposable, _definition.Package, _definition.Procedure);
-        }
+            _parameters = null;
 
-        internal IEnumerable<SqlParameter> InputParameters()
-        {
-            return _parameters.Select(x => new SqlParameter
-            {
-                DbType = x.Key.DataType,
-                Direction = ParameterDirection.Input,
-                ParameterName = x.Key.Name,
-                Value = x.Value
-            });
-        }
-
-        internal SqlParameter OutputParameter()
-        {
-            if (_definition.OutputParameter != null)
-            {
-                return new SqlParameter
-                {
-                    DbType = _definition.OutputParameter.DataType,
-                    Direction = ParameterDirection.Output,
-                    ParameterName = _definition.OutputParameter.Name
-                };
-            }
-
-            return null;
-        }
-
-        internal DbType GetReturnDataType()
-        {
-            if (_definition.OutputParameter == null)
-            {
-                throw new InvalidOperationException("No output parameter defined");
-            }
-
-            return _definition.OutputParameter.DataType;
+            return parameters;
         }
     }
 }

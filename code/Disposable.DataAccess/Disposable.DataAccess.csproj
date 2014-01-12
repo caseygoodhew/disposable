@@ -46,16 +46,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess.cs" />
-    <Compile Include="DbConnection.cs" />
+    <Compile Include="IPreparedStoredProcedure.cs" />
+    <Compile Include="IStoredProcedureAdapter.cs" />
+    <Compile Include="OracleDbConnection.cs" />
     <Compile Include="IDbConnection.cs" />
     <Compile Include="DbHelper.cs" />
     <Compile Include="IDbHelper.cs" />
+    <Compile Include="OraclePreparedStoredProcedure.cs" />
+    <Compile Include="OracleStoredProcedureAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Disposable.Common\Disposable.Common.csproj">
       <Project>{1FF2CBDD-7F6E-4DDE-91D1-EBD5763E8018}</Project>
       <Name>Disposable.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Disposable.Packages\Disposable.Packages.csproj">
+      <Project>{6F6B6C9C-C821-4773-98F1-B3CD247EBFD3}</Project>
+      <Name>Disposable.Packages</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

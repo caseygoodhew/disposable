@@ -3,10 +3,13 @@ using Disposable.Packages.Core;
 
 namespace Disposable.Packages.User
 {
-    internal class UserPackage : Package, IUserPackage
+    public class UserPackage : Package, IUserPackage
     {
-        private static readonly string PackageName = "user_pkg";
-
+        public UserPackage()
+        {
+            Register(() => new AuthenticateUserProcedure(this));
+        }
+        
         public override string Schema
         {
             get { return PackageConstants.Disposable; } 
@@ -14,17 +17,14 @@ namespace Disposable.Packages.User
 
         public override string Name
         {
-            get { return PackageName; } 
+            get { return PackageConstants.UserPkg; } 
         }
 
-        public AuthenticateUserProcedure AuthenticateUser(string username, string password)
+        public IStoredProcedure AuthenticateUser(string username, string password)
         {
-            var procedure = GetProcedure<AuthenticateUserProcedure>();
-            procedure.SetParameters(username, password);
+            var procedure = Instance<AuthenticateUserProcedure>();
+            procedure.SetParameterValues(username, password);
             return procedure;
         }
-
-        
-        
     }
 }

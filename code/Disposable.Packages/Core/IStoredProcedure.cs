@@ -5,14 +5,17 @@ namespace Disposable.Packages.Core
     /// <summary>
     /// Defines the required attributes to call a stored procedure
     /// </summary>
-    internal interface IStoredProcedureDefinition
+    public interface IStoredProcedure
     {
+        /// <summary>
+        /// Get the <see cref="IPackage"/> which owns the <see cref="IStoredProcedure"/>
+        /// </summary>
         IPackage Package { get; }
         
         /// <summary>
         /// Gets the name of the procedure
         /// </summary>
-        string Procedure { get; }
+        string Name { get; }
 
         /// <summary>
         /// Gets the input parameters expected by the procedure
@@ -28,6 +31,6 @@ namespace Disposable.Packages.Core
         /// Gets the parameters that will be used to call the stored procedure
         /// </summary>
         /// <returns></returns>
-        IDictionary<string, object> GetParameters();
+        IDictionary<InputParameter, object> GetParameters();
     }
 }

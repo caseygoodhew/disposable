@@ -53,6 +53,10 @@
       <Project>{818C082C-4696-44F2-AE09-97B1A6886191}</Project>
       <Name>Disposable.DataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Disposable.Packages\Disposable.Packages.csproj">
+      <Project>{6F6B6C9C-C821-4773-98F1-B3CD247EBFD3}</Project>
+      <Name>Disposable.Packages</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,17 +4,17 @@ using Oracle.DataAccess.Client;
 namespace Disposable.DataAccess
 {
     /// <summary>
-    /// Acts as an adapter to the underlying database connection
+    /// Acts as an adapter to the underlying oracle database connection
     /// </summary>
-    internal class DbConnection : IDbConnection
+    internal class OracleDbConnection : IDbConnection
     {
         private readonly OracleConnection _oracleConnection;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DbConnection"/> class.
+        /// Initializes a new instance of the <see cref="OracleDbConnection"/> class.
         /// </summary>
         /// <param name="connectionString">The connection string to use to connect to the underlying database connection</param>
-        public DbConnection(string connectionString)
+        public OracleDbConnection(string connectionString)
         {
             _oracleConnection = new OracleConnection(connectionString);
         }

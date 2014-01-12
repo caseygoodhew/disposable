@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using Disposable.DataAccess.StoredProcedures;
+using Disposable.Packages.Core;
 
 namespace Disposable.DataAccess
 {
     public interface IDbHelper : IDisposable
     {
-        bool ReturnBool<T>(IDictionary<string, object> parameters) where T : IStoredProcedureDefinition, new();
+        bool ReturnBool(IStoredProcedure storedProcedure);
     }
 }

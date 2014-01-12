@@ -1,6 +1,6 @@
 ﻿namespace Disposable.Packages.Core
 {
-    internal interface IPackage
+    public interface IPackage
     {
         string Schema { get; }
 

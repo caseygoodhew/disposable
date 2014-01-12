@@ -16,5 +16,13 @@ namespace Disposable.Common
                 throw new ArgumentNullException(argumentName);
             }
         }
+
+        public static void ArgumentNotNullOrEmpty(string value, string argumentName)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(argumentName);
+            }
+        }
     }
 }

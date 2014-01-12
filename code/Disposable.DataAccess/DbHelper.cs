@@ -1,11 +1,11 @@
-﻿using Disposable.DataAccess.StoredProcedures;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
+using Disposable.Packages.Core;
 
 namespace Disposable.DataAccess
 {
     /// <summary>
-    /// Wrapper to manage a <see cref="DbConnection"/>
+    /// Wrapper to manage a <see cref="OracleDbConnection"/>
     /// </summary>
     public class DbHelper : IDbHelper
     {
@@ -25,7 +25,7 @@ namespace Disposable.DataAccess
                 
                 if (_connection == null)
                 {
-                    _connection = new DbConnection(WebConnectionString);
+                    _connection = new OracleDbConnection(WebConnectionString);
                     _connection.Open();
                 }
 
@@ -39,7 +39,7 @@ namespace Disposable.DataAccess
         /// <typeparam name="T"></typeparam>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public bool ReturnBool<T>(IDictionary<string, object> parameters) where T : IStoredProcedureDefinition, new()
+        /*public bool ReturnBool<T>(IDictionary<string, object> parameters) where T : IStoredProcedure, new()
         {
             var storedProcedure = StoredProcedure.Create<T>(parameters);
             /*
@@ -54,9 +54,9 @@ namespace Disposable.DataAccess
             
             cmd.ExecuteNonQuery();
 
-            return Convert.ToBoolean(outputParam.Value);*/
+            return Convert.ToBoolean(outputParam.Value);* /
             return true;
-        }
+        }*/
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -73,6 +73,11 @@ namespace Disposable.DataAccess
 
                 _connection.Dispose();
             }
+        }
+
+        public bool ReturnBool(IStoredProcedure storedProcedure)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

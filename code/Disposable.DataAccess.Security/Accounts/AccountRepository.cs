@@ -1,4 +1,5 @@
-﻿using Disposable.DataAccess.Security.Accounts.StoredProcedures;
+﻿using Disposable.Common.ServiceLocator;
+using Disposable.Packages.User;
 
 namespace Disposable.DataAccess.Security.Accounts
 {
@@ -13,7 +14,8 @@ namespace Disposable.DataAccess.Security.Accounts
         /// <returns>true if the pair are authenticated, otherwise false</returns>
         public bool Authenticate(IDbHelper dbHelper, string username, string password)
         {
-            return dbHelper.ReturnBool<AuthenticateUserProcedure>(AuthenticateUserProcedure.Parameterize(username, password));
+            var userPackage = Locator.Current.Instance<IUserPackage>();
+            return dbHelper.ReturnBool(userPackage.AuthenticateUser(username, password));
         }
     }
 }
