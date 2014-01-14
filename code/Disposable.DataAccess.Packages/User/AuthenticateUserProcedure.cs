@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using Disposable.Packages.Core;
+using Disposable.DataAccess.Packages.Core;
 
-namespace Disposable.Packages.User
+namespace Disposable.DataAccess.Packages.User
 {
     internal class AuthenticateUserProcedure : StoredProcedure
     {

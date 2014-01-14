@@ -1,12 +1,7 @@
 ﻿using System;
 using Disposable.Common.ServiceLocator;
 using Disposable.Common.Services;
-using Disposable.DataAccess.Security;
-using Disposable.DataAccess.Security.Accounts;
-using Disposable.Security;
-using Disposable.Security.Accounts;
-using Disposable.Security.Authentication;
-using Disposable.Validation;
+using Disposable.DataAccess;
 
 namespace Disposable.Initialization
 {
@@ -28,9 +23,14 @@ namespace Disposable.Initialization
 
             var registrar = locator.BaseRegistrar;
 
-            DataAccessSecurity.Register(registrar);
-            Security.Security.Register(registrar);
-            Validation.Validation.Register(registrar);
+            
+            Disposable.DataAccess.
+            DataAccess.Packages.Registrar.Register(registrar);
+            DataAccess.Security.Registrar.Register(registrar);
+            
+            Security.Registrar.Register(registrar);
+            
+            Validation.Registrar.Register(registrar);
 
             // misc
             registrar.Register<ITimeSource>(() => new LocalTimeSource());

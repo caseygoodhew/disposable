@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Disposable.Packages.Core;
+﻿using Disposable.DataAccess.Packages.Core;
 
-namespace Disposable.DataAccess
+namespace Disposable.DataAccess.Database.Oracle
 {
     internal class OracleStoredProcedureAdapter : IStoredProcedureAdapter<OraclePreparedStoredProcedure>
     {

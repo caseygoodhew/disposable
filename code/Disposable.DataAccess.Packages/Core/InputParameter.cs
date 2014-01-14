@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Disposable.Packages.Core
+namespace Disposable.DataAccess.Packages.Core
 {
     public class InputParameter : Parameter
     {

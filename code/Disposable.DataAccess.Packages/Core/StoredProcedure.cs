@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Disposable.Common.Extensions;
 
-namespace Disposable.Packages.Core
+namespace Disposable.DataAccess.Packages.Core
 {
     internal abstract class StoredProcedure : IStoredProcedure
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-using Disposable.Packages.Core;
+using Disposable.DataAccess.Packages.Core;
 
 namespace Disposable.DataAccess
 {

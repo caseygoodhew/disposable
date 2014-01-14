@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
-using Disposable.Packages.Core;
+using Disposable.DataAccess.Packages.Core;
 
-namespace Disposable.Packages.User
+namespace Disposable.DataAccess.Packages.User
 {
     public interface IUserPackage : IPackage
     {

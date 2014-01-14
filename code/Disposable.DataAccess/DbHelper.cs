@@ -1,16 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
-using Disposable.Packages.Core;
+using Disposable.Common.ServiceLocator;
+using Disposable.DataAccess.Database;
+using Disposable.DataAccess.Database.Oracle;
+using Disposable.DataAccess.Packages.Core;
+using IDbConnection = Disposable.DataAccess.Database.IDbConnection;
 
 namespace Disposable.DataAccess
 {
     /// <summary>
-    /// Wrapper to manage a <see cref="OracleDbConnection"/>
+    /// Wrapper to manage a <see cref="IDbConnection"/>
     /// </summary>
     public class DbHelper : IDbHelper
     {
-        private static readonly string WebConnectionString = "Password=upd;Persist Security Info=True;User ID=upd;Data Source=disposable;";
-
+        private readonly static Lazy<IConnectionProvider> WebConnectionProvider = new Lazy<IConnectionProvider>(
+            () => Locator.Current.Instance<IConnectionProvider>());
+        
         private IDbConnection _connection;
 
         private IDbConnection Connection
@@ -25,7 +31,7 @@ namespace Disposable.DataAccess
                 
                 if (_connection == null)
                 {
-                    _connection = new OracleDbConnection(WebConnectionString);
+                    _connection = WebConnectionProvider.Value.CreateConnection(ConnectionType.Web, null, Guid.Empty);
                     _connection.Open();
                 }
 
@@ -41,7 +47,9 @@ namespace Disposable.DataAccess
         /// <returns></returns>
         /*public bool ReturnBool<T>(IDictionary<string, object> parameters) where T : IStoredProcedure, new()
         {
-            var storedProcedure = StoredProcedure.Create<T>(parameters);
+            
+            
+            //var storedProcedure = StoredProcedure.Create<T>(parameters);
             /*
             var cmd = new MySqlCommand(storedProcedure.CommandText(), Connection)
             {

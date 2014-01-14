@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Disposable.Packages.Core
+namespace Disposable.DataAccess.Packages.Core
 {
     /// <summary>
     /// Defines the required attributes to call a stored procedure

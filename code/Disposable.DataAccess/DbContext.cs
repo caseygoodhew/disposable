@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Disposable.DataAccess
 {
-    public static class DataAccess
+    internal class DbContext
     {
     }
 }

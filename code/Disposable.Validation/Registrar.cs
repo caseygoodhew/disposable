@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace Disposable.Validation
 {
-    public static class Validation
+    public static class Registrar
     {
         public static void Register(IRegistrar registrar)
         {

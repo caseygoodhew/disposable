@@ -5,7 +5,7 @@ using Disposable.Security.Policies;
 
 namespace Disposable.Security
 {
-    public static class Security
+    public static class Registrar
     {
         public static void Register(IRegistrar registrar)
         {

@@ -1,4 +1,4 @@
-﻿namespace Disposable.Packages.Core
+﻿namespace Disposable.DataAccess.Packages.Core
 {
     public interface IPackage
     {

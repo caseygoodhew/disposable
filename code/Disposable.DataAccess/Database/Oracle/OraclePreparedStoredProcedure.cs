@@ -1,6 +1,6 @@
-﻿using Disposable.Packages.Core;
+﻿using Disposable.DataAccess.Packages.Core;
 
-namespace Disposable.DataAccess
+namespace Disposable.DataAccess.Database.Oracle
 {
     internal class OraclePreparedStoredProcedure : IPreparedStoredProcedure
     {
@@ -11,11 +11,11 @@ namespace Disposable.DataAccess
             _storedProcedure = storedProcedure;
         }
 
-        /*internal string CommandText()
+        private string CommandText()
         {
-            return string.Format("{0}.{1}_{2}", Schemas.Disposable, _definition.Package, _definition.Procedure);
+            return string.Format("{0}.{1}.{2}", _storedProcedure.Package.Schema, _storedProcedure.Package.Name, _storedProcedure.Name);
         }
-
+        /*
         internal IEnumerable<SqlParameter> InputParameters()
         {
             return _parameters.Select(x => new SqlParameter

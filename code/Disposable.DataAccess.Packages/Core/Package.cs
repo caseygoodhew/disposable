@@ -1,6 +1,6 @@
 ﻿using Disposable.Common.ServiceLocator;
 
-namespace Disposable.Packages.Core
+namespace Disposable.DataAccess.Packages.Core
 {
     public abstract class Package : BaseRegistrar, IPackage
     {

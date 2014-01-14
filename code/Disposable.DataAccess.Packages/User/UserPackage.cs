@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
-using Disposable.Packages.Core;
+using Disposable.DataAccess.Packages.Core;
 
-namespace Disposable.Packages.User
+namespace Disposable.DataAccess.Packages.User
 {
     public class UserPackage : Package, IUserPackage
     {

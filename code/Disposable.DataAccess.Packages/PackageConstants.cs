@@ -1,4 +1,4 @@
-﻿namespace Disposable.Packages
+﻿namespace Disposable.DataAccess.Packages
 {
     internal static class PackageConstants
     {

@@ -67,7 +67,7 @@ namespace Disposable.Web.Security.System
         /// Gets a value indicating the format for storing passwords in the membership data store.
         /// </summary>
         /// <returns>
-        /// One of the <see cref="T:System.Web.Security.MembershipPasswordFormat"/> values indicating the format for storing passwords in the data store.
+        /// One of the <see cref="T:System.Web.Registrar.MembershipPasswordFormat"/> values indicating the format for storing passwords in the data store.
         /// </returns>
         MembershipPasswordFormat PasswordFormat { get; }
 
@@ -170,9 +170,9 @@ namespace Disposable.Web.Security.System
         /// <param name="passwordAnswer">The password answer for the new user</param>
         /// <param name="isApproved">Whether or not the new user is approved to be validated.</param>
         /// <param name="providerUserKey">The unique identifier from the membership data source for the user.</param>
-        /// <param name="status">A <see cref="T:System.Web.Security.MembershipCreateStatus"/> enumeration value indicating whether the user was created successfully.</param>
+        /// <param name="status">A <see cref="T:System.Web.Registrar.MembershipCreateStatus"/> enumeration value indicating whether the user was created successfully.</param>
         /// <returns>
-        /// A <see cref="T:System.Web.Security.MembershipUser"/> object populated with the information for the newly created user.
+        /// A <see cref="T:System.Web.Registrar.MembershipUser"/> object populated with the information for the newly created user.
         /// </returns>
         MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status);
 
@@ -203,7 +203,7 @@ namespace Disposable.Web.Security.System
         /// <param name="pageSize">The size of the page of results to return.</param>
         /// <param name="totalRecords">The total number of matched users.</param>
         /// <returns>
-        /// A <see cref="T:System.Web.Security.MembershipUserCollection"/> collection that contains a page of <paramref name="pageSize"/><see cref="T:System.Web.Security.MembershipUser"/> objects beginning at the page specified by <paramref name="pageIndex"/>.
+        /// A <see cref="T:System.Web.Registrar.MembershipUserCollection"/> collection that contains a page of <paramref name="pageSize"/><see cref="T:System.Web.Registrar.MembershipUser"/> objects beginning at the page specified by <paramref name="pageIndex"/>.
         /// </returns>
         MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords);
 
@@ -215,7 +215,7 @@ namespace Disposable.Web.Security.System
         /// <param name="pageSize">The size of the page of results to return.</param>
         /// <param name="totalRecords">The total number of matched users.</param>
         /// <returns>
-        /// A <see cref="T:System.Web.Security.MembershipUserCollection"/> collection that contains a page of <paramref name="pageSize"/><see cref="T:System.Web.Security.MembershipUser"/> objects beginning at the page specified by <paramref name="pageIndex"/>.
+        /// A <see cref="T:System.Web.Registrar.MembershipUserCollection"/> collection that contains a page of <paramref name="pageSize"/><see cref="T:System.Web.Registrar.MembershipUser"/> objects beginning at the page specified by <paramref name="pageIndex"/>.
         /// </returns>
         MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords);
 
@@ -245,7 +245,7 @@ namespace Disposable.Web.Security.System
         /// <param name="pageSize">The size of the page of results to return.</param>
         /// <param name="totalRecords">The total number of matched users.</param>
         /// <returns>
-        /// A <see cref="T:System.Web.Security.MembershipUserCollection"/> collection that contains a page of <paramref name="pageSize"/><see cref="T:System.Web.Security.MembershipUser"/> objects beginning at the page specified by <paramref name="pageIndex"/>.
+        /// A <see cref="T:System.Web.Registrar.MembershipUserCollection"/> collection that contains a page of <paramref name="pageSize"/><see cref="T:System.Web.Registrar.MembershipUser"/> objects beginning at the page specified by <paramref name="pageIndex"/>.
         /// </returns>
         MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords);
 
@@ -309,7 +309,7 @@ namespace Disposable.Web.Security.System
         /// <param name="providerUserKey">The unique identifier for the membership user to get information for.</param>
         /// <param name="userIsOnline">true to update the last-activity date/time stamp for the user; false to return user information without updating the last-activity date/time stamp for the user.</param>
         /// <returns>
-        /// A <see cref="T:System.Web.Security.MembershipUser"/> object populated with the specified user's information from the data source.
+        /// A <see cref="T:System.Web.Registrar.MembershipUser"/> object populated with the specified user's information from the data source.
         /// </returns>
         MembershipUser GetUser(object providerUserKey, bool userIsOnline);
 
@@ -319,7 +319,7 @@ namespace Disposable.Web.Security.System
         /// <param name="username">The name of the user to get information for. </param>
         /// <param name="userIsOnline">true to update the last-activity date/time stamp for the user; false to return user information without updating the last-activity date/time stamp for the user. </param>
         /// <returns>
-        /// A <see cref="T:System.Web.Security.MembershipUser"/> object populated with the specified user's information from the data source.
+        /// A <see cref="T:System.Web.Registrar.MembershipUser"/> object populated with the specified user's information from the data source.
         /// </returns>
         MembershipUser GetUser(string username, bool userIsOnline);
 
@@ -382,7 +382,7 @@ namespace Disposable.Web.Security.System
         /// <summary>
         /// Updates information about a user in the data source.
         /// </summary>
-        /// <param name="user">A <see cref="T:System.Web.Security.MembershipUser"/> object that represents the user to update and the updated information for the user. </param>
+        /// <param name="user">A <see cref="T:System.Web.Registrar.MembershipUser"/> object that represents the user to update and the updated information for the user. </param>
         void UpdateUser(MembershipUser user);
 
         /// <summary>

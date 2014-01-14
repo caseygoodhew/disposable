@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Oracle.DataAccess.Client;
 
-namespace Disposable.DataAccess
+namespace Disposable.DataAccess.Database.Oracle
 {
     /// <summary>
     /// Acts as an adapter to the underlying oracle database connection

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Data;
 
-namespace Disposable.DataAccess
+namespace Disposable.DataAccess.Database
 {
-    public interface IDbConnection : IDisposable
+    internal interface IDbConnection : IDisposable
     {
         ConnectionState State { get; }
 
