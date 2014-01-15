@@ -64,8 +64,8 @@
   <ItemGroup>
     <Compile Include="Factory\ValidationFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registration\RegistrationViewModelValidator.cs" />
-    <Compile Include="Registrar.cs" />
+    <Compile Include="UserAccounts\RegistrationViewModelValidator.cs" />
+    <Compile Include="Registration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -24,5 +24,13 @@ namespace Disposable.Common
                 throw new ArgumentNullException(argumentName);
             }
         }
+
+        public static void ArgumentIsType<T>(object value, string argumentName) where T : class
+        {
+            if (!value.GetType().IsAssignableFrom(typeof (T)))
+            {
+                throw new ArgumentNullException(argumentName);
+            }
+        }
     }
 }

@@ -67,6 +67,8 @@
     <Compile Include="ServiceLocator\ServiceNotFoundException.cs" />
     <Compile Include="Services\ITimeSource.cs" />
     <Compile Include="Services\LocalTimeSource.cs" />
+    <Compile Include="ValueTypeConversion.cs" />
+    <Compile Include="ValueTypes.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

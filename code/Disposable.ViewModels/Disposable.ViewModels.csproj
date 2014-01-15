@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registration\RegistrationViewModel.cs" />
+    <Compile Include="UserAccounts\RegistrationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

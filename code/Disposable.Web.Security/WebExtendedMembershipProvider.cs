@@ -122,7 +122,7 @@ namespace Disposable.Web.Security
         /// Gets a value indicating the format for storing passwords in the membership data store.
         /// </summary>
         /// <returns>
-        /// One of the <see cref="T:System.Web.Registrar.MembershipPasswordFormat"/> values indicating the format for storing passwords in the data store.
+        /// One of the <see cref="T:System.Web.Registration.MembershipPasswordFormat"/> values indicating the format for storing passwords in the data store.
         /// </returns>
         public override MembershipPasswordFormat PasswordFormat 
         {
@@ -268,9 +268,9 @@ namespace Disposable.Web.Security
         /// <param name="passwordAnswer">The password answer for the new user</param>
         /// <param name="isApproved">Whether or not the new user is approved to be validated.</param>
         /// <param name="providerUserKey">The unique identifier from the membership data source for the user.</param>
-        /// <param name="status">A <see cref="T:System.Web.Registrar.MembershipCreateStatus"/> enumeration value indicating whether the user was created successfully.</param>
+        /// <param name="status">A <see cref="T:System.Web.Registration.MembershipCreateStatus"/> enumeration value indicating whether the user was created successfully.</param>
         /// <returns>
-        /// A <see cref="T:System.Web.Registrar.MembershipUser"/> object populated with the information for the newly created user.
+        /// A <see cref="T:System.Web.Registration.MembershipUser"/> object populated with the information for the newly created user.
         /// </returns>
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
             bool isApproved, object providerUserKey, out MembershipCreateStatus status)
@@ -311,7 +311,7 @@ namespace Disposable.Web.Security
         /// <param name="pageSize">The size of the page of results to return.</param>
         /// <param name="totalRecords">The total number of matched users.</param>
         /// <returns>
-        /// A <see cref="T:System.Web.Registrar.MembershipUserCollection"/> collection that contains a page of <paramref name="pageSize"/><see cref="T:System.Web.Registrar.MembershipUser"/> objects beginning at the page specified by <paramref name="pageIndex"/>.
+        /// A <see cref="T:System.Web.Registration.MembershipUserCollection"/> collection that contains a page of <paramref name="pageSize"/><see cref="T:System.Web.Registration.MembershipUser"/> objects beginning at the page specified by <paramref name="pageIndex"/>.
         /// </returns>
         public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
@@ -326,7 +326,7 @@ namespace Disposable.Web.Security
         /// <param name="pageSize">The size of the page of results to return.</param>
         /// <param name="totalRecords">The total number of matched users.</param>
         /// <returns>
-        /// A <see cref="T:System.Web.Registrar.MembershipUserCollection"/> collection that contains a page of <paramref name="pageSize"/><see cref="T:System.Web.Registrar.MembershipUser"/> objects beginning at the page specified by <paramref name="pageIndex"/>.
+        /// A <see cref="T:System.Web.Registration.MembershipUserCollection"/> collection that contains a page of <paramref name="pageSize"/><see cref="T:System.Web.Registration.MembershipUser"/> objects beginning at the page specified by <paramref name="pageIndex"/>.
         /// </returns>
         public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
@@ -365,7 +365,7 @@ namespace Disposable.Web.Security
         /// <param name="pageSize">The size of the page of results to return.</param>
         /// <param name="totalRecords">The total number of matched users.</param>
         /// <returns>
-        /// A <see cref="T:System.Web.Registrar.MembershipUserCollection"/> collection that contains a page of <paramref name="pageSize"/><see cref="T:System.Web.Registrar.MembershipUser"/> objects beginning at the page specified by <paramref name="pageIndex"/>.
+        /// A <see cref="T:System.Web.Registration.MembershipUserCollection"/> collection that contains a page of <paramref name="pageSize"/><see cref="T:System.Web.Registration.MembershipUser"/> objects beginning at the page specified by <paramref name="pageIndex"/>.
         /// </returns>
         public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
         {
@@ -450,7 +450,7 @@ namespace Disposable.Web.Security
         /// <param name="providerUserKey">The unique identifier for the membership user to get information for.</param>
         /// <param name="userIsOnline">true to update the last-activity date/time stamp for the user; false to return user information without updating the last-activity date/time stamp for the user.</param>
         /// <returns>
-        /// A <see cref="T:System.Web.Registrar.MembershipUser"/> object populated with the specified user's information from the data source.
+        /// A <see cref="T:System.Web.Registration.MembershipUser"/> object populated with the specified user's information from the data source.
         /// </returns>
         public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
         {
@@ -463,7 +463,7 @@ namespace Disposable.Web.Security
         /// <param name="username">The name of the user to get information for. </param>
         /// <param name="userIsOnline">true to update the last-activity date/time stamp for the user; false to return user information without updating the last-activity date/time stamp for the user. </param>
         /// <returns>
-        /// A <see cref="T:System.Web.Registrar.MembershipUser"/> object populated with the specified user's information from the data source.
+        /// A <see cref="T:System.Web.Registration.MembershipUser"/> object populated with the specified user's information from the data source.
         /// </returns>
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
@@ -547,7 +547,7 @@ namespace Disposable.Web.Security
         /// <summary>
         /// Updates information about a user in the data source.
         /// </summary>
-        /// <param name="user">A <see cref="T:System.Web.Registrar.MembershipUser"/> object that represents the user to update and the updated information for the user. </param>
+        /// <param name="user">A <see cref="T:System.Web.Registration.MembershipUser"/> object that represents the user to update and the updated information for the user. </param>
         public override void UpdateUser(MembershipUser user)
         {
             throw new NotImplementedException();

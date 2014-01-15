@@ -18,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Test", "Disposab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Security", "Disposable.Security\Disposable.Security.csproj", "{EF86A53A-1A9A-45F9-8D77-BE0FD92E16CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.DataAccess", "Disposable.DataAccess\Disposable.DataAccess.csproj", "{818C082C-4696-44F2-AE09-97B1A6886191}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Data.Access", "Disposable.Data.Access\Disposable.Data.Access.csproj", "{818C082C-4696-44F2-AE09-97B1A6886191}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{79A25E09-9235-4C59-A2A6-0F1658A6D4EC}"
 EndProject
@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{9C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{0096FE72-138B-4B84-AAA3-FF37878B0A0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.DataAccess.Security", "Disposable.DataAccess.Security\Disposable.DataAccess.Security.csproj", "{803C1789-CA8F-46F4-86DF-164524353639}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Data.Security", "Disposable.Data.Security\Disposable.Data.Security.csproj", "{803C1789-CA8F-46F4-86DF-164524353639}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{CFDB2C0E-A39D-4492-97F7-70BC82C6CA69}"
 EndProject
@@ -67,7 +67,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{28DCF1
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.DataAccess.Packages", "Disposable.DataAccess.Packages\Disposable.DataAccess.Packages.csproj", "{6F6B6C9C-C821-4773-98F1-B3CD247EBFD3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Data.Packages", "Disposable.Data.Packages\Disposable.Data.Packages.csproj", "{6F6B6C9C-C821-4773-98F1-B3CD247EBFD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
