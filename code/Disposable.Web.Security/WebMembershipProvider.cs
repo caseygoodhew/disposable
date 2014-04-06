@@ -6,7 +6,7 @@ using Disposable.Web.Security.System;
 namespace Disposable.Web.Security
 {
     /// <summary>
-    /// 
+    /// Implementation of the the <see cref="MembershipProvider"/> for web requests
     /// </summary>
     public class WebMembershipProvider : MembershipProvider, ISystemMembershipProvider
     {

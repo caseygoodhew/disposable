@@ -6,7 +6,7 @@ namespace Disposable.Data.Access.Database.Oracle
     {
         internal static void Register(IRegistrar registrar)
         {
-            registrar.Register<ICommanderCreator>(() => new OracleCommanderCreator());
+            registrar.Register<ICommanderFactory>(() => new OracleCommanderFactory());
             registrar.Register<IConnectionProvider>(() => new OracleConnectionProvider());
         }
     }

@@ -4,9 +4,22 @@
 -- Project :      disposable.dm1
 -- Author :       Casey
 --
--- Date Created : Thursday, January 09, 2014 16:44:15
+-- Date Created : Sunday, April 06, 2014 18:02:55
 -- Target DBMS : Oracle 11g
 --
+
+-- 
+-- SEQUENCE: DISPOSABLE.OBJECT_SID_SEQ 
+--
+
+CREATE SEQUENCE DISPOSABLE.OBJECT_SID_SEQ
+    START WITH 10000
+    INCREMENT BY 1
+    NOMINVALUE
+    NOMAXVALUE
+    CACHE 20
+    NOORDER
+;
 
 -- 
 -- TABLE: DISPOSABLE.ACE 
@@ -337,6 +350,10 @@ CREATE TABLE DISPOSABLE.SYSTEM_ROLE(
 
 CREATE TABLE DISPOSABLE.SYSTEM_USER(
     USER_SID    NUMBER(38, 0)    NOT NULL,
+    EMAIL       VARCHAR2(200)    NOT NULL
+                CHECK (EMAIL =TRIM(EMAIL)),
+    PASSWORD    RAW(40)          NOT NULL,
+    SALT        RAW(32)          NOT NULL,
     CONSTRAINT PK_SYSTEM_USER PRIMARY KEY (USER_SID)
 )
 ;

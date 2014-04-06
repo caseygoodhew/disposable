@@ -44,6 +44,9 @@ BEGIN
 END;
 /
 
+@prompt "Granting system privledges"
+@sys_grants
+
 @prompt "Creating DISPOSABLE"
 @schema
 
@@ -54,9 +57,13 @@ create or replace synonym constants for disposable.constants;
 @prompt "Inserting BASEDATA"
 @basedata
 
-
+@prompt "Building PACKAGES"
+@packages
 
 -- NOT TO BE USED FOR LIVE DEVELOPMENT
+@prompt "Local - configure mock environment"
+@local\environment
+
 @prompt "Local - views"
 @local\views
 

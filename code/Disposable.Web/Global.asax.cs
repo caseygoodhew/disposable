@@ -31,7 +31,7 @@ namespace Disposable.Web
             
 		    var locator = Locator.Current as Locator;
             
-            WebValidation.Register(locator);
+            Registration.Register(locator);
             locator.Register<IApplication>(() => new Application("DISPOSABLE APP NAME", "DISPOSABLE APP DESCRIPTION"));
 		}
 	}

@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace Disposable.Common.Extensions
 {
+    /// <summary>
+    /// IEnumerable extensions
+    /// </summary>
     public static class EnumberableExtensions
     {
         /// <summary>

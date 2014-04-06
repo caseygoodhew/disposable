@@ -30,7 +30,7 @@ namespace Disposable.Common.ServiceLocator
         /// Checks to see if a locator function for type T is already registered
         /// </summary>
         /// <typeparam name="T">The generic type to look for</typeparam>
-        /// <returns></returns>
+        /// <returns>true if the generic type is registered</returns>
         public bool IsRegistered<T>() where T : class
         {
             return IsRegistered(typeof(T));
@@ -40,7 +40,7 @@ namespace Disposable.Common.ServiceLocator
         /// Checks to see if a locator function for given <see cref="Type"/> is already registered
         /// </summary>
         /// <param name="type">The type to look for</param>
-        /// <returns></returns>
+        /// <returns>true if the <see cref="type"/> is registered</returns>
         public bool IsRegistered(Type type)
         {
             return _services.ContainsKey(type);
@@ -50,7 +50,7 @@ namespace Disposable.Common.ServiceLocator
         /// Gets an instance of type T
         /// </summary>
         /// <typeparam name="T">The generic type to look for</typeparam>
-        /// <returns></returns>
+        /// <returns>The instance</returns>
         /// <exception cref="ServiceNotFoundException">Thrown when a locator function for the given generic type T is not found</exception>
         public T Instance<T>() where T : class
         {
@@ -67,7 +67,7 @@ namespace Disposable.Common.ServiceLocator
         /// Gets the implementation of a given <see cref="Type"/>
         /// </summary>
         /// <param name="type">The type to retrieve</param>
-        /// <returns>The type instance</returns>
+        /// <returns>The instance</returns>
         public object Instance(Type type)
         {
             object instance;

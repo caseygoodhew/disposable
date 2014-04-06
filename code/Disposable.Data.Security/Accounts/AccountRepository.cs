@@ -18,7 +18,8 @@ namespace Disposable.Data.Security.Accounts
         /// <returns>true if the pair are authenticated, otherwise false</returns>
         public bool Authenticate(IDbHelper dbHelper, string username, string password)
         {
-            return dbHelper.ReturnValue<bool, IUserPackage>(x => x.AuthenticateUserFunction(username, password));
+            //return dbHelper.ReturnValue<bool, IUserPackage>(x => x.AuthenticateUserFunction(username, password));
+            return dbHelper.ReturnValue<bool, IUserPackage>(x => x.AuthenticateUserProcedure(username, password));
         }
 
         private void Test<T>(Func<T, IStoredProcedure> func) where T : class

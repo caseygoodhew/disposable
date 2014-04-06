@@ -26,10 +26,16 @@ namespace Disposable.Common.ServiceLocator
             }
         }
 
-        // set intentionally left internal for unit testing
+        /// <summary>
+        /// Gets or sets the base registrar
+        /// </summary>
+        /// <remarks>'set' intentionally left internal for unit testing</remarks>
         internal BaseRegistrar BaseRegistrar { get; set; }
 
-        // set intentionally left internal for unit testing
+        /// <summary>
+        /// Gets or sets the base registrar
+        /// </summary>
+        /// <remarks>'set' intentionally left internal for unit testing</remarks>
         internal BaseRegistrar OverrideRegistrar { get; set; }
 
         /// <summary>
@@ -77,7 +83,7 @@ namespace Disposable.Common.ServiceLocator
         /// <summary>
         /// Registers a locator function of type T
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The generic type to register (typically an interface)</typeparam>
         /// <param name="locatorFunc">A function that returns an instance of T</param>
         public void Register<T>(Func<T> locatorFunc) where T : class
         {

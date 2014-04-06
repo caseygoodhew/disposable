@@ -17,8 +17,8 @@ namespace Disposable.Data.Access
         private readonly static Lazy<IConnectionProvider> ConnectionProvider = new Lazy<IConnectionProvider>(
             () => Locator.Current.Instance<IConnectionProvider>());
 
-        private readonly static Lazy<ICommanderCreator> StoredProcedureCreator = new Lazy<ICommanderCreator>(
-            () => Locator.Current.Instance<ICommanderCreator>());
+        private readonly static Lazy<ICommanderFactory> StoredProcedureCreator = new Lazy<ICommanderFactory>(
+            () => Locator.Current.Instance<ICommanderFactory>());
         
         private IDbConnection _connection;
 
@@ -46,7 +46,7 @@ namespace Disposable.Data.Access
         {
             var storedMethod = spGenerator.Invoke(Locator.Current.Instance<TInput>());
 
-            var commander = StoredProcedureCreator.Value.CreateStoredMethodCommander();
+            var commander = StoredProcedureCreator.Value.GetStoredMethodCommander();
 
             return commander.Execute<TResult>(Connection, storedMethod);
         }

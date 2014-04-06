@@ -9,6 +9,9 @@ using WebMatrix.WebData;
 
 namespace Disposable.Web.Security
 {
+    /// <summary>
+    /// Implementation of the the <see cref="ExtendedMembershipProvider"/> for web requests
+    /// </summary>
     public class WebExtendedMembershipProvider : ExtendedMembershipProvider, ISystemExtendedMembershipProvider
     {
         private Lazy<IAccountManager> _accountManager = new Lazy<IAccountManager>(() => Locator.Current.Instance<IAccountManager>());
@@ -198,8 +201,7 @@ namespace Disposable.Web.Security
         /// <returns>
         /// true if the password question and answer are updated successfully; otherwise, false.
         /// </returns>
-        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion,
-            string newPasswordAnswer)
+        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)
         {
             throw new NotImplementedException();
         }
@@ -272,8 +274,7 @@ namespace Disposable.Web.Security
         /// <returns>
         /// A <see cref="T:System.Web.Registration.MembershipUser"/> object populated with the information for the newly created user.
         /// </returns>
-        public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
-            bool isApproved, object providerUserKey, out MembershipCreateStatus status)
+        public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
             throw new NotImplementedException();
         }

@@ -6,7 +6,7 @@ using Disposable.Validation;
 namespace Disposable.Initialization
 {
     /// <summary>
-    /// 
+    /// Singleton to register all core services with the serivce locator
     /// </summary>
     public class DisposableCore
     {

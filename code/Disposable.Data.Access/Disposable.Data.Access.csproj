@@ -67,7 +67,7 @@
     <Compile Include="Registration.cs" />
     <Compile Include="Database\ConnectionType.cs" />
     <Compile Include="Database\IStoredMethodCommander.cs" />
-    <Compile Include="Database\ICommanderCreator.cs" />
+    <Compile Include="Database\ICommanderFactory.cs" />
     <Compile Include="Database\IConnectionProvider.cs" />
     <Compile Include="Database\Oracle\Registration.cs" />
     <Compile Include="Database\Oracle\OracleConnectionProvider.cs" />
@@ -77,7 +77,7 @@
     <Compile Include="DbHelper.cs" />
     <Compile Include="IDbHelper.cs" />
     <Compile Include="Database\Oracle\OracleStoredMethodCommander.cs" />
-    <Compile Include="Database\Oracle\OracleCommanderCreator.cs" />
+    <Compile Include="Database\Oracle\OracleCommanderFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

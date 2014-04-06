@@ -5,6 +5,9 @@ using WebMatrix.WebData;
 
 namespace Disposable.Web.Security.System
 {
+    /// <summary>
+    /// Local interface matching the <see cref="ExtendedMembershipProvider"/> framework class to allow interface based IOC registration
+    /// </summary>
     public interface ISystemExtendedMembershipProvider
     {
         /// <summary>

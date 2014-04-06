@@ -18,14 +18,14 @@ namespace Disposable.Common.ServiceLocator
         /// Checks to see if a locator function for type T is already registered
         /// </summary>
         /// <typeparam name="T">The generic type to look for</typeparam>
-        /// <returns></returns>
+        /// <returns>The instance</returns>
         bool IsRegistered<T>() where T : class;
 
         /// <summary>
         /// Checks to see if a locator function for given <see cref="Type"/> is already registered
         /// </summary>
         /// <param name="type">The type to look for</param>
-        /// <returns></returns>
+        /// <returns>The instance</returns>
         bool IsRegistered(Type type);
     }
 }
