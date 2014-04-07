@@ -4,8 +4,6 @@ namespace Disposable.Data.Packages.User
 {
     public interface IUserPackage : IPackage
     {
-        IStoredProcedure AuthenticateUserProcedure(string username, string password);
-
-        IStoredFunction AuthenticateUserFunction(string username, string password);
+        IStoredProcedure AuthenticateUserProcedure(string email, string password);
     }
 }

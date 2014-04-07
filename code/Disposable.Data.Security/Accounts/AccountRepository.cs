@@ -10,16 +10,20 @@ namespace Disposable.Data.Security.Accounts
     public class AccountRepository : IAccountRepository
     {
         /// <summary>
-        /// Authenticates a username and password
+        /// Authenticates an email and password
         /// </summary>
         /// <param name="dbHelper">The dbHelper that should be used to authenticate the credentials</param>
-        /// <param name="username">The username to authenticate</param>
+        /// <param name="email">The email to authenticate</param>
         /// <param name="password">The corresponding password</param>
         /// <returns>true if the pair are authenticated, otherwise false</returns>
-        public bool Authenticate(IDbHelper dbHelper, string username, string password)
+        public bool Authenticate(IDbHelper dbHelper, string email, string password)
         {
-            //return dbHelper.ReturnValue<bool, IUserPackage>(x => x.AuthenticateUserFunction(username, password));
-            return dbHelper.ReturnValue<bool, IUserPackage>(x => x.AuthenticateUserProcedure(username, password));
+            return dbHelper.ReturnValue<bool, IUserPackage>(x => x.AuthenticateUserProcedure(email, password));
+        }
+
+        public long CreateUser(IDbHelper dbHelper, string email, string password, bool isApproved, out string confirmationCode)
+        {
+            throw new NotImplementedException();
         }
 
         private void Test<T>(Func<T, IStoredProcedure> func) where T : class

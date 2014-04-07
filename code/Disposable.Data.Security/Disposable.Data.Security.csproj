@@ -58,6 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accounts\AccountRepository.cs" />
+    <Compile Include="Accounts\Exceptions\AccountException.cs" />
+    <Compile Include="Accounts\Exceptions\DuplicateEmailException.cs" />
+    <Compile Include="Accounts\Exceptions\InvalidEmailException.cs" />
+    <Compile Include="Accounts\Exceptions\DuplicatePasswordException.cs" />
+    <Compile Include="Accounts\Exceptions\InvalidPasswordException.cs" />
     <Compile Include="Accounts\IAccountRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration.cs" />

@@ -8,7 +8,6 @@ namespace Disposable.Data.Packages.User
         public UserPackage()
         {
             Register(() => new AuthenticateUserProcedure(this));
-            Register(() => new AuthenticateUserFunction(this));
         }
         
         public override string Schema
@@ -26,13 +25,6 @@ namespace Disposable.Data.Packages.User
             var procedure = Instance<AuthenticateUserProcedure>();
             procedure.SetParameterValues(username, password);
             return procedure;
-        }
-
-        public IStoredFunction AuthenticateUserFunction(string username, string password)
-        {
-            var function = Instance<AuthenticateUserFunction>();
-            function.SetParameterValues(username, password);
-            return function;
         }
     }
 }

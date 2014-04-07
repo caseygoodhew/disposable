@@ -11,7 +11,7 @@ namespace Disposable.Security.Accounts
         bool ChangePassword();
         
         // string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status
-        IUser CreateUser();
+        long CreateUser(string email, string password, bool isApproved, out UserAccountCreateStatus status, out string confirmationCode);
 
         // string username, bool deleteAllRelatedData
         bool DeleteUser();

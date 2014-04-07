@@ -257,7 +257,37 @@ namespace Disposable.Web.Security
         /// </returns>
         public override string CreateUserAndAccount(string userName, string password, bool requireConfirmation, IDictionary<string, object> values)
         {
-            throw new NotImplementedException();
+            if (!requireConfirmation)
+            {
+                throw new ArgumentException("All users created via the web interface require confirmation", "requireConfirmation");
+            }
+            
+            UserAccountCreateStatus status;
+            string confirmationCode;
+
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            _accountManager.Value.CreateUser(userName, password, !requireConfirmation, out status, out confirmationCode);
+
+            if (status != UserAccountCreateStatus.Success)
+            {
+                switch (status)
+                {
+                    case UserAccountCreateStatus.DuplicateEmail:
+                        throw new MembershipCreateUserException(MembershipCreateStatus.DuplicateEmail);
+                        
+                    case UserAccountCreateStatus.InvalidEmail:
+                        throw new MembershipCreateUserException(MembershipCreateStatus.InvalidEmail);
+                        
+                    case UserAccountCreateStatus.InvalidPassword:
+                        throw new MembershipCreateUserException(MembershipCreateStatus.DuplicateEmail);
+                        
+                    default:
+                        throw new MembershipCreateUserException(MembershipCreateStatus.ProviderError);
+                        
+                }
+            }
+
+            return confirmationCode;
         }
 
         /// <summary>

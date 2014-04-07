@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Accounts\AccountManager.cs" />
     <Compile Include="Accounts\IUser.cs" />
+    <Compile Include="Accounts\UserAccountCreateStatus.cs" />
     <Compile Include="Authentication\AuthenticationResult.cs" />
     <Compile Include="Authentication\AuthenticationStatus.cs" />
     <Compile Include="Authentication\Authentication.cs" />
