@@ -13,12 +13,12 @@ namespace Disposable.Security.Accounts
         
         public bool ApproveUser()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public bool ChangePassword()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public long CreateUser(string email, string password, bool isApproved, out UserAccountCreateStatus status, out string confirmationCode)
@@ -65,9 +65,20 @@ namespace Disposable.Security.Accounts
             throw new System.NotImplementedException();
         }
 
-        public IUser GetUser()
+        public IUser GetUser(string username)
         {
-            throw new System.NotImplementedException();
+            using (IDbHelper dbHelper = new DbHelper())
+            {
+                return _accountRepository.Value.GetUser(dbHelper, username);
+            }
+        }
+
+        public bool HasLocalAccount(long userId)
+        {
+            using (IDbHelper dbHelper = new DbHelper())
+            {
+                return _accountRepository.Value.HasLocalAccount(dbHelper, userId);
+            }
         }
 
         public bool LockUser()

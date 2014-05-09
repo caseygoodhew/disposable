@@ -24,8 +24,10 @@ namespace Disposable.Security.Accounts
         IList<IUser> GetAllUsers();
 
         // object providerUserKey, bool userIsOnline
-        IUser GetUser();
+        IUser GetUser(string username);
 
+        bool HasLocalAccount(long userId);
+        
         // ?? This is my own creation
         bool LockUser();
 

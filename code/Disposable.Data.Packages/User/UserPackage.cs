@@ -8,6 +8,8 @@ namespace Disposable.Data.Packages.User
         public UserPackage()
         {
             Register(() => new AuthenticateUserProcedure(this));
+            Register(() => new CreateUserProcedure(this));
+            Register(() => new GetUserProcedure(this));
         }
         
         public override string Schema
@@ -20,10 +22,24 @@ namespace Disposable.Data.Packages.User
             get { return PackageConstants.UserPkg; } 
         }
 
-        public IStoredProcedure AuthenticateUserProcedure(string username, string password)
+        public IStoredProcedure AuthenticateUserProcedure(string email, string password)
         {
             var procedure = Instance<AuthenticateUserProcedure>();
-            procedure.SetParameterValues(username, password);
+            procedure.SetParameterValues(email, password);
+            return procedure;
+        }
+
+        public IStoredProcedure CreateUserProcedure(string email, string password, bool isApproved)
+        {
+            var procedure = Instance<CreateUserProcedure>();
+            procedure.SetParameterValues(email, password, isApproved);
+            return procedure;
+        }
+
+        public IStoredProcedure GetUserProcedure(string username)
+        {
+            var procedure = Instance<GetUserProcedure>();
+            procedure.SetParameterValues(username);
             return procedure;
         }
     }

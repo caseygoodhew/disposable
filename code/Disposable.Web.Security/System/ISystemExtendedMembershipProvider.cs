@@ -345,6 +345,13 @@ namespace Disposable.Web.Security.System
         string GetUserNameByEmail(string email);
 
         /// <summary>
+        /// Indicates whether the user has local account.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <returns>true if the user has local account; otherwise, false.</returns>
+        bool HasLocalAccount(int userId);
+            
+        /// <summary>
         /// When overridden in a derived class, returns a value that indicates whether the user account has been confirmed by the provider.
         /// </summary>
         /// <param name="userName">The user name.</param>

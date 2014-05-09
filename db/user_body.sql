@@ -1,10 +1,13 @@
 CREATE OR REPLACE PACKAGE BODY disposable.user_pkg
 AS
 
-FUNCTION CreateUser (
-	in_email			IN  SYSTEM_USER.EMAIL%TYPE,
-	in_password			IN  VARCHAR2
-) RETURN constants.T_SID
+PROCEDURE CreateUser (
+	in_email				IN  constants.T_EMAIL,
+	in_password				IN  constants.T_PASSWORD,
+	in_approved				IN  constants.T_BOOLEAN,
+	out_user_sid			OUT constants.T_SID,
+	out_confirmation_guid	OUT constants.T_GUID
+)
 AS
 	v_user_sid			constants.T_SID DEFAULT so_pkg.CreateSO(constants.OT_USER, NULL);
 	v_salt				constants.T_GUID DEFAULT crypto_pkg.Guid;
@@ -15,12 +18,12 @@ BEGIN
 	VALUES
 	(v_user_sid, in_email, crypto_pkg.Hash(v_password||v_salt), v_salt);
 	
-	RETURN v_user_sid;
+	out_user_sid := v_user_sid;
 END;
 
 FUNCTION Authenticate (
-	in_email			IN  SYSTEM_USER.EMAIL%TYPE,
-	in_password			IN  VARCHAR2
+	in_email			IN  constants.T_EMAIL,
+	in_password			IN  constants.T_PASSWORD
 ) RETURN BOOLEAN
 AS
 	v_password_hash		SYSTEM_USER.PASSWORD%TYPE;
@@ -40,8 +43,8 @@ BEGIN
 END;
 
 PROCEDURE Authenticate (
-	in_email			IN  SYSTEM_USER.EMAIL%TYPE,
-	in_password			IN  VARCHAR2,
+	in_email			IN  constants.T_EMAIL,
+	in_password			IN  constants.T_PASSWORD,
 	out_result			OUT constants.T_BOOLEAN
 )
 AS
@@ -52,6 +55,16 @@ BEGIN
 	END IF;
 END;
 
+PROCEDURE CreateUser (
+	in_username			IN  VARCHAR2,
+	out_cur				OUT constants.T_OUTPUT_CUR
+)
+AS
+BEGIN
+	OPEN out_cur FOR
+		SELECT * FROM system_user;
+
+END;
 
 END user_pkg;
 /

@@ -51,6 +51,24 @@ namespace Disposable.Data.Access
             return commander.Execute<TResult>(Connection, storedMethod);
         }
 
+        public void Run<TInput, TOut1>(Func<TInput, IStoredMethod> spGenerator, out TOut1 out1) where TInput : class
+        {
+            var storedMethod = spGenerator.Invoke(Locator.Current.Instance<TInput>());
+
+            var commander = StoredProcedureCreator.Value.GetStoredMethodCommander();
+
+            out1 = commander.Execute<TOut1>(Connection, storedMethod);
+        }
+
+        public void Run<TInput, TOut1, TOut2>(Func<TInput, IStoredMethod> spGenerator, out TOut1 out1, out TOut2 out2) where TInput : class
+        {
+            var storedMethod = spGenerator.Invoke(Locator.Current.Instance<TInput>());
+
+            var commander = StoredProcedureCreator.Value.GetStoredMethodCommander();
+
+            commander.Execute(Connection, storedMethod, out out1, out out2);
+        }
+
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
@@ -67,7 +85,5 @@ namespace Disposable.Data.Access
                 _connection.Dispose();
             }
         }
-
-        
     }
 }

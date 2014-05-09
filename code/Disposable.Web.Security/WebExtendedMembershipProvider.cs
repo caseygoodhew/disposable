@@ -498,6 +498,10 @@ namespace Disposable.Web.Security
         /// </returns>
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
+            /*return new MembershipUser("DisposableWebExtendedMembershipProvider", username, 101010, username, string.Empty, string.Empty, true, false,
+                DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now);*/
+            //throw new NotImplementedException();
+            _accountManager.Value.GetUser(username);
             throw new NotImplementedException();
         }
 
@@ -525,6 +529,16 @@ namespace Disposable.Web.Security
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Indicates whether the user has local account.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <returns>true if the user has local account; otherwise, false.</returns>
+        public override bool HasLocalAccount(int userId)
+        {
+            return _accountManager.Value.HasLocalAccount(userId);
+        }
+        
         /// <summary>
         /// When overridden in a derived class, returns a value that indicates whether the user account has been confirmed by the provider.
         /// </summary>

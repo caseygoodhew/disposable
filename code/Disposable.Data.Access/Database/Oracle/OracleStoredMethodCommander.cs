@@ -13,16 +13,33 @@ namespace Disposable.Data.Access.Database.Oracle
     {
         public T Execute<T>(IDbConnection connection, IStoredMethod storedMethod)
         {
+            var values = Execute(connection, storedMethod);
+
+            if (typeof(T) == typeof(DataSet))
+            {
+                return (T)(object)(ToDataSet(values));
+            }
+
+            return (T)(values.Single());
+        }
+
+        public void Execute<TOut1, TOut2>(IDbConnection connection, IStoredMethod storedMethod, out TOut1 out1, out TOut2 out2)
+        {
+            var values = Execute(connection, storedMethod).ToList();
+
+            out1 = (TOut1)values[0];
+            out2 = (TOut2)values[1];
+        }
+
+        private static IEnumerable<object> Execute(IDbConnection connection, IStoredMethod storedMethod)
+        {
             var command = CreateCommand(connection, storedMethod);
 
-            // in order to call execute with a single return type, there must be exactly one output parameter
-            var outputParameter = ApplyParameters(command, storedMethod).Single();
+            var outputParameters = ApplyParameters(command, storedMethod).ToList();
 
             command.ExecuteNonQuery();
 
-            var value = Map(outputParameter, outputParameter.OracleParameter.Value);
-
-            return (T)value;
+            return outputParameters.Select(p => OracleDataTypeMapper.Map(p, p.OracleParameter.Value));
         }
 
         private static OracleCommand CreateCommand(IDbConnection connection, IStoredMethod storedMethod)
@@ -65,7 +82,7 @@ namespace Disposable.Data.Access.Database.Oracle
         {
             foreach (var parameter in storedMethod.GetInputParameters(true))
             {
-                command.Parameters.Add(parameter.Name, Map(parameter), Map(parameter, parameter.Value), ParameterDirection.Input);
+                command.Parameters.Add(parameter.Name, OracleDataTypeMapper.Map(parameter), OracleDataTypeMapper.Map(parameter, parameter.Value), ParameterDirection.Input);
             }
         }
 
@@ -94,14 +111,14 @@ namespace Disposable.Data.Access.Database.Oracle
             {
                 foreach (var parameter in (storedMethod as IStoredProcedure).GetOutputParameters())
                 {
-                    var oracleParameter = command.Parameters.Add(parameter.Name, Map(parameter), ParameterDirection.Output);
+                    var oracleParameter = command.Parameters.Add(parameter.Name, OracleDataTypeMapper.Map(parameter), ParameterDirection.Output);
                     oracleOutputParameter.Add(new OracleOutputParameter(oracleParameter, parameter));
                 }
             }
             else if (storedMethod is IStoredFunction)
             {
                 var parameter = (storedMethod as IStoredFunction).GetOutputParameter();
-                var oracleParameter = command.Parameters.Add(parameter.Name, Map(parameter), ParameterDirection.ReturnValue);
+                var oracleParameter = command.Parameters.Add(parameter.Name, OracleDataTypeMapper.Map(parameter), ParameterDirection.ReturnValue);
                 oracleOutputParameter.Add(new OracleOutputParameter(oracleParameter, parameter));
             }
             else
@@ -112,120 +129,23 @@ namespace Disposable.Data.Access.Database.Oracle
             return oracleOutputParameter;
         }
 
-        // TODO: create this as a mapper
-        // http://stackoverflow.com/questions/1334574/c-sharp-datatypes-oracle-datatypes
-        private static OracleDbType Map(IParameter parameter)
+        private static DataSet ToDataSet(IEnumerable<object> values)
         {
-            switch (parameter.DataType)
-            {
-                case DataTypes.Boolean:
-                    return OracleDbType.Int16;
-                case DataTypes.Byte:
-                    return OracleDbType.Byte;
-                case DataTypes.Cursor:
-                    return OracleDbType.RefCursor;
-                case DataTypes.Decimal:
-                    return OracleDbType.Decimal;
-                case DataTypes.Guid:
-                    return OracleDbType.Raw;
-                case DataTypes.Int:
-                    return OracleDbType.Int32;
-                case DataTypes.Long:
-                    return OracleDbType.Int64;
-                case DataTypes.String:
-                    return OracleDbType.Varchar2;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+            var adapter = new OracleDataAdapter();
+            var ds = new DataSet();
 
-        private static object Map(IInputParameter inputParameter, object value)
-        {
-            if (value == null)
+            foreach (var value in values)
             {
-                return null;
+                if (!(value is OracleRefCursor))
+                {
+                    throw new InvalidCastException(string.Format(@"value is type ""{0}"". Expected type OracleRefCursor",
+                        value.GetType()));
+                }
+
+                adapter.Fill(ds.Tables.Add(), value as OracleRefCursor);
             }
 
-            switch (inputParameter.DataType)
-            {
-                case DataTypes.Boolean:
-                    return Convert.ToInt16(value);
-                case DataTypes.Byte:
-                    return Convert.ToByte(value);
-                case DataTypes.Cursor:
-                    throw new InvalidOperationException("Cannot map an object value to a cursor");
-                case DataTypes.Decimal:
-                    return Convert.ToDecimal(value);
-                case DataTypes.Guid:
-                    return ((Guid)value).ToByteArray();
-                case DataTypes.Int:
-                    return Convert.ToInt32(value);
-                case DataTypes.Long:
-                    return Convert.ToInt64(value);
-                case DataTypes.String:
-                    return Convert.ToString(value);
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private static object Map(IOutputParameter outputParameter, object value)
-        {
-            if (value == null || value == DBNull.Value)
-            {
-                return null;
-            }
-
-            value = MapToValueType(value);
-
-            switch (outputParameter.DataType)
-            {
-                case DataTypes.Boolean:
-                    return Convert.ToBoolean(value);
-                case DataTypes.Byte:
-                    return Convert.ToByte(value);
-                case DataTypes.Cursor:
-                    throw new InvalidOperationException("Cannot map an object value to a cursor");
-                case DataTypes.Decimal:
-                    return Convert.ToDecimal(value);
-                case DataTypes.Guid:
-                    return new Guid((byte[])value);
-                case DataTypes.Int:
-                    return Convert.ToInt32(value);
-                case DataTypes.Long:
-                    return Convert.ToInt64(value);
-                case DataTypes.String:
-                    return Convert.ToString(value);
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private static object MapToValueType(object value)
-        {
-            var valueType = value.GetType();
-
-            if (valueType == typeof(OracleDate))
-            {
-                return ((OracleDate)value).Value;
-            }
-
-            if (valueType == typeof(OracleDecimal))
-            {
-                return ((OracleDecimal)value).Value;
-            }
-
-            if (valueType == typeof(OracleString))
-            {
-                return ((OracleString)value).Value;
-            }
-
-            if (valueType == typeof(OracleTimeStamp))
-            {
-                return ((OracleTimeStamp)value).Value;
-            }
-
-            return value;
-        }
+            return ds;
+        }        
     }
 }

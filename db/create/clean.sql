@@ -16,6 +16,7 @@ BEGIN
 	
 	v_users := t_users(
 		'DISPOSABLE',
+		'PROTECTED',
 		'WEB_USER'
 	);	
 	
@@ -60,7 +61,25 @@ create or replace synonym constants for disposable.constants;
 @prompt "Building PACKAGES"
 @packages
 
+@prompt "Building PROTECTED"
+@..\protected\pull_grants
+@..\protected\packages
+
+
+@prompt " "
+@prompt " "
+@prompt "-----------------------------------------------"
+@prompt " "
+@prompt " PRODUCTION: DROP USER PROTECTED CASCADE; "
+@prompt " "
+@prompt "-----------------------------------------------"
+@prompt " "
+@prompt " "
+
 -- NOT TO BE USED FOR LIVE DEVELOPMENT
+@prompt "Local - grants"
+@local\pull_grants
+
 @prompt "Local - configure mock environment"
 @local\environment
 
@@ -97,7 +116,6 @@ set term off
 @prompt " "
 @prompt " "
 @prompt "*** Clean COMPLETED ***"
-@prompt " "
 @prompt " "
 @prompt " "
 

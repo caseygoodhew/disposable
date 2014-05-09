@@ -132,7 +132,8 @@ namespace Disposable.Web.Controllers
 				: message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
 				: message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
 				: "";
-			ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+		    var userId = WebSecurity.GetUserId(User.Identity.Name);
+            ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(userId);
 			ViewBag.ReturnUrl = Url.Action("Manage");
 			return View();
 		}

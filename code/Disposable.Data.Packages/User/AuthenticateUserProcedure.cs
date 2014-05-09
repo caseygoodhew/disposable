@@ -10,7 +10,7 @@ namespace Disposable.Data.Packages.User
             : base(
                 package, 
                 PackageConstants.Authenticate, 
-                new InputParameter(PackageConstants.InUsername, DataTypes.String),
+                new InputParameter(PackageConstants.InEmail, DataTypes.String),
                 new InputParameter(PackageConstants.InPassword, DataTypes.String),
                 new OutputParameter(PackageConstants.OutResult, DataTypes.Boolean)
             )
@@ -20,13 +20,13 @@ namespace Disposable.Data.Packages.User
         /// <summary>
         /// Sets the parameters for the stored procedure arguments
         /// </summary>
-        /// <param name="username">The username to authenticate</param>
+        /// <param name="email">The username to authenticate</param>
         /// <param name="password">The password to authenticate</param>
-        internal void SetParameterValues(string username, string password)
+        internal void SetParameterValues(string email, string password)
         {
             SetParameterValues(new Dictionary<string, object>
             {
-                { PackageConstants.InUsername, username },
+                { PackageConstants.InEmail, email },
                 { PackageConstants.InPassword, password }
             });
         }

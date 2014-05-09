@@ -1,7 +1,9 @@
 DECLARE
 	TYPE t_users IS TABLE OF VARCHAR2(30);
-	v_users t_users;
-	v_exists NUMBER;
+	v_users 	t_users;
+	v_exists	NUMBER;
+	v_sid	 	NUMBER;
+	v_serial	NUMBER;
 BEGIN
 	
 	v_users := t_users(
@@ -16,6 +18,13 @@ BEGIN
 		 WHERE username = v_users(i);
 		
 		IF v_exists <> 0 THEN
+
+			FOR r IN (
+				SELECT sid, serial# FROM v$session WHERE UPPER(username) = v_users(i)
+			) LOOP
+				EXECUTE IMMEDIATE 'ALTER SYSTEM KILL SESSION '''||r.sid||','||r.serial#||'''';
+			END LOOP;
+
 			EXECUTE IMMEDIATE 'DROP USER '||v_users(i)||' CASCADE';
 		END IF;
 	

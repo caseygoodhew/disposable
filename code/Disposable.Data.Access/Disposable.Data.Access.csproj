@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\Exceptions\ProgrammaticDatabaseException.cs" />
+    <Compile Include="Database\Oracle\OracleDataTypeMapper.cs" />
     <Compile Include="Database\Oracle\OracleOutputParameter.cs" />
     <Compile Include="Registration.cs" />
     <Compile Include="Database\ConnectionType.cs" />
