@@ -376,8 +376,7 @@ namespace Disposable.Web.Controllers
 					return "User name already exists. Please enter a different user name.";
 
 				case MembershipCreateStatus.DuplicateEmail:
-					throw new Exception("this model state message isn't showing");
-                    return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
+					return "That e-mail address already exists. Please enter a different e-mail address.";
 
 				case MembershipCreateStatus.InvalidPassword:
 					return "The password provided is invalid. Please enter a valid password value.";
