@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Disposable.Data.Common.Exceptions;
+
 namespace Disposable.Data.Packages.Core
 {
     internal abstract class StoredProcedure : StoredMethod, IStoredProcedure
@@ -22,6 +24,10 @@ namespace Disposable.Data.Packages.Core
         public IList<OutputParameterValue> GetOutputParameters()
         {
             return OutputParameters.Select(x => new OutputParameterValue(x)).ToList();
+        }
+
+        public override void Throw(ProgrammaticDatabaseExceptions programmaticDatabaseException, Exception exception)
+        {
         }
     }
 }

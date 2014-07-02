@@ -79,6 +79,10 @@
       <Project>{818C082C-4696-44F2-AE09-97B1A6886191}</Project>
       <Name>Disposable.Data.Access</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Disposable.Data.Common\Disposable.Data.Common.csproj">
+      <Project>{8E85F9DF-7C2E-4968-8AD4-E043CC40A8B8}</Project>
+      <Name>Disposable.Data.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Disposable.Data.Packages\Disposable.Data.Packages.csproj">
       <Project>{6F6B6C9C-C821-4773-98F1-B3CD247EBFD3}</Project>
       <Name>Disposable.Data.Packages</Name>

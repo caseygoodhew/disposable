@@ -37,7 +37,15 @@ namespace Disposable.Data.Access.Database.Oracle
 
             var outputParameters = ApplyParameters(command, storedMethod).ToList();
 
-            command.ExecuteNonQuery();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (OracleException oe)
+            {
+                OracleExceptionAdapter.Throw(oe, storedMethod); 
+            }
+            
 
             return outputParameters.Select(p => OracleDataTypeMapper.Map(p, p.OracleParameter.Value));
         }

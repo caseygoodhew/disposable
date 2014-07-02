@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Disposable.Data.Common.Exceptions;
 
 namespace Disposable.Data.Packages.Core
 {
@@ -23,5 +25,9 @@ namespace Disposable.Data.Packages.Core
         /// <param name="includeEmpty"></param>
         /// <returns></returns>
         IList<InputParameterValue> GetInputParameters(bool includeEmpty);
+
+        InputParameterValue GetInputParameterValue(string name);
+
+        void Throw(ProgrammaticDatabaseExceptions programmaticDatabaseException, Exception exception);
     }
 }

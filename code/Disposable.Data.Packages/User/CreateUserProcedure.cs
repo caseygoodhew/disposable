@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using Disposable.Data.Common.Exceptions;
 using Disposable.Data.Packages.Core;
+using Disposable.Data.Security.Accounts.Exceptions;
 
 namespace Disposable.Data.Packages.User
 {
@@ -33,6 +36,14 @@ namespace Disposable.Data.Packages.User
                 { PackageConstants.InPassword, password },
                 { PackageConstants.InApproved, isApproved }
             });
+        }
+
+        public override void Throw(ProgrammaticDatabaseExceptions programmaticDatabaseException, Exception exception)
+        {
+            if (programmaticDatabaseException == ProgrammaticDatabaseExceptions.DuplicateEmail)
+            {
+                throw new DuplicateEmailException(GetInputParameterValue(PackageConstants.InEmail).Value.ToString());
+            }
         }
     }
 }

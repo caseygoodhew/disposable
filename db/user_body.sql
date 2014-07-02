@@ -13,10 +13,17 @@ AS
 	v_salt				constants.T_GUID DEFAULT crypto_pkg.Guid;
 	v_password			VARCHAR2(4000) DEFAULT NVL(in_password, crypto_pkg.Guid);
 BEGIN
-	INSERT INTO system_user
-	(user_sid, email, password, salt)
-	VALUES
-	(v_user_sid, in_email, crypto_pkg.Hash(v_password||v_salt), v_salt);
+	BEGIN
+		INSERT INTO system_user
+		(user_sid, email, lower_email, password, salt)
+		VALUES
+		(v_user_sid, TRIM(in_email), LOWER(TRIM(in_email)), crypto_pkg.Hash(v_password||v_salt), v_salt);
+	EXCEPTION WHEN DUP_VAL_ON_INDEX THEN   	
+      	IF SQLERRM = 'ORA-00001: unique constraint (DISPOSABLE.UK_LOWER_EMAIL) violated' THEN
+		   RAISE_APPLICATION_ERROR(exceptions.ERR_DUPLICATE_EMAIL, 'Duplicate email '||in_email);
+		END IF;	
+		RAISE;
+    END;
 	
 	out_user_sid := v_user_sid;
 END;

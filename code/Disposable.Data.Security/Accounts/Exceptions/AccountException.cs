@@ -1,4 +1,4 @@
-﻿using Disposable.Data.Access.Database.Exceptions;
+﻿using Disposable.Data.Common.Exceptions;
 
 namespace Disposable.Data.Security.Accounts.Exceptions
 {

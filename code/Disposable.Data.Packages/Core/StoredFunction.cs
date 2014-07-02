@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Disposable.Data.Common.Exceptions;
+
 namespace Disposable.Data.Packages.Core
 {
     internal abstract class StoredFunction : StoredMethod, IStoredFunction
@@ -18,6 +21,10 @@ namespace Disposable.Data.Packages.Core
         public OutputParameterValue GetOutputParameter()
         {
             return new OutputParameterValue(_outputParameter);
+        }
+
+        public override void Throw(ProgrammaticDatabaseExceptions programmaticDatabaseException, Exception exception)
+        {
         }
     }
 }

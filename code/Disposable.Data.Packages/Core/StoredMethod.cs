@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Disposable.Common.Extensions;
+using Disposable.Data.Common.Exceptions;
 
 namespace Disposable.Data.Packages.Core
 {
     internal abstract class StoredMethod : IStoredMethod
     {
+        private IList<InputParameterValue> _lastFullParameterValues;
+        
         private IList<InputParameterValue> _fullParameterValues;
 
         private IList<InputParameterValue> _trimmedParameterValues;
@@ -65,10 +68,18 @@ namespace Disposable.Data.Packages.Core
         {
             var parameters = includeEmpty ? _fullParameterValues : _trimmedParameterValues;
 
+            _lastFullParameterValues = _fullParameterValues;
             _trimmedParameterValues = null;
             _fullParameterValues = null;
 
             return parameters;
         }
+
+        public InputParameterValue GetInputParameterValue(string name)
+        {
+            return (_fullParameterValues ?? _lastFullParameterValues).Single(x => x.Name == name);
+        }
+
+        public abstract void Throw(ProgrammaticDatabaseExceptions programmaticDatabaseException, Exception exception);
     }
 }

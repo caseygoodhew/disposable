@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Disposable.Data.Common.Exceptions;
 using Disposable.Data.Packages.Core;
 
 namespace Disposable.Data.Packages.User
@@ -25,6 +27,10 @@ namespace Disposable.Data.Packages.User
             {
                 { PackageConstants.InUsername, username }
             });
+        }
+
+        public override void Throw(ProgrammaticDatabaseExceptions programmaticDatabaseException, Exception exception)
+        {
         }
     }
 }

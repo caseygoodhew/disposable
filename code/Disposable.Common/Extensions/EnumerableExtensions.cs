@@ -6,7 +6,7 @@ namespace Disposable.Common.Extensions
     /// <summary>
     /// IEnumerable extensions
     /// </summary>
-    public static class EnumberableExtensions
+    public static class EnumerableExtensions
     {
         /// <summary>
         /// Determines whether a sequence is null or an Empty.

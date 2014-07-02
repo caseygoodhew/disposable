@@ -55,6 +55,10 @@ END;
 @..\constants
 create or replace synonym constants for disposable.constants;
 
+@prompt "Creating EXEPTIONS"
+@..\exceptions
+create or replace synonym exceptions for disposable.exceptions;
+
 @prompt "Inserting BASEDATA"
 @basedata
 
