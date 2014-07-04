@@ -8,18 +8,30 @@ using Disposable.Data.ObjectMapping;
 
 namespace Disposable.Data.Access.Database
 {
+    /// <summary>
+    /// Abstract implementation for converting database data structures to well known data types.
+    /// </summary>
     internal abstract class DataObjectConverter : IDataObjectConverter
     {
-        private readonly static Lazy<IObjectMapper> ObjectMapper = new Lazy<IObjectMapper>(
+        private static readonly Lazy<IObjectMapper> ObjectMapper = new Lazy<IObjectMapper>(
             () => Locator.Current.Instance<IObjectMapper>());
         
+        /// <summary>
+        /// Converts an object set to a well known data type.
+        /// Valid types are any value type, DataSet, IDataReader or IEnumerable{IDataReader}.
+        /// These types expect that the <see cref="values"/> parameter will contain an appropriate number of elements to satisfy the data type being returned.
+        /// Any other type will be passed to the registered <see cref="IObjectMapper"/> which will perform its own validation as needed.
+        /// </summary>
+        /// <typeparam name="T">The type to map to.</typeparam>
+        /// <param name="values">The values to convert.</param>
+        /// <returns>The converted value(s).</returns>
         public T ConvertTo<T>(IEnumerable<object> values)
         {
             var typeT = typeof(T);
 
             if (typeT == typeof(DataSet))
             {
-                return (T)(object)(ToDataSet(values));
+                return (T)(object)ToDataSet(values);
             }
 
             if (typeT == typeof(IDataReader))
@@ -42,13 +54,28 @@ namespace Disposable.Data.Access.Database
                 return InvokeObjectMapper<T>(values);
             }
 
-            return (T)(values.Single());
+            return (T)values.Single();
         }
 
+        /// <summary>
+        /// Converts an enumeration of objects to a DataSet.
+        /// </summary>
+        /// <param name="values">The values to be converted.</param>
+        /// <returns>A DataSet of the values.</returns>
         protected abstract DataSet ToDataSet(IEnumerable<object> values);
 
+        /// <summary>
+        /// Converts an enumeration of objects to an IDataReader.
+        /// </summary>
+        /// <param name="values">The values to be converted.</param>
+        /// <returns>An IDataReader of the values.</returns>
         protected abstract IDataReader ToIDataReader(IEnumerable<object> values);
 
+        /// <summary>
+        /// Converts an enumeration of objects to an enumeration of IDataReaders.
+        /// </summary>
+        /// <param name="values">The values to be converted.</param>
+        /// <returns>An enumeration of IDataReaders.</returns>
         protected abstract IEnumerable<IDataReader> ToIDataReaders(IEnumerable<object> values);
 
         private T InvokeObjectMapper<T>(IEnumerable<object> values)
@@ -57,18 +84,18 @@ namespace Disposable.Data.Access.Database
             var typeToBind = typeT;
             var isEnumerable = false;
 
-            if (typeT.ImplementsIEnumerable())
+            if (typeT.IsIEnumerable())
             {
-                if (!typeT.IsIEnumerable())
-                {
-                    var substring = typeT.Name.Substring(0, typeT.Name.IndexOf('`'));
-                    throw new InvalidOperationException(String.Format("Cannot convert result to specific enumerable type {0}<>. Change calling declaration to IEnumerable<>.", substring));
-                }
-
                 isEnumerable = true;
                 typeToBind = typeT.GetGenericArguments()[0];
             }
-            
+
+            if (!typeToBind.HasDefaultConstructor())
+            {
+                // TODO: allow a delegate constructor to be passed in.
+                throw new InvalidOperationException(string.Format("{0} does not contain a public default constructor.", typeT.Name));
+            }
+
             var mapper = ObjectMapper.Value;
             
             var method = mapper.GetType()

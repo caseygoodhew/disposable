@@ -1,13 +1,16 @@
 ﻿namespace Disposable.Security.Accounts
 {
+    /// <summary>
+    /// User account create status flags
+    /// </summary>
     public enum UserAccountCreateStatus
     {
         DuplicateEmail,
-        //DuplicateProviderUserKey.
+        ////DuplicateProviderUserKey.
         InvalidEmail,
         InvalidPassword,
-        //InvalidProviderUserKey,
+        ////InvalidProviderUserKey,
         Success,
-        //UserRejected
+        ////UserRejected
     }
 }

@@ -71,7 +71,7 @@
     <Compile Include="Database\Oracle\OracleExceptions.cs" />
     <Compile Include="Database\Oracle\OracleOutputParameter.cs" />
     <Compile Include="Registration.cs" />
-    <Compile Include="Database\ConnectionType.cs" />
+    <Compile Include="Database\ConnectionSource.cs" />
     <Compile Include="Database\IStoredMethodCommander.cs" />
     <Compile Include="Database\ICommanderFactory.cs" />
     <Compile Include="Database\IConnectionProvider.cs" />

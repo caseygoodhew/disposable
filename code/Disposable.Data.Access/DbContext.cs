@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Disposable.Data.Access
+﻿namespace Disposable.Data.Access
 {
+    /// <summary>
+    /// The database context
+    /// </summary>
     internal class DbContext
     {
     }

@@ -8,18 +8,18 @@ namespace Disposable.Data.Access.Database.Oracle
         private static readonly string WebConnectionString = "Password=upd;Persist Security Info=True;User ID=upd;Data Source=disposable;";
         private static readonly string SecurityConnectionString = "Password=upd;Persist Security Info=True;User ID=upd;Data Source=disposable;";
 
-        public IDbConnection CreateConnection(ConnectionType connectionType, DbContext databaseContext)
+        public IDbConnection CreateConnection(ConnectionSource connectionSource, DbContext databaseContext)
         {
-            switch (connectionType)
+            switch (connectionSource)
             {
-                case ConnectionType.Web:
+                case ConnectionSource.Web:
                     return new OracleDbConnection(WebConnectionString);
                 default:
-                    throw new ArgumentOutOfRangeException("connectionType");
+                    throw new ArgumentOutOfRangeException("connectionSource");
             }
         }
 
-        public IDbConnection CreateConnection(ConnectionType connectionType, DbContext databaseContext, Guid authorizationToken)
+        public IDbConnection CreateConnection(ConnectionSource connectionSource, DbContext databaseContext, Guid authorizationToken)
         {
             throw new NotImplementedException();
         }

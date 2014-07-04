@@ -57,14 +57,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Accounts\AccountManager.cs" />
+    <Compile Include="Accounts\UserAccountManager.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Accounts\IUser.cs" />
     <Compile Include="Accounts\UserAccountCreateStatus.cs" />
-    <Compile Include="Authentication\AuthenticationResult.cs" />
     <Compile Include="Authentication\AuthenticationStatus.cs" />
     <Compile Include="Authentication\Authentication.cs" />
     <Compile Include="Authentication\IAuthentication.cs" />
-    <Compile Include="Accounts\IAccountManager.cs" />
+    <Compile Include="Accounts\IUserAccountManager.cs" />
     <Compile Include="Policies\IPasswordPolicy.cs" />
     <Compile Include="Policies\PasswordPolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

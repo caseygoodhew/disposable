@@ -2,15 +2,18 @@
 
 namespace Disposable.Security.Policies
 {
+    /// <summary>
+    /// A user password policy.
+    /// </summary>
     public class PasswordPolicy : IPasswordPolicy
     {
-        private readonly static int MaxPasswordLength = 200;
+        private static readonly int MaxPasswordLength = 200;
 
-        private readonly static int MinPasswordLength = 8;
+        private static readonly int MinPasswordLength = 8;
 
-        private readonly static int MinSpecialCharcters = 2;
+        private static readonly int MinSpecialCharcters = 2;
 
-        private readonly static string PasswordRegEx = @"^.*(?=.{8,})(?=.*\d)(?=.*\d).*$";
+        private static readonly string PasswordRegEx = @"^.*(?=.{8,})(?=.*\d)(?=.*\d).*$";
         
         /// <summary>
         /// Gets the time window between which consecutive failed attempts to provide a valid password or password answer are tracked.
@@ -27,6 +30,7 @@ namespace Disposable.Security.Policies
         {
             get { return MaxPasswordLength; }
         }
+
         /// <summary>
         /// Gets the number of invalid password or password-answer attempts allowed before the membership user is locked out.
         /// </summary>

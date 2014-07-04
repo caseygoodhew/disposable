@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Disposable.Security.Authentication
+﻿namespace Disposable.Security.Authentication
 {
+    /// <summary>
+    /// Authentication status
+    /// </summary>
     public enum AuthenticationStatus
     {
         Succeeded,

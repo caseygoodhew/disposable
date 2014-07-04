@@ -14,7 +14,7 @@ namespace Disposable.Web.Security
     /// </summary>
     public class WebExtendedMembershipProvider : ExtendedMembershipProvider, ISystemExtendedMembershipProvider
     {
-        private Lazy<IAccountManager> _accountManager = new Lazy<IAccountManager>(() => Locator.Current.Instance<IAccountManager>());
+        private Lazy<IUserAccountManager> _accountManager = new Lazy<IUserAccountManager>(() => Locator.Current.Instance<IUserAccountManager>());
 
         private Lazy<IAuthentication> _authentication = new Lazy<IAuthentication>(() => Locator.Current.Instance<IAuthentication>());
 
@@ -608,7 +608,7 @@ namespace Disposable.Web.Security
         /// </returns>
         public override bool ValidateUser(string username, string password)
         {
-            return _authentication.Value.Authenticate(username, password, Guid.Empty).Status == AuthenticationStatus.Succeeded;
+            return _authentication.Value.Authenticate(username, password, Guid.Empty) == AuthenticationStatus.Succeeded;
         }
     }
 }

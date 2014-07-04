@@ -10,38 +10,54 @@ using IDbConnection = Disposable.Data.Access.Database.IDbConnection;
 namespace Disposable.Data.Access
 {
     /// <summary>
-    /// Wrapper to manage a <see cref="IDbConnection"/>
+    /// Orchestrates connections to the database.
     /// </summary>
     public class DbHelper : IDbHelper
     {
-        private readonly static Lazy<IConnectionProvider> ConnectionProvider = new Lazy<IConnectionProvider>(
+        private static readonly Lazy<IConnectionProvider> ConnectionProvider = new Lazy<IConnectionProvider>(
             () => Locator.Current.Instance<IConnectionProvider>());
 
-        private readonly static Lazy<ICommanderFactory> StoredProcedureCreator = new Lazy<ICommanderFactory>(
+        private static readonly Lazy<ICommanderFactory> StoredProcedureCreator = new Lazy<ICommanderFactory>(
             () => Locator.Current.Instance<ICommanderFactory>());
         
-        private IDbConnection _connection;
+        private IDbConnection connection;
 
         private IDbConnection Connection
         {
             get
             {
-                if (_connection != null && _connection.State == ConnectionState.Closed)
+                if (connection != null && connection.State == ConnectionState.Closed)
                 {
-                    _connection.Dispose();
-                    _connection = null;
+                    connection.Dispose();
+                    connection = null;
                 }
                 
-                if (_connection == null)
+                if (connection == null)
                 {
-                    _connection = ConnectionProvider.Value.CreateConnection(ConnectionType.Web, null);
-                    _connection.Open();
+                    connection = ConnectionProvider.Value.CreateConnection(ConnectionSource.Web, null);
+                    connection.Open();
                 }
 
-                return _connection;
+                return connection;
             }
         }
 
+        /// <summary>
+        /// Executes a calls the provided stored method and returns a value in the type requested. 
+        /// Typical valid types are:
+        /// <code>
+        /// Any ValueType
+        /// DataSet
+        /// IDataReader
+        /// IEnumerable{IDataReader}
+        /// ConcreteClass
+        /// IEnumerable{ConcreteClass}
+        /// </code>
+        /// </summary>
+        /// <typeparam name="TResult">The required return type.</typeparam>
+        /// <typeparam name="TInput">Typically reference type which implements <see cref="IPackage"/> but could be any reference type that can generate a <see cref="IStoredMethod"/> reference type.</typeparam>
+        /// <param name="spGenerator">A function which can provide a <see cref="IStoredMethod"/> reference type.</param>
+        /// <returns>An object of the type requested.</returns>
         public TResult ReturnValue<TResult, TInput>(Func<TInput, IStoredMethod> spGenerator) where TInput : class
         {
             var storedMethod = spGenerator.Invoke(Locator.Current.Instance<TInput>());
@@ -51,6 +67,22 @@ namespace Disposable.Data.Access
             return commander.Execute<TResult>(Connection, storedMethod);
         }
 
+        /// <summary>
+        /// Executes a calls the provided stored method and returns a value in the type requested. 
+        /// Typical valid types are:
+        /// <code>
+        /// Any ValueType
+        /// DataSet
+        /// IDataReader
+        /// IEnumerable{IDataReader}
+        /// ConcreteClass
+        /// IEnumerable{ConcreteClass}
+        /// </code>
+        /// </summary>
+        /// <typeparam name="TInput">Typically reference type which implements <see cref="IPackage"/> but could be any reference type that can generate a <see cref="IStoredMethod"/> reference type.</typeparam>
+        /// <typeparam name="TOut1">The required out type.</typeparam>
+        /// <param name="spGenerator">A function which can provide a <see cref="IStoredMethod"/> reference type.</param>
+        /// <param name="out1">An object of the type requested.</param>
         public void Run<TInput, TOut1>(Func<TInput, IStoredMethod> spGenerator, out TOut1 out1) where TInput : class
         {
             var storedMethod = spGenerator.Invoke(Locator.Current.Instance<TInput>());
@@ -60,6 +92,24 @@ namespace Disposable.Data.Access
             out1 = commander.Execute<TOut1>(Connection, storedMethod);
         }
 
+        /// <summary>
+        /// Executes a calls the provided stored method and returns a value in the type requested. 
+        /// Typical valid types are:
+        /// <code>
+        /// Any ValueType
+        /// DataSet
+        /// IDataReader
+        /// IEnumerable{IDataReader}
+        /// ConcreteClass
+        /// IEnumerable{ConcreteClass}
+        /// </code>
+        /// </summary>
+        /// <typeparam name="TInput">Typically reference type which implements <see cref="IPackage"/> but could be any reference type that can generate a <see cref="IStoredMethod"/> reference type.</typeparam>
+        /// <typeparam name="TOut1">The first required out type.</typeparam>
+        /// <typeparam name="TOut2">The second required out type.</typeparam>
+        /// <param name="spGenerator">A function which can provide a <see cref="IStoredMethod"/> reference type.</param>
+        /// <param name="out1">The first object of the type requested.</param>
+        /// <param name="out2">The second object of the type requested.</param>
         public void Run<TInput, TOut1, TOut2>(Func<TInput, IStoredMethod> spGenerator, out TOut1 out1, out TOut2 out2) where TInput : class
         {
             var storedMethod = spGenerator.Invoke(Locator.Current.Instance<TInput>());
@@ -74,15 +124,15 @@ namespace Disposable.Data.Access
         /// </summary>
         public void Dispose()
         {
-            if (_connection != null)
+            if (connection != null)
             {
-                if (_connection.State != ConnectionState.Closed)
+                if (connection.State != ConnectionState.Closed)
                 {
                     // see http://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_interactive_timeout
-                    _connection.Close();
+                    connection.Close();
                 }
 
-                _connection.Dispose();
+                connection.Dispose();
             }
         }
     }
