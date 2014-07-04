@@ -40,7 +40,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IObjectMapper.cs" />
+    <Compile Include="ObjectMapper.cs" />
+    <Compile Include="ObjectMapperFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registration.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Disposable.Common\Disposable.Common.csproj">
+      <Project>{1FF2CBDD-7F6E-4DDE-91D1-EBD5763E8018}</Project>
+      <Name>Disposable.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

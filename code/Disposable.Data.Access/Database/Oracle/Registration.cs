@@ -8,6 +8,7 @@ namespace Disposable.Data.Access.Database.Oracle
         {
             registrar.Register<ICommanderFactory>(() => new OracleCommanderFactory());
             registrar.Register<IConnectionProvider>(() => new OracleConnectionProvider());
+            registrar.Register<IDataObjectConverter>(() => new OracleDataObjectConverter());
         }
     }
 }

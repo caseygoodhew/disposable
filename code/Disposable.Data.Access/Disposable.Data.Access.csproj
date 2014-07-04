@@ -63,6 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\DataObjectConverter.cs" />
+    <Compile Include="Database\IDataObjectConverter.cs" />
+    <Compile Include="Database\Oracle\OracleDataObjectConverter.cs" />
     <Compile Include="Database\Oracle\OracleDataTypeMapper.cs" />
     <Compile Include="Database\Oracle\OracleExceptionAdapter.cs" />
     <Compile Include="Database\Oracle\OracleExceptions.cs" />
