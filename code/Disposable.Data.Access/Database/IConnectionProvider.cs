@@ -11,17 +11,17 @@ namespace Disposable.Data.Access.Database
         /// Creates a database connection.
         /// </summary>
         /// <param name="connectionSource">The source of the connection.</param>
-        /// <param name="databaseContext">The database context</param>
-        /// <returns>A database connection</returns>
+        /// <param name="databaseContext">The database context.</param>
+        /// <returns>A database connection.</returns>
         IDbConnection CreateConnection(ConnectionSource connectionSource, DbContext databaseContext);
 
         /// <summary>
         /// Creates a database connection.
         /// </summary>
         /// <param name="connectionSource">The source of the connection.</param>
-        /// <param name="databaseContext">The database context</param>
+        /// <param name="databaseContext">The database context.</param>
         /// <param name="authorizationToken">The user authorization token.</param>
-        /// <returns>A database connection</returns>
+        /// <returns>A database connection.</returns>
         IDbConnection CreateConnection(ConnectionSource connectionSource, DbContext databaseContext, Guid authorizationToken);
     }
 }

@@ -22,9 +22,5 @@ namespace Disposable.Data.Packages.Core
         {
             return new OutputParameterValue(_outputParameter);
         }
-
-        public override void Throw(ProgrammaticDatabaseExceptions programmaticDatabaseException, Exception exception)
-        {
-        }
     }
 }

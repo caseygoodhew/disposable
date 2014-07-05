@@ -8,6 +8,9 @@ namespace Disposable.Data.Access.Database.Oracle
     /// </summary>
     internal class OracleDbConnection : IDbConnection
     {
+        /// <summary>
+        /// The underlying <see cref="OracleConnection"/>.
+        /// </summary>
         internal readonly OracleConnection Connection;
 
         /// <summary>

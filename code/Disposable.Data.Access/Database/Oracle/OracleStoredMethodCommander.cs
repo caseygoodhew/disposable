@@ -6,21 +6,39 @@ using Disposable.Common;
 using Disposable.Common.ServiceLocator;
 using Disposable.Data.Packages.Core;
 using Oracle.DataAccess.Client;
-using Oracle.DataAccess.Types;
 
 namespace Disposable.Data.Access.Database.Oracle
 {
+    /// <summary>
+    /// Oracle stored method commander.
+    /// </summary>
     internal class OracleStoredMethodCommander : IStoredMethodCommander
     {
-        private readonly static Lazy<IDataObjectConverter> DataConverter = new Lazy<IDataObjectConverter>(
+        private static readonly Lazy<IDataObjectConverter> DataConverter = new Lazy<IDataObjectConverter>(
             () => Locator.Current.Instance<IDataObjectConverter>());
-        
+
+        /// <summary>
+        /// Executes a call to the given stored method over the given connection.
+        /// </summary>
+        /// <typeparam name="T">The type to return.</typeparam>
+        /// <param name="connection">The database connection.</param>
+        /// <param name="storedMethod">The stored method to call.</param>
+        /// <returns>An object of the required type.</returns>
         public T Execute<T>(IDbConnection connection, IStoredMethod storedMethod)
         {
             var values = Execute(connection, storedMethod);
             return DataConverter.Value.ConvertTo<T>(values);
         }
 
+        /// <summary>
+        /// Executes a call to the given method over the given connection.
+        /// </summary>
+        /// <typeparam name="TOut1">The first type to return.</typeparam>
+        /// <typeparam name="TOut2">The second type to return.</typeparam>
+        /// <param name="connection">The database connection.</param>
+        /// <param name="storedMethod">The stored method to call.</param>
+        /// <param name="out1">The first return object.</param>
+        /// <param name="out2">The second return object.</param>
         public void Execute<TOut1, TOut2>(IDbConnection connection, IStoredMethod storedMethod, out TOut1 out1, out TOut2 out2)
         {
             var values = Execute(connection, storedMethod).ToList();
@@ -44,7 +62,6 @@ namespace Disposable.Data.Access.Database.Oracle
                 OracleExceptionAdapter.Throw(oe, storedMethod); 
             }
             
-
             return outputParameters.Select(p => OracleDataTypeMapper.Map(p, p.OracleParameter.Value));
         }
 
@@ -52,10 +69,11 @@ namespace Disposable.Data.Access.Database.Oracle
         {
             Guard.ArgumentIsType<OracleDbConnection>(connection, "connection");
 
-            var commandText = string.Format("{0}.{1}.{2}", 
-                                            storedMethod.Package.Schema, 
-                                            storedMethod.Package.Name, 
-                                            storedMethod.Name);
+            var commandText = string.Format(
+                "{0}.{1}.{2}", 
+                storedMethod.Package.Schema, 
+                storedMethod.Package.Name, 
+                storedMethod.Name);
             
             var command = new OracleCommand(commandText, (connection as OracleDbConnection).Connection)
             {

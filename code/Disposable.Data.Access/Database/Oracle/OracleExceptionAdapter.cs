@@ -5,23 +5,35 @@ using Oracle.DataAccess.Client;
 
 namespace Disposable.Data.Access.Database.Oracle
 {
+    /// <summary>
+    /// Handles converting custom oracle errors to .net exceptions.
+    /// </summary>
     internal static class OracleExceptionAdapter
     {
+        /// <summary>
+        /// Relay method to convert and rethrow a custom oracle exceptions to an <see cref="IStoredMethod"/>
+        /// </summary>
+        /// <param name="oracleException">The <see cref="OracleException"/> to rethrow.</param>
+        /// <param name="storedMethod">The <see cref="IStoredMethod"/> which invoked the <see cref="OracleException"/>.</param>
         internal static void Throw(OracleException oracleException, IStoredMethod storedMethod)
         {
             var oe = (OracleExceptions)Enum.ToObject(typeof(OracleExceptions), oracleException.Number);
+            var isHandled = false;
 
             switch (oe)
             {
                 case OracleExceptions.DuplicateEmail:
-                    storedMethod.Throw(ProgrammaticDatabaseExceptions.DuplicateEmail, oracleException);
+                    isHandled = storedMethod.Handle(ProgrammaticDatabaseExceptions.DuplicateEmail) == ProgrammaticDatabaseExceptions.DuplicateEmail;
                     break;
 
                 default:
                     throw new UnknownDatabaseException(oracleException);
             }
 
-            throw new UnhandledDatabaseException(oracleException);
+            if (!isHandled)
+            {
+                throw new UnhandledDatabaseException(oracleException);
+            }
         }
     }
 }

@@ -5,12 +5,20 @@ using Oracle.DataAccess.Types;
 
 namespace Disposable.Data.Access.Database.Oracle
 {
-    // TODO: Create this as a mapper entity
+    /// <summary>
+    /// Provides oracle data type mapping functionality.
+    /// </summary>
+    /// <remarks>TODO: Create this as a mapper entity</remarks>
     internal static class OracleDataTypeMapper
     {
-        // http://stackoverflow.com/questions/1334574/c-sharp-datatypes-oracle-datatypes
+        /// <summary>
+        /// Maps <see cref="IParameter.DataType"/> to <see cref="OracleDbType"/>.
+        /// </summary>
+        /// <param name="parameter">The <see cref="IParameter"/> to map.</param>
+        /// <returns>The <see cref="OracleDbType"/>.</returns>
         internal static OracleDbType Map(IParameter parameter)
         {
+            //// http://stackoverflow.com/questions/1334574/c-sharp-datatypes-oracle-datatypes</remarks>
             switch (parameter.DataType)
             {
                 case DataTypes.Boolean:
@@ -34,6 +42,12 @@ namespace Disposable.Data.Access.Database.Oracle
             }
         }
 
+        /// <summary>
+        /// Maps <see cref="IInputParameter"/> values to oracle compatible values.
+        /// </summary>
+        /// <param name="inputParameter">The <see cref="IInputParameter"/> for the corresponding <see cref="value"/>.</param>
+        /// <param name="value">The value to map.</param>
+        /// <returns>The oracle compatible value.</returns>
         internal static object Map(IInputParameter inputParameter, object value)
         {
             if (value == null)
@@ -64,6 +78,12 @@ namespace Disposable.Data.Access.Database.Oracle
             }
         }
 
+        /// <summary>
+        /// Maps oracle values to <see cref="IOutputParameter.DataType"/> compatible values.
+        /// </summary>
+        /// <param name="outputParameter">The <see cref="IOutputParameter.DataType"/> to map to.</param>
+        /// <param name="value">The value to map.</param>
+        /// <returns>The mapped value.</returns>
         internal static object Map(IOutputParameter outputParameter, object value)
         {
             if (value == null || value == DBNull.Value)
@@ -97,6 +117,11 @@ namespace Disposable.Data.Access.Database.Oracle
             }
         }
 
+        /// <summary>
+        /// Maps oracle specific values to .net value types.
+        /// </summary>
+        /// <param name="value">The value to map.</param>
+        /// <returns>The mapped value.</returns>
         internal static object MapToValueType(object value)
         {
             var valueType = value.GetType();

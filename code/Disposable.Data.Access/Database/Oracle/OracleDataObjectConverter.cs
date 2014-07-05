@@ -7,8 +7,16 @@ using Oracle.DataAccess.Types;
 
 namespace Disposable.Data.Access.Database.Oracle
 {
+    /// <summary>
+    /// Converting oracle database data structures to well known data types.
+    /// </summary>
     internal class OracleDataObjectConverter : DataObjectConverter
     {
+        /// <summary>
+        /// Converts an enumeration of objects to a DataSet.
+        /// </summary>
+        /// <param name="values">The values to be converted.</param>
+        /// <returns>A DataSet of the values.</returns>
         protected override DataSet ToDataSet(IEnumerable<object> values)
         {
             var adapter = new OracleDataAdapter();
@@ -19,6 +27,11 @@ namespace Disposable.Data.Access.Database.Oracle
             return ds;
         }
 
+        /// <summary>
+        /// Converts an enumeration of objects to an IDataReader.
+        /// </summary>
+        /// <param name="values">The values to be converted.</param>
+        /// <returns>An IDataReader of the values.</returns>
         protected override IDataReader ToIDataReader(IEnumerable<object> values)
         {
             var value = values.Single();
@@ -26,6 +39,11 @@ namespace Disposable.Data.Access.Database.Oracle
             return (value as OracleRefCursor).GetDataReader();
         }
 
+        /// <summary>
+        /// Converts an enumeration of objects to an enumeration of IDataReaders.
+        /// </summary>
+        /// <param name="values">The values to be converted.</param>
+        /// <returns>An enumeration of IDataReaders.</returns>
         protected override IEnumerable<IDataReader> ToIDataReaders(IEnumerable<object> values)
         {
             return ToRefCursors(values).Select(x => x.GetDataReader());

@@ -28,9 +28,5 @@ namespace Disposable.Data.Packages.User
                 { PackageConstants.InUsername, username }
             });
         }
-
-        public override void Throw(ProgrammaticDatabaseExceptions programmaticDatabaseException, Exception exception)
-        {
-        }
     }
 }

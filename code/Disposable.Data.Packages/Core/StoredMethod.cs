@@ -80,6 +80,9 @@ namespace Disposable.Data.Packages.Core
             return (_fullParameterValues ?? _lastFullParameterValues).Single(x => x.Name == name);
         }
 
-        public abstract void Throw(ProgrammaticDatabaseExceptions programmaticDatabaseException, Exception exception);
+        public virtual ProgrammaticDatabaseExceptions Handle(ProgrammaticDatabaseExceptions programmaticDatabaseException)
+        {
+            return ProgrammaticDatabaseExceptions.Unhandled;
+        }
     }
 }

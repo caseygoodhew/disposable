@@ -28,6 +28,15 @@ namespace Disposable.Data.Packages.Core
 
         InputParameterValue GetInputParameterValue(string name);
 
-        void Throw(ProgrammaticDatabaseExceptions programmaticDatabaseException, Exception exception);
+        /// <summary>
+        /// Instructs an <see cref="IStoredMethod"/> to handle a <see cref="ProgrammaticDatabaseException"/> which 
+        /// was thrown in the database when the <see cref="IStoredMethod"/> was invoked.
+        /// </summary>
+        /// <param name="programmaticDatabaseException">The normalized <see cref="ProgrammaticDatabaseException"/>.</param>
+        /// <returns>
+        /// If the exception has been handled, this should be the same value that was passed into the method. 
+        /// Returning any value other than this will result in an <see cref="UnhandledDatabaseException"/> being immediately thrown.
+        /// </returns>
+        ProgrammaticDatabaseExceptions Handle(ProgrammaticDatabaseExceptions programmaticDatabaseException);
     }
 }

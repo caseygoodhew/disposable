@@ -38,12 +38,14 @@ namespace Disposable.Data.Packages.User
             });
         }
 
-        public override void Throw(ProgrammaticDatabaseExceptions programmaticDatabaseException, Exception exception)
+        public override ProgrammaticDatabaseExceptions Handle(ProgrammaticDatabaseExceptions programmaticDatabaseException)
         {
             if (programmaticDatabaseException == ProgrammaticDatabaseExceptions.DuplicateEmail)
             {
                 throw new DuplicateEmailException(GetInputParameterValue(PackageConstants.InEmail).Value.ToString());
             }
+
+            return base.Handle(programmaticDatabaseException);
         }
     }
 }

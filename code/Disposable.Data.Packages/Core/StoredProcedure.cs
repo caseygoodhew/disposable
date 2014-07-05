@@ -25,9 +25,5 @@ namespace Disposable.Data.Packages.Core
         {
             return OutputParameters.Select(x => new OutputParameterValue(x)).ToList();
         }
-
-        public override void Throw(ProgrammaticDatabaseExceptions programmaticDatabaseException, Exception exception)
-        {
-        }
     }
 }
