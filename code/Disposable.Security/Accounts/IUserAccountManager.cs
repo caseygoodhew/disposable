@@ -8,16 +8,16 @@ namespace Disposable.Security.Accounts
     public interface IUserAccountManager
     {
         /// <summary>
-        /// The parameter is not used.
+        /// This method is not used.
         /// </summary>
-        /// <returns>The parameter is not used.</returns>
+        /// <returns>This method is not used.</returns>
         /// <remarks>This is my own addition.</remarks>
         bool ApproveUser();
 
         /// <summary>
-        /// The parameter is not used.
+        /// This method is not used.
         /// </summary>
-        /// <returns>The parameter is not used.</returns>
+        /// <returns>This method is not used.</returns>
         /// <remarks>system arguments: string username, string oldPassword, string newPassword</remarks>
         bool ChangePassword();
 
@@ -34,21 +34,21 @@ namespace Disposable.Security.Accounts
         long CreateUser(string email, string password, bool isApproved, out UserAccountCreateStatus status, out string confirmationCode);
 
         /// <summary>
-        /// The parameter is not used.
+        /// This method is not used.
         /// </summary>
-        /// <returns>The parameter is not used.</returns>
+        /// <returns>This method is not used.</returns>
         bool DeleteUser();
 
         /// <summary>
-        /// The parameter is not used.
+        /// This method is not used.
         /// </summary>
-        /// <returns>The parameter is not used.</returns>
+        /// <returns>This method is not used.</returns>
         IList<IUser> FindUsers();
 
         /// <summary>
-        /// The parameter is not used.
+        /// The method is not used.
         /// </summary>
-        /// <returns>The parameter is not used.</returns>
+        /// <returns>The method is not used.</returns>
         IList<IUser> GetAllUsers();
 
         /// <summary>
@@ -68,21 +68,21 @@ namespace Disposable.Security.Accounts
         bool HasLocalAccount(long userId);
 
         /// <summary>
-        /// The parameter is not used.
+        /// The method is not used.
         /// </summary>
-        /// <returns>The parameter is not used.</returns>
+        /// <returns>The method is not used.</returns>
         /// <remarks>This is my own addition.</remarks>
         bool LockUser();
 
         /// <summary>
-        /// The parameter is not used.
+        /// The method is not used.
         /// </summary>
-        /// <returns>The parameter is not used.</returns>
+        /// <returns>The method is not used.</returns>
         /// <remarks>system arguments: string userName</remarks>
         bool UnlockUser();
 
         /// <summary>
-        /// The parameter is not used.
+        /// The method is not used.
         /// </summary>
         void UpdateUser();
     }

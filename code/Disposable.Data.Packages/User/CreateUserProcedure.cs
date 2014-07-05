@@ -30,7 +30,7 @@ namespace Disposable.Data.Packages.User
         /// <param name="isApproved">Flag indicating if the user should be created in an approved state</param>
         internal void SetParameterValues(string email, string password, bool isApproved)
         {
-            SetParameterValues(new Dictionary<string, object>
+            this.SetInputParameterValues(new Dictionary<string, object>
             {
                 { PackageConstants.InEmail, email },
                 { PackageConstants.InPassword, password },

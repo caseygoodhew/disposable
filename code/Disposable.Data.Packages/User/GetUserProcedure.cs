@@ -23,7 +23,7 @@ namespace Disposable.Data.Packages.User
         /// <param name="username">The username of the user to get</param>
         internal void SetParameterValues(string username)
         {
-            SetParameterValues(new Dictionary<string, object>
+            this.SetInputParameterValues(new Dictionary<string, object>
             {
                 { PackageConstants.InUsername, username }
             });

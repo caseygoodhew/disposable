@@ -3,6 +3,11 @@ using Disposable.Security.Accounts;
 
 namespace Disposable.Data.Security.Accounts
 {
+    using System;
+
+    /// <summary>
+    /// Interface for repository wrapper implementations for user account related activities
+    /// </summary>
     public interface IAccountRepository
     {
         /// <summary>
@@ -33,7 +38,13 @@ namespace Disposable.Data.Security.Accounts
         /// <returns>true if the user has local account; otherwise, false.</returns>
         bool HasLocalAccount(IDbHelper dbHelper, long userId);
 
-        // TODO: Depricate this method once it's removed from MVC
+        /// <summary>
+        /// To be deprecated
+        /// </summary>
+        /// <param name="dbHelper">To be deprecated</param>
+        /// <param name="username">To be deprecated</param>
+        /// <returns>To be deprecated</returns>
+        [Obsolete("Remove this method once it's removed from MVC")]
         IUser GetUser(IDbHelper dbHelper, string username);
     }
 }

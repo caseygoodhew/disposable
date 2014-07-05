@@ -24,7 +24,7 @@ namespace Disposable.Data.Packages.User
         /// <param name="password">The password to authenticate</param>
         internal void SetParameterValues(string email, string password)
         {
-            SetParameterValues(new Dictionary<string, object>
+            this.SetInputParameterValues(new Dictionary<string, object>
             {
                 { PackageConstants.InEmail, email },
                 { PackageConstants.InPassword, password }

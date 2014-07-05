@@ -2,7 +2,10 @@
 
 namespace Disposable.Data.Security.Accounts.Exceptions
 {
-    public class AccountException : ProgrammaticDatabaseException
+    /// <summary>
+    /// Abstract database account exception
+    /// </summary>
+    public abstract class AccountException : ProgrammaticDatabaseException
     {
     }
 }

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Data;
-using System.Linq.Expressions;
-using Disposable.Common.ServiceLocator;
 using Disposable.Data.Access;
-using Disposable.Data.Packages.Core;
 using Disposable.Data.Packages.User;
 using Disposable.Security.Accounts;
 
 namespace Disposable.Data.Security.Accounts
 {
+    /// <summary>
+    /// Repository wrapper for user account related activities
+    /// </summary>
     public class AccountRepository : IAccountRepository
     {
         /// <summary>
@@ -23,6 +23,15 @@ namespace Disposable.Data.Security.Accounts
             return dbHelper.ReturnValue<bool, IUserPackage>(x => x.AuthenticateUserProcedure(email, password));
         }
 
+        /// <summary>
+        /// Creates a user
+        /// </summary>
+        /// <param name="dbHelper">The dbHelper that should be used to create the user</param>
+        /// <param name="email">The user's email address</param>
+        /// <param name="password">The user's password</param>
+        /// <param name="isApproved">Flag that the calling service has approved the user</param>
+        /// <param name="confirmationCode">The output confirmation code</param>
+        /// <returns>The user sid</returns>
         public long CreateUser(IDbHelper dbHelper, string email, string password, bool isApproved, out string confirmationCode)
         {
             long userSid;
@@ -34,13 +43,26 @@ namespace Disposable.Data.Security.Accounts
             return userSid;
         }
 
+        /// <summary>
+        /// Indicates whether the user has local account.
+        /// </summary>
+        /// <param name="dbHelper">The dbHelper that should be used to check the local account</param>
+        /// <param name="userId">The user ID.</param>
+        /// <returns>true if the user has local account; otherwise, false.</returns>
         public bool HasLocalAccount(IDbHelper dbHelper, long userId)
         {
             throw new NotImplementedException();
 
-            //return dbHelper.ReturnValue<bool, IUserPackage>(x => x.HasLocalAccount(userId));
+            ////return dbHelper.ReturnValue<bool, IUserPackage>(x => x.HasLocalAccount(userId));
         }
 
+        /// <summary>
+        /// To be deprecated
+        /// </summary>
+        /// <param name="dbHelper">To be deprecated</param>
+        /// <param name="username">To be deprecated</param>
+        /// <returns>To be deprecated</returns>
+        [Obsolete("Remove this method once it's removed from MVC")]
         public IUser GetUser(IDbHelper dbHelper, string username)
         {
             var test = dbHelper.ReturnValue<DataSet, IUserPackage>(x => x.GetUserProcedure(username));

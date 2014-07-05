@@ -5,12 +5,12 @@ using Disposable.Data.Common.Exceptions;
 namespace Disposable.Data.Packages.Core
 {
     /// <summary>
-    /// Defines the required attributes to call a stored method
+    /// Interface defining the common attributes required to call a stored method.
     /// </summary>
     public interface IStoredMethod
     {
         /// <summary>
-        /// Get the <see cref="IPackage"/> which owns the <see cref="IStoredProcedure"/>
+        /// Gets the <see cref="IPackage"/> which owns the <see cref="IStoredProcedure"/>
         /// </summary>
         IPackage Package { get; }
         
@@ -20,12 +20,17 @@ namespace Disposable.Data.Packages.Core
         string Name { get; }
 
         /// <summary>
-        /// Gets the input parameter values that will be used to call the stored method
+        /// Gets the input parameter values.
         /// </summary>
-        /// <param name="includeEmpty"></param>
-        /// <returns></returns>
-        IList<InputParameterValue> GetInputParameters(bool includeEmpty);
+        /// <param name="includeEmpty">Flag to include empty parameters.</param>
+        /// <returns>A list of <see cref="InputParameterValue"/></returns>
+        IList<InputParameterValue> GetInputParameterValues(bool includeEmpty);
 
+        /// <summary>
+        /// Gets an input parameter value.
+        /// </summary>
+        /// <param name="name">The name of the parameter to get.</param>
+        /// <returns>The <see cref="InputParameterValue"/></returns>
         InputParameterValue GetInputParameterValue(string name);
 
         /// <summary>

@@ -104,7 +104,7 @@ namespace Disposable.Data.Access.Database.Oracle
         
         private static void ApplyInputParameters(OracleCommand command, IStoredMethod storedMethod)
         {
-            foreach (var parameter in storedMethod.GetInputParameters(true))
+            foreach (var parameter in storedMethod.GetInputParameterValues(true))
             {
                 command.Parameters.Add(parameter.Name, OracleDataTypeMapper.Map(parameter), OracleDataTypeMapper.Map(parameter, parameter.Value), ParameterDirection.Input);
             }
