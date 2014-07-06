@@ -17,22 +17,24 @@ namespace Disposable.Data.Access.Database.Oracle
         /// <param name="storedMethod">The <see cref="IStoredMethod"/> which invoked the <see cref="OracleException"/>.</param>
         internal static void Throw(OracleException oracleException, IStoredMethod storedMethod)
         {
+            var underlyingException = new UnderlyingOracleException(oracleException);
+
             var oe = (OracleExceptions)Enum.ToObject(typeof(OracleExceptions), oracleException.Number);
             var isHandled = false;
 
             switch (oe)
             {
                 case OracleExceptions.DuplicateEmail:
-                    isHandled = storedMethod.Handle(ProgrammaticDatabaseExceptions.DuplicateEmail) == ProgrammaticDatabaseExceptions.DuplicateEmail;
+                    isHandled = storedMethod.Handle(ProgrammaticDatabaseExceptions.DuplicateEmail, underlyingException) == ProgrammaticDatabaseExceptions.DuplicateEmail;
                     break;
 
                 default:
-                    throw new UnknownDatabaseException(oracleException);
+                    throw new UnknownDatabaseException(underlyingException);
             }
 
             if (!isHandled)
             {
-                throw new UnhandledDatabaseException(oracleException);
+                throw new UnhandledDatabaseException(underlyingException);
             }
         }
     }

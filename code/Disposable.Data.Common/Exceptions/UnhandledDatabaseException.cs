@@ -10,8 +10,8 @@ namespace Disposable.Data.Common.Exceptions
         /// <summary>
         /// Initializes a new instance of the <see cref="UnhandledDatabaseException"/> class.
         /// </summary>
-        /// <param name="innerException">The underlying exception.</param>
-        public UnhandledDatabaseException(Exception innerException) : base(@"Unhandled Database Exception", innerException)
+        /// <param name="underlyingDatabaseException">The underlying exception.</param>
+        public UnhandledDatabaseException(UnderlyingDatabaseException underlyingDatabaseException) : base(@"Unhandled Database Exception", underlyingDatabaseException)
         {
         }
     }

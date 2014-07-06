@@ -11,6 +11,6 @@ namespace Disposable.Data.Packages.Core
         /// Gets the output parameter values that will be used to call the stored procedure.
         /// </summary>
         /// <returns>A list of the output parameters.</returns>
-        IList<OutputParameterValue> GetOutputParameters();
+        IList<OutputParameterValue> GetOutputParameterValues();
     }
 }

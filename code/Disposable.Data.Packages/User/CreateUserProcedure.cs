@@ -7,8 +7,15 @@ using Disposable.Data.Security.Accounts.Exceptions;
 
 namespace Disposable.Data.Packages.User
 {
+    /// <summary>
+    /// Creates a new user account.
+    /// </summary>
     internal class CreateUserProcedure : StoredProcedure
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateUserProcedure"/> class.
+        /// </summary>
+        /// <param name="package">The <see cref="IPackage"/> to which the procedure belongs.</param>
         public CreateUserProcedure(IPackage package) 
             : base(
                 package, 
@@ -17,9 +24,26 @@ namespace Disposable.Data.Packages.User
                 new InputParameter(PackageConstants.InPassword, DataTypes.String),
                 new InputParameter(PackageConstants.InApproved, DataTypes.Boolean),
                 new OutputParameter(PackageConstants.OutUserSid, DataTypes.Long),
-                new OutputParameter(PackageConstants.OutConfirmationGuid, DataTypes.Guid)
-            )
+                new OutputParameter(PackageConstants.OutConfirmationGuid, DataTypes.Guid))
         {
+        }
+
+        /// <summary>
+        /// Throws or handles <see cref="ProgrammaticDatabaseExceptions"/> thrown by the underlying database.
+        /// </summary>
+        /// <param name="programmaticDatabaseException">The normalized <see cref="ProgrammaticDatabaseException"/>.</param>
+        /// <param name="underlyingDatabaseException">The <see cref="UnderlyingDatabaseException"/></param>
+        /// <returns>
+        /// The <see cref="programmaticDatabaseException"/> that was handled, or <see cref="ProgrammaticDatabaseExceptions.Unhandled"/>.
+        /// </returns>
+        public override ProgrammaticDatabaseExceptions Handle(ProgrammaticDatabaseExceptions programmaticDatabaseException, UnderlyingDatabaseException underlyingDatabaseException)
+        {
+            if (programmaticDatabaseException == ProgrammaticDatabaseExceptions.DuplicateEmail)
+            {
+                throw new DuplicateEmailException(GetInputParameterValue(PackageConstants.InEmail).Value.ToString());
+            }
+
+            return base.Handle(programmaticDatabaseException, underlyingDatabaseException);
         }
 
         /// <summary>
@@ -36,16 +60,6 @@ namespace Disposable.Data.Packages.User
                 { PackageConstants.InPassword, password },
                 { PackageConstants.InApproved, isApproved }
             });
-        }
-
-        public override ProgrammaticDatabaseExceptions Handle(ProgrammaticDatabaseExceptions programmaticDatabaseException)
-        {
-            if (programmaticDatabaseException == ProgrammaticDatabaseExceptions.DuplicateEmail)
-            {
-                throw new DuplicateEmailException(GetInputParameterValue(PackageConstants.InEmail).Value.ToString());
-            }
-
-            return base.Handle(programmaticDatabaseException);
         }
     }
 }

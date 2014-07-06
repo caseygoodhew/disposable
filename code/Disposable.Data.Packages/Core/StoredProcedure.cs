@@ -15,11 +15,7 @@ namespace Disposable.Data.Packages.Core
         /// <param name="name">The name of the procedure.</param>
         /// <param name="parameters">The list of <see cref="IInputParameter"/>s and <see cref="IOutputParameter"/>s in the package declaration.</param>
         protected StoredProcedure(IPackage package, string name, params IParameter[] parameters)
-            : base(package, 
-                   name, 
-                   parameters.Where(x => x is IInputParameter)
-                             .Cast<IInputParameter>()
-                             .ToArray())
+            : base(package, name, parameters.Where(x => x is IInputParameter).Cast<IInputParameter>().ToArray())
         {
             OutputParameters = parameters.Where(x => x is IOutputParameter)
                              .Cast<IOutputParameter>()
@@ -27,7 +23,7 @@ namespace Disposable.Data.Packages.Core
         }
 
         /// <summary>
-        /// The list of <see cref="IOutputParameter"/>s of the procedure.
+        /// Gets the list of <see cref="IOutputParameter"/>s of the procedure.
         /// </summary>
         internal IList<IOutputParameter> OutputParameters { get; private set; }
 
@@ -35,7 +31,7 @@ namespace Disposable.Data.Packages.Core
         /// Gets the output parameter values that will be used to call the stored procedure.
         /// </summary>
         /// <returns>A list of the output parameters.</returns>
-        public IList<OutputParameterValue> GetOutputParameters()
+        public IList<OutputParameterValue> GetOutputParameterValues()
         {
             return OutputParameters.Select(x => new OutputParameterValue(x)).ToList();
         }

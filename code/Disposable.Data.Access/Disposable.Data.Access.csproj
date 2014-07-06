@@ -70,6 +70,7 @@
     <Compile Include="Database\Oracle\OracleExceptionAdapter.cs" />
     <Compile Include="Database\Oracle\OracleExceptions.cs" />
     <Compile Include="Database\Oracle\OracleOutputParameter.cs" />
+    <Compile Include="Database\Oracle\UnderlyingOracleException.cs" />
     <Compile Include="Registration.cs" />
     <Compile Include="Database\ConnectionSource.cs" />
     <Compile Include="Database\IStoredMethodCommander.cs" />

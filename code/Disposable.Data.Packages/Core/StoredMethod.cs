@@ -74,10 +74,11 @@ namespace Disposable.Data.Packages.Core
         /// This method should be overridden in derived classes that provide error handling.
         /// </summary>
         /// <param name="programmaticDatabaseException">The normalized <see cref="ProgrammaticDatabaseException"/>.</param>
+        /// <param name="underlyingDatabaseException">The <see cref="UnderlyingDatabaseException"/></param>
         /// <returns>
         /// <see cref="ProgrammaticDatabaseExceptions.Unhandled"/> if not overridden.
         /// </returns>
-        public virtual ProgrammaticDatabaseExceptions Handle(ProgrammaticDatabaseExceptions programmaticDatabaseException)
+        public virtual ProgrammaticDatabaseExceptions Handle(ProgrammaticDatabaseExceptions programmaticDatabaseException, UnderlyingDatabaseException underlyingDatabaseException)
         {
             return ProgrammaticDatabaseExceptions.Unhandled;
         }

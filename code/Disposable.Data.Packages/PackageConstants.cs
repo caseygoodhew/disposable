@@ -1,5 +1,8 @@
 ﻿namespace Disposable.Data.Packages
 {
+    /// <summary>
+    /// Loose collection of strings used in database connections to promote code consitency.
+    /// </summary>
     internal static class PackageConstants
     {
         // schemas

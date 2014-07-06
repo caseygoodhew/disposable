@@ -133,7 +133,7 @@ namespace Disposable.Data.Access.Database.Oracle
 
             if (storedMethod is IStoredProcedure)
             {
-                foreach (var parameter in (storedMethod as IStoredProcedure).GetOutputParameters())
+                foreach (var parameter in (storedMethod as IStoredProcedure).GetOutputParameterValues())
                 {
                     var oracleParameter = command.Parameters.Add(parameter.Name, OracleDataTypeMapper.Map(parameter), ParameterDirection.Output);
                     oracleOutputParameter.Add(new OracleOutputParameter(oracleParameter, parameter));
@@ -141,7 +141,7 @@ namespace Disposable.Data.Access.Database.Oracle
             }
             else if (storedMethod is IStoredFunction)
             {
-                var parameter = (storedMethod as IStoredFunction).GetOutputParameter();
+                var parameter = (storedMethod as IStoredFunction).GetOutputParameterValue();
                 var oracleParameter = command.Parameters.Add(parameter.Name, OracleDataTypeMapper.Map(parameter), ParameterDirection.ReturnValue);
                 oracleOutputParameter.Add(new OracleOutputParameter(oracleParameter, parameter));
             }
