@@ -4,21 +4,19 @@ using System.Data;
 namespace Disposable.Data.ObjectMapping
 {
     /// <summary>
-    /// <see cref="DataTable"/> to <see cref="MapperDataReader"/> adapter.
+    /// <see cref="IDataReader"/> to <see cref="MapperDataReader"/> adapter.
     /// </summary>
-    internal class DataTableMapperDataReader : MapperDataReader
+    internal sealed class MapperIDataReaderAdapter : MapperDataReader
     {
-        private readonly DataTable dataTable;
-
-        private int index;
+        private readonly IDataReader dataReader;
 
         /// <summary>
-        /// Invokes a new instance of the <see cref="DataTableMapperDataReader"/> class.
+        /// Invokes a new instance of the <see cref="MapperIDataReaderAdapter"/> class.
         /// </summary>
-        /// <param name="table"></param>
-        internal DataTableMapperDataReader(DataTable table)
+        /// <param name="reader"></param>
+        internal MapperIDataReaderAdapter(IDataReader reader)
         {
-            dataTable = table;
+            dataReader = reader;
         }
 
         /// <summary>
@@ -28,7 +26,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The name of the field or the empty string (""), if there is no value to return.</returns>
         public override string GetName(int i)
         {
-            return dataTable.Columns[i].ColumnName;
+            return dataReader.GetName(i);
         }
 
         /// <summary>
@@ -38,7 +36,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The data type information for the specified field.</returns>
         public override string GetDataTypeName(int i)
         {
-            return dataTable.Columns[i].DataType.Name;
+            return dataReader.GetDataTypeName(i);
         }
 
         /// <summary>
@@ -48,7 +46,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The <see cref="Type"/> information corresponding to the type of <see cref="Object"/> that would be returned from <see cref="MapperDataReader.GetValue"/>. </returns>
         public override Type GetFieldType(int i)
         {
-            return dataTable.Columns[i].DataType;
+            return dataReader.GetFieldType(i);
         }
 
         /// <summary>
@@ -58,7 +56,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The <see cref="Object"/> which will contain the field value upon return.</returns>
         public override object GetValue(int i)
         {
-            return dataTable.Rows[index][i];
+            return dataReader.GetValue(i);
         }
 
         /// <summary>
@@ -68,14 +66,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The number of instances of <see cref="Object"/> in the array.</returns>
         public override int GetValues(object[] values)
         {
-            var count = Math.Min(values.Length, dataTable.Columns.Count);
-            
-            for (var i = 0; i < count; i++)
-            {
-                values[0] = this.GetValue(i);
-            }
-
-            return count;
+            return dataReader.GetValues(values);
         }
 
         /// <summary>
@@ -85,7 +76,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The index of the named field.</returns>
         public override int GetOrdinal(string name)
         {
-            return dataTable.Columns[name].Ordinal;
+            return dataReader.GetOrdinal(name);
         }
 
         /// <summary>
@@ -95,7 +86,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The value of the column.</returns>
         public override bool GetBoolean(int i)
         {
-            return Convert.ToBoolean(GetValue(i));
+            return dataReader.GetBoolean(i);
         }
 
         /// <summary>
@@ -105,7 +96,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The value of the column.</returns>
         public override byte GetByte(int i)
         {
-            return Convert.ToByte(GetValue(i));
+            return dataReader.GetByte(i);
         }
 
         /// <summary>
@@ -115,7 +106,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The value of the column.</returns>
         public override char GetChar(int i)
         {
-            return Convert.ToChar(GetValue(i));
+            return dataReader.GetChar(i);
         }
 
         /// <summary>
@@ -125,7 +116,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The value of the column.</returns>
         public override short GetInt16(int i)
         {
-            return Convert.ToInt16(GetValue(i));
+            return dataReader.GetInt16(i);
         }
 
         /// <summary>
@@ -135,7 +126,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The value of the column.</returns>
         public override int GetInt32(int i)
         {
-            return Convert.ToInt32(GetValue(i));
+            return dataReader.GetInt32(i);
         }
 
         /// <summary>
@@ -145,7 +136,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The value of the column.</returns>
         public override long GetInt64(int i)
         {
-            return Convert.ToInt64(GetValue(i));
+            return dataReader.GetInt64(i);
         }
 
         /// <summary>
@@ -155,7 +146,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The value of the column.</returns>
         public override float GetFloat(int i)
         {
-            return Convert.ToSingle(GetValue(i));
+            return dataReader.GetFloat(i);
         }
 
         /// <summary>
@@ -165,7 +156,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The value of the column.</returns>
         public override double GetDouble(int i)
         {
-            return Convert.ToDouble(GetValue(i));
+            return dataReader.GetDouble(i);
         }
 
         /// <summary>
@@ -175,7 +166,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The value of the column.</returns>
         public override string GetString(int i)
         {
-            return Convert.ToString(GetValue(i));
+            return dataReader.GetString(i);
         }
 
         /// <summary>
@@ -185,7 +176,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The value of the column.</returns>
         public override decimal GetDecimal(int i)
         {
-            return Convert.ToDecimal(GetValue(i));
+            return dataReader.GetDecimal(i);
         }
 
         /// <summary>
@@ -195,7 +186,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>The value of the column.</returns>
         public override DateTime GetDateTime(int i)
         {
-            return Convert.ToDateTime(GetValue(i));
+            return dataReader.GetDateTime(i);
         }
 
         /// <summary>
@@ -205,7 +196,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>true if the specified field is set to null; otherwise, false.</returns>
         public override bool IsDBNull(int i)
         {
-            return dataTable.Rows[index].IsNull(i);
+            return dataReader.IsDBNull(i);
         }
 
         /// <summary>
@@ -215,7 +206,7 @@ namespace Disposable.Data.ObjectMapping
         {
             get
             {
-                return dataTable.Columns.Count;
+                return dataReader.FieldCount;
             }
         }
 
@@ -225,7 +216,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>A <see cref="DataTable"/> that describes the column metadata.</returns>
         public override DataTable GetSchemaTable()
         {
-            return dataTable;
+            return dataReader.GetSchemaTable();
         }
 
         /// <summary>
@@ -234,8 +225,7 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>true if there are more rows; otherwise, false.</returns>
         public override bool Read()
         {
-            index++;
-            return index >= dataTable.Rows.Count;
+            return dataReader.Read();
         }
     }
 }

@@ -9,25 +9,33 @@ namespace Disposable.Data.ObjectMapping
     {
         public T GetOne<T>(DataSet dataSet) where T : class, new()
         {
-            throw new System.NotImplementedException();
+            return GetOne<T>(new MapperDataTableAdapter(dataSet.Tables[0]));
         }
 
         public T GetOne<T>(IDataReader dataReader) where T : class, new()
         {
-            throw new System.NotImplementedException();
+            return GetOne<T>(new MapperIDataReaderAdapter(dataReader));
         }
 
         public IEnumerable<T> GetMany<T>(DataSet dataSet) where T : class, new()
         {
-            throw new System.NotImplementedException();
+            return GetMany<T>(new MapperDataTableAdapter(dataSet.Tables[0]));
         }
 
         public IEnumerable<T> GetMany<T>(IDataReader dataReader) where T : class, new()
         {
+            return GetMany<T>(new MapperIDataReaderAdapter(dataReader)); 
+        }
+
+        private T GetOne<T>(MapperDataReader mapperDataReader) where T : class, new()
+        {
             throw new System.NotImplementedException();
         }
 
-
+        private IEnumerable<T> GetMany<T>(MapperDataReader mapperDataReader) where T : class, new()
+        {
+            throw new System.NotImplementedException();
+        } 
 
         private static IObjectBinding<T> GetObjectBinding<T>() where T : class
         {
