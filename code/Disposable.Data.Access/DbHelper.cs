@@ -12,7 +12,7 @@ namespace Disposable.Data.Access
     /// <summary>
     /// Orchestrates connections to the database.
     /// </summary>
-    public class DbHelper : IDbHelper
+    public sealed class DbHelper : IDbHelper
     {
         private static readonly Lazy<IConnectionProvider> ConnectionProvider = new Lazy<IConnectionProvider>(
             () => Locator.Current.Instance<IConnectionProvider>());

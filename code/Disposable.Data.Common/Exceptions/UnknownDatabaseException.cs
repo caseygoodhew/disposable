@@ -5,6 +5,7 @@ namespace Disposable.Data.Common.Exceptions
     /// <summary>
     /// Wrapper to rethrow any database exceptions which are unknown.
     /// </summary>
+    [Serializable]
     public sealed class UnknownDatabaseException : Exception
     {
         /// <summary>

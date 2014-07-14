@@ -1,4 +1,5 @@
-﻿using Disposable.Data.Common.Exceptions;
+﻿using System;
+using Disposable.Data.Common.Exceptions;
 using Oracle.DataAccess.Client;
 
 namespace Disposable.Data.Access.Database.Oracle
@@ -6,6 +7,7 @@ namespace Disposable.Data.Access.Database.Oracle
     /// <summary>
     /// Wrapper for <see cref="OracleException"/>s to bind them into the core data access stack.
     /// </summary>
+    [Serializable]
     internal class UnderlyingOracleException : UnderlyingDatabaseException
     {
         /// <summary>

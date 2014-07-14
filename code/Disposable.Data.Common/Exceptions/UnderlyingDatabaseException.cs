@@ -5,6 +5,7 @@ namespace Disposable.Data.Common.Exceptions
     /// <summary>
     /// Wrapper for database specific exceptions to bind them into the core data access stack.
     /// </summary>
+    [Serializable]
     public abstract class UnderlyingDatabaseException : Exception
     {
         /// <summary>

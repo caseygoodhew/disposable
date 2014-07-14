@@ -5,6 +5,7 @@ namespace Disposable.Data.Common.Exceptions
     /// <summary>
     /// Wrapper to rethrow any <see cref="ProgrammaticDatabaseException"/> exceptions which are not handled by the IStoredMethod
     /// </summary>
+    [Serializable]
     public sealed class UnhandledDatabaseException : Exception
     {
         /// <summary>

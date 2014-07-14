@@ -39,9 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\MapAsAttribute.cs" />
+    <Compile Include="Attributes\NoMapAttribute.cs" />
+    <Compile Include="DataTableDataReader.cs" />
+    <Compile Include="MapperDataReader.cs" />
+    <Compile Include="ObjectBinding.cs" />
+    <Compile Include="IMemberMapper.cs" />
+    <Compile Include="IObjectBinding.cs" />
     <Compile Include="IObjectMapper.cs" />
+    <Compile Include="MemberMapper.cs" />
     <Compile Include="ObjectMapper.cs" />
-    <Compile Include="ObjectMapperFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration.cs" />
   </ItemGroup>

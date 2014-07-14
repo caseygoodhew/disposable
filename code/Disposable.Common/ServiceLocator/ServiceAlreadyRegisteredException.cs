@@ -7,6 +7,7 @@ namespace Disposable.Common.ServiceLocator
     /// Indicates that a service has already been registered
     /// </summary>
     [ExcludeFromCodeCoverage]
+    [Serializable]
     public class ServiceAlreadyRegisteredException : Exception
     {
         /// <summary>

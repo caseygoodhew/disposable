@@ -8,7 +8,7 @@ namespace Disposable.Common.ServiceLocator
     /// </summary>
     public class BaseRegistrar : IRegistrar, ILocator
     {
-        private readonly Dictionary<Type, Func<object>> _services = new Dictionary<Type, Func<object>>();
+        private readonly Dictionary<Type, Func<object>> services = new Dictionary<Type, Func<object>>();
         
         /// <summary>
         /// Registers a locator function for type T
@@ -23,7 +23,7 @@ namespace Disposable.Common.ServiceLocator
                 throw new ServiceAlreadyRegisteredException(typeof(T));
             }
 
-            _services[typeof(T)] = locatorFunc;
+            this.services[typeof(T)] = locatorFunc;
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Disposable.Common.ServiceLocator
         /// <returns>true if the <see cref="type"/> is registered</returns>
         public bool IsRegistered(Type type)
         {
-            return _services.ContainsKey(type);
+            return this.services.ContainsKey(type);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Disposable.Common.ServiceLocator
         {
             if (IsRegistered<T>())
             {
-                instance = (T)_services[typeof(T)]();
+                instance = (T)this.services[typeof(T)]();
                 return true;
             }
 
@@ -107,7 +107,7 @@ namespace Disposable.Common.ServiceLocator
         {
             if (IsRegistered(type))
             {
-                instance = _services[type]();
+                instance = this.services[type]();
                 return true;
             }
 

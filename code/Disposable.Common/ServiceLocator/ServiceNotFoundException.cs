@@ -7,6 +7,7 @@ namespace Disposable.Common.ServiceLocator
     /// Indicates that a service could not be found.
     /// </summary>
     [ExcludeFromCodeCoverage]
+    [Serializable]
     public class ServiceNotFoundException : Exception
     {
         /// <summary>

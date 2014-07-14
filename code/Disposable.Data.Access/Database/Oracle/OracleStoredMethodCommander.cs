@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security;
+using System.Text.RegularExpressions;
+
 using Disposable.Common;
 using Disposable.Common.ServiceLocator;
 using Disposable.Data.Packages.Core;
@@ -16,6 +19,9 @@ namespace Disposable.Data.Access.Database.Oracle
     {
         private static readonly Lazy<IDataObjectConverter> DataConverter = new Lazy<IDataObjectConverter>(
             () => Locator.Current.Instance<IDataObjectConverter>());
+
+        private static readonly Regex StoredMethodFormat = new Regex("^[a-z][a-z_0-9]*.[a-z][a-z_0-9]*.[a-z][a-z_0-9]*$", RegexOptions.IgnoreCase);
+
 
         /// <summary>
         /// Executes a call to the given stored method over the given connection.
@@ -65,6 +71,7 @@ namespace Disposable.Data.Access.Database.Oracle
             return outputParameters.Select(p => OracleDataTypeMapper.Map(p, p.OracleParameter.Value));
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         private static OracleCommand CreateCommand(IDbConnection connection, IStoredMethod storedMethod)
         {
             Guard.ArgumentIsType<OracleDbConnection>(connection, "connection");
@@ -74,6 +81,11 @@ namespace Disposable.Data.Access.Database.Oracle
                 storedMethod.Package.Schema, 
                 storedMethod.Package.Name, 
                 storedMethod.Name);
+
+            if (!StoredMethodFormat.IsMatch(commandText))
+            {
+                throw new SecurityException(String.Format(@"""{0}"" failed match. Possible security breach.", commandText));
+            }
             
             var command = new OracleCommand(commandText, (connection as OracleDbConnection).Connection)
             {
