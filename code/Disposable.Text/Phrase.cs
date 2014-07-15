@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 using Disposable.Common.Extensions;
 
@@ -12,30 +14,48 @@ namespace Disposable.Text
 
         public Phrase(string phrase) : this(phrase, CaseStyles.Auto) { }
 
-        public Phrase(string phrase, CaseStyles style) : this(phrase, Dummy(phrase, style)) { }
-
-        private Phrase(string phrase, IList<Word> wordList) : base(
-            phrase,
-            () => wordList.Select(x => x.Upper()).Aggregate(StringAggregate),
-            () => wordList.Select(x => x.Lower()).Aggregate(StringAggregate),
-            () => wordList.Select(x => x.Proper()).Aggregate(StringAggregate))
+        public Phrase(string phrase, CaseStyles style) : this(phrase, Converter.Split(phrase, style))
         {
             if (wordList.IsNullOrEmpty())
             {
                 throw new ArgumentNullException("phrase");
             }
-            
+        }
+
+        private Phrase(string phrase, IList<Word> wordList) : base(
+            phrase,
+            () => wordList.Concat(x => x.Upper()),
+            () => wordList.Concat(x => x.Lower()),
+            () => wordList.Concat(x => x.Proper()))
+        {
             this.wordList = wordList;
         }
 
-        private static IList<Word> Dummy(string phrase, CaseStyles style)
+        public string As(CaseStyles style)
         {
-            throw new NotImplementedException();
-        }
+            switch (style)
+            {
+                case CaseStyles.Auto:
+                    throw new InvalidOperationException("Cannot generate Auto CaseStyle as output");
 
-        private static string StringAggregate(string current, string next)
-        {
-            return current + next;
+                case CaseStyles.LowerCamelCase:
+                    return Converter.ToLowerCamelCase(wordList);
+
+                case CaseStyles.UpperCamelCase:
+                    return Converter.ToUpperCamelCase(wordList);
+
+                case CaseStyles.SpaceDelimiter:
+                    return Converter.ToSpaceDelimited(wordList);
+
+                case CaseStyles.DashDelimiter:
+                    return Converter.ToDashDelimited(wordList);
+
+                case CaseStyles.UnderscoreDelimiter:
+                    return Converter.ToUnderscoreDelimited(wordList);
+
+                default:
+                    throw new ArgumentOutOfRangeException("style");
+            }
         }
     }
 }
