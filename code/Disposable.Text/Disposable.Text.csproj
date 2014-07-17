@@ -40,9 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CaseStyles.cs" />
-    <Compile Include="Component.cs" />
+    <Compile Include="TextComponent.cs" />
     <Compile Include="Phrase.cs" />
-    <Compile Include="Converter.cs" />
+    <Compile Include="CaseConverter.cs" />
     <Compile Include="Word.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

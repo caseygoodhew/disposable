@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 using Disposable.Common.Extensions;
 
 namespace Disposable.Text
 {
-    public class Phrase : Component
+    /// <summary>
+    /// <see cref="TextComponent"/> representing a word or group of words.
+    /// </summary>
+    public class Phrase : TextComponent
     {
         private readonly IList<Word> wordList;
 
-        public Phrase(string phrase) : this(phrase, CaseStyles.Auto) { }
+        private readonly Dictionary<CaseStyles, Lazy<TextComponent>> asLazy = new Dictionary<CaseStyles, Lazy<TextComponent>>();
 
-        public Phrase(string phrase, CaseStyles style) : this(phrase, Converter.Split(phrase, style))
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Phrase"/> class.
+        /// </summary>
+        /// <param name="phrase">The underlying phrase.</param>
+        /// <param name="style">The case style of the underlying phrase used for parsing. Defaults to Auto which is the least efficient parsing method.</param>
+        public Phrase(string phrase, CaseStyles style = CaseStyles.Auto) : this(phrase, CaseConverter.Split(phrase, style))
         {
             if (wordList.IsNullOrEmpty())
             {
@@ -24,38 +29,31 @@ namespace Disposable.Text
 
         private Phrase(string phrase, IList<Word> wordList) : base(
             phrase,
-            () => wordList.Concat(x => x.Upper()),
-            () => wordList.Concat(x => x.Lower()),
-            () => wordList.Concat(x => x.Proper()))
+            () => wordList.Concat(x => x.Upper),
+            () => wordList.Concat(x => x.Lower))
         {
             this.wordList = wordList;
+
+            asLazy[CaseStyles.LowerCamelCase] = new Lazy<TextComponent>(() => new Word(CaseConverter.ToLowerCamelCase(this.wordList)));
+            asLazy[CaseStyles.UpperCamelCase] = new Lazy<TextComponent>(() => new Word(CaseConverter.ToUpperCamelCase(this.wordList)));
+            asLazy[CaseStyles.SpaceDelimiter] = new Lazy<TextComponent>(() => new Word(CaseConverter.ToSpaceDelimited(this.wordList)));
+            asLazy[CaseStyles.DashDelimiter] = new Lazy<TextComponent>(() => new Word(CaseConverter.ToDashDelimited(this.wordList)));
+            asLazy[CaseStyles.UnderscoreDelimiter] = new Lazy<TextComponent>(() => new Word(CaseConverter.ToUnderscoreDelimited(this.wordList)));
         }
 
-        public string As(CaseStyles style)
+        /// <summary>
+        /// Gets the phase as a <see cref="TextComponent"/> in the requested case style of the value using lazy loading.
+        /// </summary>
+        /// <param name="style">The style to convert the phase to.</param>
+        /// <returns>A <see cref="TextComponent"/> in the requested case style of the value using lazy loading.</returns>
+        public TextComponent As(CaseStyles style)
         {
-            switch (style)
+            if (style == CaseStyles.Auto)
             {
-                case CaseStyles.Auto:
-                    throw new InvalidOperationException("Cannot generate Auto CaseStyle as output");
-
-                case CaseStyles.LowerCamelCase:
-                    return Converter.ToLowerCamelCase(wordList);
-
-                case CaseStyles.UpperCamelCase:
-                    return Converter.ToUpperCamelCase(wordList);
-
-                case CaseStyles.SpaceDelimiter:
-                    return Converter.ToSpaceDelimited(wordList);
-
-                case CaseStyles.DashDelimiter:
-                    return Converter.ToDashDelimited(wordList);
-
-                case CaseStyles.UnderscoreDelimiter:
-                    return Converter.ToUnderscoreDelimited(wordList);
-
-                default:
-                    throw new ArgumentOutOfRangeException("style");
+                throw new InvalidOperationException("Cannot generate Auto CaseStyle as output");
             }
+
+            return asLazy[style].Value;
         }
     }
 }
