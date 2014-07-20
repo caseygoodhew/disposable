@@ -13,12 +13,23 @@ namespace Disposable.Data.ObjectMapping
         private int index;
 
         /// <summary>
-        /// Invokes a new instance of the <see cref="MapperDataTableAdapter"/> class.
+        /// Initializes a new instance of the <see cref="MapperDataTableAdapter"/> class.
         /// </summary>
-        /// <param name="table"></param>
+        /// <param name="table">The underlying <see cref="DataTable"/></param>
         internal MapperDataTableAdapter(DataTable table)
         {
             dataTable = table;
+        }
+
+        /// <summary>
+        /// Gets the number of columns in the current row.
+        /// </summary>
+        public override int FieldCount
+        {
+            get
+            {
+                return dataTable.Columns.Count;
+            }
         }
 
         /// <summary>
@@ -76,16 +87,6 @@ namespace Disposable.Data.ObjectMapping
             }
 
             return count;
-        }
-
-        /// <summary>
-        /// Return the index of the named field.
-        /// </summary>
-        /// <param name="name">The name of the field to find.</param>
-        /// <returns>The index of the named field.</returns>
-        public override int GetOrdinal(string name)
-        {
-            return dataTable.Columns[name].Ordinal;
         }
 
         /// <summary>
@@ -209,17 +210,6 @@ namespace Disposable.Data.ObjectMapping
         }
 
         /// <summary>
-        /// Gets the number of columns in the current row.
-        /// </summary>
-        public override int FieldCount
-        {
-            get
-            {
-                return dataTable.Columns.Count;
-            }
-        }
-
-        /// <summary>
         /// Returns a <see cref="DataTable"/> that describes the column metadata.
         /// </summary>
         /// <returns>A <see cref="DataTable"/> that describes the column metadata.</returns>
@@ -232,7 +222,7 @@ namespace Disposable.Data.ObjectMapping
         /// Advances the IDataReader to the next record.
         /// </summary>
         /// <returns>true if there are more rows; otherwise, false.</returns>
-        public override bool Read()
+        internal override bool InternalRead()
         {
             index++;
             return index >= dataTable.Rows.Count;

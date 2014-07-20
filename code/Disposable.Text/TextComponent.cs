@@ -15,20 +15,22 @@ namespace Disposable.Text
         /// Initializes a new instance of the <see cref="TextComponent"/> class.
         /// </summary>
         /// <param name="value">The underlying <see cref="Value"/>.</param>
-        /// <param name="upperFactory">
-        /// A factory function that will provide an upper case version of the <see cref="value"/>. 
-        /// This may simply be a call to value.ToUpper, or an efficient call to a cached copy of the upper case value.
-        /// </param>
-        /// <param name="lowerFactory">
-        /// A factory function that will provide a lower case version of the <see cref="value"/>.
-        /// This may simply be a call to value.ToLower, or an efficient call to a cached copy of the lower case value.
-        /// </param>
-        protected TextComponent(string value, Func<string> upperFactory, Func<string> lowerFactory)
+        protected TextComponent(string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException("value");
+            }
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentNullException("value");
+            }
+            
             Value = value;
             Length = value.Length;
-            upperLazy = new Lazy<string>(upperFactory);
-            lowerLazy = new Lazy<string>(lowerFactory);
+            upperLazy = new Lazy<string>(Value.ToUpper);
+            lowerLazy = new Lazy<string>(Value.ToLower);
         }
 
         /// <summary>

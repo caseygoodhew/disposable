@@ -55,7 +55,7 @@ namespace Disposable.Common.Extensions
         /// <returns>The concatenated string.</returns>
         public static string Concat<TSource>(this IEnumerable<TSource> source, Func<TSource, string> toString, string separator)
         {
-            return source == null ? string.Empty : source.Select(toString).Aggregate((current, next) => current + separator + next);
+            return source == null ? string.Empty : string.Join(separator, source.Select(toString));
         }
     }
 }

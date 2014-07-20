@@ -8,20 +8,15 @@ namespace Disposable.Text
     public class Word : TextComponent
     {
         private readonly Word[][] subWords;
-        
+
         private readonly Lazy<string> properLazy;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Word"/> class.
         /// </summary>
         /// <param name="value">The underlying value.</param>
-        public Word(string value) : base(value, value.ToUpper, value.ToLower)
+        public Word(string value) : base(value)
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new ArgumentNullException("value");
-            }
-
             subWords = new Word[Length][];
 
             properLazy = new Lazy<string>(() => Sub(0, 1).Upper + Sub(1).Lower);
@@ -34,7 +29,7 @@ namespace Disposable.Text
         {
             get
             {
-                return properLazy.Value;   
+                return properLazy.Value;
             }
         }
 
@@ -59,7 +54,7 @@ namespace Disposable.Text
         /// <returns>A <see cref="Word"/> that is a substring of the <see cref="TextComponent.Value"/>.</returns>
         public Word Sub(int startIndex)
         {
-            return GetSub(startIndex, Length);
+            return GetSub(startIndex, Length - 1);
         }
 
         /// <summary>
@@ -81,7 +76,12 @@ namespace Disposable.Text
                 throw new IndexOutOfRangeException(string.Format(@"startIndex ({0}: [0=>{1}]) out range", startIndex, Length - 1));
             }
 
-            if (endIndex < 0 || endIndex > Length)
+            if (endIndex < startIndex)
+            {
+                throw new IndexOutOfRangeException(string.Format(@"endIndex ({0}) is less than startIndex ({1})", endIndex, startIndex));
+            } 
+            
+            if (endIndex < 0 || endIndex >= Length)
             {
                 throw new IndexOutOfRangeException(string.Format(@"endIndex ({0}: [0=>{1}]) out range", endIndex, Length));
             }
@@ -90,10 +90,10 @@ namespace Disposable.Text
             {
                 subWords[startIndex] = new Word[Length + 1];
             }
-            
+
             if (subWords[startIndex][endIndex] == null)
             {
-                subWords[startIndex][endIndex] = new Word(Value.Substring(startIndex, endIndex - startIndex));
+                subWords[startIndex][endIndex] = new Word(Value.Substring(startIndex, endIndex - startIndex + 1));
             }
 
             return subWords[startIndex][endIndex];

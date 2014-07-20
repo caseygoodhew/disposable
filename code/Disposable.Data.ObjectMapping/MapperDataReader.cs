@@ -1,13 +1,83 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+
+using Disposable.Text;
 
 namespace Disposable.Data.ObjectMapping
 {
     /// <summary>
     /// Provides partial implementation framework of IDataReader to be used for <see cref="ObjectMapping"/> services.
     /// </summary>
-    public abstract class MapperDataReader : IDataReader
+    internal abstract class MapperDataReader : IDataReader
     {
+        private readonly Lazy<Dictionary<string, int>> lazyOrdinalDictionary;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapperDataReader"/> class.
+        /// </summary>
+        protected MapperDataReader()
+        {
+            lazyOrdinalDictionary = new Lazy<Dictionary<string, int>>(() => BuildOrdinalDictionary(this));
+        }
+
+        /// <summary>
+        /// Gets the number of columns in the current row.
+        /// </summary>
+        public abstract int FieldCount { get; }
+
+        /// <summary>
+        /// Gets not implemented
+        /// </summary>
+        /// <returns>Not implemented</returns>
+        public int Depth
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether Not implemented
+        /// </summary>
+        /// <returns>Not implemented</returns>
+        public bool IsClosed
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Gets not implemented
+        /// </summary>
+        /// <returns>Not implemented</returns>
+        public int RecordsAffected
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        object IDataRecord.this[int i]
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        object IDataRecord.this[string name]
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         /// <summary>
         /// Gets the name for the field to find.
         /// </summary>
@@ -42,13 +112,6 @@ namespace Disposable.Data.ObjectMapping
         /// <param name="values">An array of <see cref="Object"/> to copy the attribute fields into.</param>
         /// <returns>The number of instances of <see cref="Object"/> in the array.</returns>
         public abstract int GetValues(object[] values);
-
-        /// <summary>
-        /// Return the index of the named field.
-        /// </summary>
-        /// <param name="name">The name of the field to find.</param>
-        /// <returns>The index of the named field.</returns>
-        public abstract int GetOrdinal(string name);
 
         /// <summary>
         /// Gets the value of the specified column as a Boolean.
@@ -135,40 +198,13 @@ namespace Disposable.Data.ObjectMapping
         public abstract bool IsDBNull(int i);
 
         /// <summary>
-        /// Gets the number of columns in the current row.
-        /// </summary>
-        public abstract int FieldCount { get; }
-
-        /// <summary>
         /// Returns a <see cref="DataTable"/> that describes the column metadata.
         /// </summary>
         /// <returns>A <see cref="DataTable"/> that describes the column metadata.</returns>
         public abstract DataTable GetSchemaTable();
 
         /// <summary>
-        /// Advances the IDataReader to the next record.
-        /// </summary>
-        /// <returns>true if there are more rows; otherwise, false.</returns>
-        public abstract bool Read();
-
-        object IDataRecord.this[int i]
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        object IDataRecord.this[string name]
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        /// <summary>
-        /// Dispose is implemented to satisfy interface inheritance and is not used. The underlying DataTable should be disposed independantly.
+        /// Dispose is implemented to satisfy interface inheritance and is not used. The underlying DataTable should be disposed of independently.
         /// </summary>
         public void Dispose()
         {
@@ -198,7 +234,7 @@ namespace Disposable.Data.ObjectMapping
         /// <param name="bufferoffset">Not implemented</param>
         /// <param name="length">Not implemented</param>
         /// <returns>Not implemented</returns>
-        public long GetChars(int i, long fieldoffset, char[] buffer, int bufferoffset, int length)
+        public long GetChars(int i, long fieldOffset, char[] buffer, int bufferoffset, int length)
         {
             throw new NotImplementedException();
         }
@@ -224,10 +260,17 @@ namespace Disposable.Data.ObjectMapping
         }
 
         /// <summary>
+        /// Use InternalRead instead.
+        /// </summary>
+        /// <returns>Not implemented.</returns>
+        public bool Read()
+        {
+            throw new InvalidOperationException("Calls to Read are not permitted.");
+        }
+
+        /// <summary>
         /// Not implemented
         /// </summary>
-        /// <param name="i">Not implemented</param>
-        /// <returns>Not implemented</returns>
         public void Close()
         {
             throw new NotImplementedException();
@@ -236,7 +279,6 @@ namespace Disposable.Data.ObjectMapping
         /// <summary>
         /// Not implemented
         /// </summary>
-        /// <param name="i">Not implemented</param>
         /// <returns>Not implemented</returns>
         public bool NextResult()
         {
@@ -244,36 +286,76 @@ namespace Disposable.Data.ObjectMapping
         }
 
         /// <summary>
-        /// Not implemented
+        /// Return the index of the named field.
         /// </summary>
-        public int Depth
+        /// <param name="name">The name of the field to find.</param>
+        /// <returns>The index of the named field.</returns>
+        public int GetOrdinal(string name)
         {
-            get
+            int ordinal;
+
+            if (!TryGetOrdinal(name, out ordinal))
             {
-                throw new NotImplementedException();
+                throw new IndexOutOfRangeException(string.Format(@"Could not find ordinal for ""{0}"".", name));
             }
+
+            return ordinal;
         }
 
         /// <summary>
-        /// Not implemented
+        /// Tries to get the index of the named field.=
         /// </summary>
-        public bool IsClosed
+        /// <param name="name">The name of the field to find.</param>
+        /// <param name="ordinal">The index of the named field.</param>
+        /// <returns>true if the named field was found.</returns>
+        public bool TryGetOrdinal(string name, out int ordinal)
         {
-            get
+            if (!lazyOrdinalDictionary.Value.TryGetValue(name, out ordinal))
             {
-                throw new NotImplementedException();
+                var upperCamelCase = new Phrase(name).As(JoinStyle.UpperCamelCase).Value;
+
+                if (!lazyOrdinalDictionary.Value.TryGetValue(upperCamelCase, out ordinal))
+                {
+                    return false;
+                }
+
+                lazyOrdinalDictionary.Value[upperCamelCase] = ordinal;
             }
+
+            return true;
         }
 
         /// <summary>
-        /// Not implemented
+        /// Return a value indicating if the name will map to an ordinal.
         /// </summary>
-        public int RecordsAffected
+        /// <param name="name">The name of the field to find.</param>
+        /// <returns>true if the named field was found.</returns>
+        public bool HasOrdinal(string name)
         {
-            get
+            int ordinal;
+            return TryGetOrdinal(name, out ordinal);
+        }
+
+        /// <summary>
+        /// Advances the IDataReader to the next record.
+        /// </summary>
+        /// <returns>true if there are more rows; otherwise, false.</returns>
+        internal abstract bool InternalRead();
+
+        private static Dictionary<string, int> BuildOrdinalDictionary(MapperDataReader mapperDataReader)
+        {
+            var dict = new Dictionary<string, int>();
+
+            for (var i = 0; i < mapperDataReader.FieldCount; i++)
             {
-                throw new NotImplementedException();
+                var name = mapperDataReader.GetName(i);
+                var phrase = new Phrase(name);
+
+                dict[name] = i;
+                dict[phrase.As(JoinStyle.UpperCamelCase).Value] = i;
             }
+
+            return dict;
         }
     }
 }

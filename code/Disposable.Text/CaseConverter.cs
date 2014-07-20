@@ -11,19 +11,19 @@ namespace Disposable.Text
     /// </summary>
     public static class CaseConverter
     {
-        private static readonly List<CaseStyles> CaseStyles = Enum.GetValues(typeof(CaseStyles)).Cast<CaseStyles>().ToList();
+        private static readonly List<SplitStyle> CaseStyles = Enum.GetValues(typeof(SplitStyle)).Cast<SplitStyle>().ToList();
         
-        private static readonly List<CaseStyles> SplitAutoExcludes = new List<CaseStyles> { Text.CaseStyles.Auto, Text.CaseStyles.UpperCamelCase };
+        private static readonly List<SplitStyle> SplitAutoExcludes = new List<SplitStyle> { SplitStyle.Auto };
 
-        private static readonly List<CaseStyles> SplitAutoIncludes = CaseStyles.Where(x => !SplitAutoExcludes.Contains(x)).ToList();
+        private static readonly List<SplitStyle> SplitAutoIncludes = CaseStyles.Where(x => !SplitAutoExcludes.Contains(x)).ToList();
 
         /// <summary>
         /// Splits a <see cref="String"/> into a list of <see cref="Word"/>s using the specified style. 
         /// </summary>
         /// <param name="value">The word to convert.</param>
-        /// <param name="style">The case style to use when splitting the <see cref="value"/>. Defaults to <see cref="Text.CaseStyles.Auto"/> which is the least efficient parsing method.</param>
+        /// <param name="style">The case style to use when splitting the <see cref="value"/>. Defaults to <see cref="SplitStyle.Auto"/> which is the least efficient parsing method.</param>
         /// <returns>A list of <see cref="Word"/>s split using the specified style.</returns>
-        public static IList<Word> Split(string value, CaseStyles style = Text.CaseStyles.Auto)
+        public static IList<Word> Split(string value, SplitStyle style = SplitStyle.Auto)
         {
             return Split(new Word(value), style);
         }
@@ -32,28 +32,25 @@ namespace Disposable.Text
         /// Splits a <see cref="Word"/> into a list of <see cref="Word"/>s using the specified style. 
         /// </summary>
         /// <param name="word">The value to convert.</param>
-        /// <param name="style">The case style to use when splitting the <see cref="word"/>. Defaults to <see cref="Text.CaseStyles.Auto"/> which is the least efficient parsing method.</param>
+        /// <param name="style">The case style to use when splitting the <see cref="word"/>. Defaults to <see cref="SplitStyle.Auto"/> which is the least efficient parsing method.</param>
         /// <returns>A list of <see cref="Word"/>s split using the specified style.</returns>
-        public static IList<Word> Split(Word word, CaseStyles style = Text.CaseStyles.Auto)
+        public static IList<Word> Split(Word word, SplitStyle style = SplitStyle.Auto)
         {
             switch (style)
             {
-                case Text.CaseStyles.Auto:
+                case SplitStyle.Auto:
                     return SplitAutoIncludes.Aggregate(new List<Word> { word } as IList<Word>, Split);
                     
-                case Text.CaseStyles.LowerCamelCase:
-                    return SplitLowerCamelCase(word);
+                case SplitStyle.CamelCase:
+                    return SplitCamelCase(word);
 
-                case Text.CaseStyles.UpperCamelCase:
-                    return SplitUpperCamelCase(word);
-
-                case Text.CaseStyles.SpaceDelimiter:
+                case SplitStyle.SpaceDelimited:
                     return SplitSpaceDelimited(word);
 
-                case Text.CaseStyles.DashDelimiter:
+                case SplitStyle.DashDelimited:
                     return SplitDashDelimited(word);
 
-                case Text.CaseStyles.UnderscoreDelimiter:
+                case SplitStyle.UnderscoreDelimited:
                     return SplitUnderscoreDelimited(word);
 
                 default:
@@ -65,9 +62,9 @@ namespace Disposable.Text
         /// Splits a list of <see cref="Word"/>s into a flattened list of <see cref="Word"/>s using the specified style. 
         /// </summary>
         /// <param name="words">The words to convert.</param>
-        /// <param name="style">The case style to use when splitting the <see cref="words"/>. Defaults to <see cref="Text.CaseStyles.Auto"/> which is the least efficient parsing method.</param>
+        /// <param name="style">The case style to use when splitting the <see cref="words"/>. Defaults to <see cref="SplitStyle.Auto"/> which is the least efficient parsing method.</param>
         /// <returns>A flattened list of <see cref="Word"/>s split using the specified style.</returns>
-        public static IList<Word> Split(IList<Word> words, CaseStyles style = Text.CaseStyles.Auto)
+        public static IList<Word> Split(IList<Word> words, SplitStyle style = SplitStyle.Auto)
         {
             return words.SelectMany(x => Split(x, style)).ToList();
         }
@@ -96,33 +93,65 @@ namespace Disposable.Text
         /// Converts a list of <see cref="Word"/>s to a Space Delimited string.
         /// </summary>
         /// <param name="words">The words to convert.</param>
+        /// <param name="caseStyle">The case style to use. (Defaults to CaseStyle.Default)</param>
         /// <returns>The converted string.</returns>
-        public static string ToSpaceDelimited(IList<Word> words)
+        public static string ToSpaceDelimited(IList<Word> words, CaseStyle caseStyle = CaseStyle.Default)
         {
-            return words.Concat(x => x.Value, " ");
+            return ToDelimited(words, caseStyle, " ");
         }
 
         /// <summary>
         /// Converts a list of <see cref="Word"/>s to a Dash-Delimited string.
         /// </summary>
         /// <param name="words">The words to convert.</param>
+        /// <param name="caseStyle">The case style to use. (Defaults to CaseStyle.Default)</param>
         /// <returns>The converted string.</returns>
-        public static string ToDashDelimited(IList<Word> words)
+        public static string ToDashDelimited(IList<Word> words, CaseStyle caseStyle = CaseStyle.Default)
         {
-            return words.Concat(x => x.Value, "-");
+            return ToDelimited(words, caseStyle, "-");
         }
 
         /// <summary>
         /// Converts a list of <see cref="Word"/>s to an Underscore_Delimited string.
         /// </summary>
         /// <param name="words">The words to convert.</param>
+        /// <param name="caseStyle">The case style to use. (Defaults to CaseStyle.Default)</param>
         /// <returns>The converted string.</returns>
-        public static string ToUnderscoreDelimited(IList<Word> words)
+        public static string ToUnderscoreDelimited(IList<Word> words, CaseStyle caseStyle = CaseStyle.Default)
         {
-            return words.Concat(x => x.Value, "_");
+            return ToDelimited(words, caseStyle, "_");
         }
 
-        private static IList<Word> SplitLowerCamelCase(Word word)
+        private static string ToDelimited(IList<Word> words, CaseStyle caseStyle, string separator)
+        {
+            Func<Word, string> selector;
+            
+            switch (caseStyle)
+            {
+                case CaseStyle.Default:
+                    selector = x => x.Value;
+                    break;
+
+                case CaseStyle.Lower:
+                    selector = x => x.Lower;
+                    break;
+
+                case CaseStyle.Upper:
+                    selector = x => x.Upper;
+                    break;
+
+                case CaseStyle.Proper:
+                    selector = x => x.Proper;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException("caseStyle");
+            }
+
+            return words.Concat(selector, separator);
+        }
+
+        private static IList<Word> SplitCamelCase(Word word)
         {
             // if there's no difference between upper or lower then this isn't a camel case
             if (word.Value == word.Upper || word.Value == word.Lower)
@@ -147,11 +176,6 @@ namespace Disposable.Text
             result.Add(word.Sub(lastCapAt));
 
             return result;
-        }
-
-        private static IList<Word> SplitUpperCamelCase(Word word)
-        {
-            return SplitLowerCamelCase(word);
         }
 
         private static IList<Word> SplitSpaceDelimited(Word word)

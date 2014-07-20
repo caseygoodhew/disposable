@@ -43,9 +43,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{FD5B9CCB-6D99-426D-B80A-8BDEC7C13462}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{64053B0A-CA80-45ED-8622-AB01696E1752}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\Users\Casey\Desktop\New folder (2)\WP_20140211_004.mp4 = ..\..\..\Users\Casey\Desktop\New folder (2)\WP_20140211_004.mp4
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{2BAE2819-4179-4951-9C0E-B0FC9DCC3A38}"
 EndProject
@@ -77,6 +74,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Data.ObjectMapping", "Disposable.Data.ObjectMapping\Disposable.Data.ObjectMapping.csproj", "{9B69086A-67C7-464D-9848-786ABB6827B8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Text", "Disposable.Text\Disposable.Text.csproj", "{76512F6F-32C6-47E8-A6A0-FFE807549F9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Text.Test", "Disposable.Text.Test\Disposable.Text.Test.csproj", "{E3CB3565-61EC-4965-8705-B7CC94267D7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -298,6 +297,16 @@ Global
 		{76512F6F-32C6-47E8-A6A0-FFE807549F9F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{76512F6F-32C6-47E8-A6A0-FFE807549F9F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{76512F6F-32C6-47E8-A6A0-FFE807549F9F}.Release|x64.ActiveCfg = Release|Any CPU
+		{E3CB3565-61EC-4965-8705-B7CC94267D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3CB3565-61EC-4965-8705-B7CC94267D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3CB3565-61EC-4965-8705-B7CC94267D7D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E3CB3565-61EC-4965-8705-B7CC94267D7D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E3CB3565-61EC-4965-8705-B7CC94267D7D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E3CB3565-61EC-4965-8705-B7CC94267D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3CB3565-61EC-4965-8705-B7CC94267D7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3CB3565-61EC-4965-8705-B7CC94267D7D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E3CB3565-61EC-4965-8705-B7CC94267D7D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E3CB3565-61EC-4965-8705-B7CC94267D7D}.Release|x64.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -319,6 +328,7 @@ Global
 		{79A25E09-9235-4C59-A2A6-0F1658A6D4EC} = {CFDB2C0E-A39D-4492-97F7-70BC82C6CA69}
 		{31EC337A-F4C1-4C7A-BDE3-523729A561F4} = {CFDB2C0E-A39D-4492-97F7-70BC82C6CA69}
 		{58635AE0-9A30-4C2E-9A54-4135B2607299} = {CAB106E3-339A-4A65-A5B2-E4C73FF49F6F}
+		{E3CB3565-61EC-4965-8705-B7CC94267D7D} = {CAB106E3-339A-4A65-A5B2-E4C73FF49F6F}
 		{EF86A53A-1A9A-45F9-8D77-BE0FD92E16CA} = {9C167216-3F98-4379-B2AF-E91EC6162FA3}
 		{89764B07-6937-4F2C-B876-991E1C879C44} = {9C167216-3F98-4379-B2AF-E91EC6162FA3}
 		{51E2008F-9BC3-40F2-8C1D-A79F3D525BA7} = {9C167216-3F98-4379-B2AF-E91EC6162FA3}

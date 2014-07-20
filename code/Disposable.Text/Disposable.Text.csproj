@@ -39,7 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CaseStyles.cs" />
+    <Compile Include="CaseStyle.cs" />
+    <Compile Include="JoinStyle.cs" />
+    <Compile Include="SplitStyle.cs" />
     <Compile Include="TextComponent.cs" />
     <Compile Include="Phrase.cs" />
     <Compile Include="CaseConverter.cs" />

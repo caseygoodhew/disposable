@@ -11,12 +11,23 @@ namespace Disposable.Data.ObjectMapping
         private readonly IDataReader dataReader;
 
         /// <summary>
-        /// Invokes a new instance of the <see cref="MapperIDataReaderAdapter"/> class.
+        /// Initializes a new instance of the <see cref="MapperIDataReaderAdapter"/> class.
         /// </summary>
-        /// <param name="reader"></param>
+        /// <param name="reader">The underlying <see cref="IDataReader"/></param>
         internal MapperIDataReaderAdapter(IDataReader reader)
         {
             dataReader = reader;
+        }
+
+        /// <summary>
+        /// Gets the number of columns in the current row.
+        /// </summary>
+        public override int FieldCount
+        {
+            get
+            {
+                return dataReader.FieldCount;
+            }
         }
 
         /// <summary>
@@ -67,16 +78,6 @@ namespace Disposable.Data.ObjectMapping
         public override int GetValues(object[] values)
         {
             return dataReader.GetValues(values);
-        }
-
-        /// <summary>
-        /// Return the index of the named field.
-        /// </summary>
-        /// <param name="name">The name of the field to find.</param>
-        /// <returns>The index of the named field.</returns>
-        public override int GetOrdinal(string name)
-        {
-            return dataReader.GetOrdinal(name);
         }
 
         /// <summary>
@@ -200,17 +201,6 @@ namespace Disposable.Data.ObjectMapping
         }
 
         /// <summary>
-        /// Gets the number of columns in the current row.
-        /// </summary>
-        public override int FieldCount
-        {
-            get
-            {
-                return dataReader.FieldCount;
-            }
-        }
-
-        /// <summary>
         /// Returns a <see cref="DataTable"/> that describes the column metadata.
         /// </summary>
         /// <returns>A <see cref="DataTable"/> that describes the column metadata.</returns>
@@ -223,7 +213,7 @@ namespace Disposable.Data.ObjectMapping
         /// Advances the IDataReader to the next record.
         /// </summary>
         /// <returns>true if there are more rows; otherwise, false.</returns>
-        public override bool Read()
+        internal override bool InternalRead()
         {
             return dataReader.Read();
         }
