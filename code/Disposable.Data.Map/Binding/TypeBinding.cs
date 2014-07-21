@@ -5,17 +5,18 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 
-using Disposable.Data.ObjectMapping.Attributes;
+using Disposable.Data.Map.Attributes;
+using Disposable.Data.Map.Data;
 
-namespace Disposable.Data.ObjectMapping
+namespace Disposable.Data.Map.Binding
 {
     /// <summary>
-    /// Provides type mapping services and <see cref="IMemberMapper{TObject}"/> enumeration.
+    /// Provides type mapping services and <see cref="IMemberBinding{TObject}"/> enumeration.
     /// </summary>
     /// <typeparam name="TObject">The type to map.</typeparam>
     internal class TypeBinding<TObject> : ITypeBinding<TObject> where TObject : class
     {
-        private readonly IEnumerable<IMemberMapper<TObject>> members;
+        private readonly IEnumerable<IMemberBinding<TObject>> members;
 
         private readonly List<MethodInfo> beginMappingMethods;
         
@@ -30,18 +31,18 @@ namespace Disposable.Data.ObjectMapping
             
             members = objType.GetMembers(BindingFlags.NonPublic)
                              .Where(x => !x.GetCustomAttributes(typeof(NoMapAttribute), true).Any())
-                             .Select(x => new MemberMapper<TObject>(x));
+                             .Select(MemberBinding<TObject>.Create);
 
-            beginMappingMethods = GetTypeMappingMethods<BeginMappingAttribute>(objType).ToList();
+            beginMappingMethods = GetTypeMappingMethods<BeginMapAttribute>(objType).ToList();
 
-            endMappingMethods = GetTypeMappingMethods<EndMappingAttribute>(objType).ToList();
+            endMappingMethods = GetTypeMappingMethods<EndMapAttribute>(objType).ToList();
         }
 
         /// <summary>
         /// Gets the enumerator.
         /// </summary>
         /// <returns>The enumerator.</returns>
-        public IEnumerator<IMemberMapper<TObject>> GetEnumerator()
+        public IEnumerator<IMemberBinding<TObject>> GetEnumerator()
         {
             return members.GetEnumerator();
         }
@@ -59,30 +60,30 @@ namespace Disposable.Data.ObjectMapping
         /// Called before any data is automatically mapped against the object.
         /// </summary>
         /// <param name="obj">The object that is being mapped to.</param>
-        /// <param name="mapperDataReader">The <see cref="MapperDataReader"/> that contains the data to map.</param>
-        public void BeginMapping(TObject obj, MapperDataReader mapperDataReader)
+        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> that contains the data to map.</param>
+        public void BeginMapping(TObject obj, DataSourceReader dataSourceReader)
         {
-            InvokeTypeMappingMethods(beginMappingMethods, obj, mapperDataReader);
+            InvokeTypeMappingMethods(beginMappingMethods, obj, dataSourceReader);
         }
 
         /// <summary>
         /// Called after all data is automatically mapped against the object.
         /// </summary>
         /// <param name="obj">The object that is being mapped to.</param>
-        /// <param name="mapperDataReader">The <see cref="MapperDataReader"/> that contains the data to map.</param>
-        public void EndMapping(TObject obj, MapperDataReader mapperDataReader)
+        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> that contains the data to map.</param>
+        public void EndMapping(TObject obj, DataSourceReader dataSourceReader)
         {
-            InvokeTypeMappingMethods(endMappingMethods, obj, mapperDataReader);
+            InvokeTypeMappingMethods(endMappingMethods, obj, dataSourceReader);
         }
 
-        private static void InvokeTypeMappingMethods(List<MethodInfo> methods, TObject obj, MapperDataReader mapperDataReader)
+        private static void InvokeTypeMappingMethods(List<MethodInfo> methods, TObject obj, DataSourceReader dataSourceReader)
         {
             if (methods == null || !methods.Any())
             {
                 return;
             }
 
-            var parameters = new object[] { mapperDataReader };
+            var parameters = new object[] { dataSourceReader };
 
             methods.ForEach(x => x.Invoke(obj, parameters));
         }

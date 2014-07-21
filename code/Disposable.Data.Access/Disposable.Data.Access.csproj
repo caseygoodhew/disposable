@@ -96,7 +96,7 @@
       <Project>{8E85F9DF-7C2E-4968-8AD4-E043CC40A8B8}</Project>
       <Name>Disposable.Data.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Disposable.Data.ObjectMapping\Disposable.Data.ObjectMapping.csproj">
+    <ProjectReference Include="..\Disposable.Data.Map\Disposable.Data.Map.csproj">
       <Project>{9B69086A-67C7-464D-9848-786ABB6827B8}</Project>
       <Name>Disposable.Data.ObjectMapping</Name>
     </ProjectReference>

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Disposable.Common.Extensions;
-using Disposable.Common.ServiceLocator;
-using Disposable.Data.ObjectMapping;
+using Disposable.Data.Map;
+using Disposable.Data.Map.Data;
 
 namespace Disposable.Data.Access.Database
 {
@@ -13,14 +13,11 @@ namespace Disposable.Data.Access.Database
     /// </summary>
     internal abstract class DataObjectConverter : IDataObjectConverter
     {
-        private static readonly Lazy<IObjectMapper> ObjectMapper = new Lazy<IObjectMapper>(
-            () => Locator.Current.Instance<IObjectMapper>());
-        
         /// <summary>
         /// Converts an object set to a well known data type.
         /// Valid types are any value type, DataSet, IDataReader or IEnumerable{IDataReader}.
         /// These types expect that the <see cref="values"/> parameter will contain an appropriate number of elements to satisfy the data type being returned.
-        /// Any other type will be passed to the registered <see cref="IObjectMapper"/> which will perform its own validation as needed.
+        /// Any other type will be passed to the registered <see cref="IDataSourceMapper{TDataSource}"/> which will perform its own validation as needed.
         /// </summary>
         /// <typeparam name="T">The type to map to.</typeparam>
         /// <param name="values">The values to convert.</param>
@@ -96,13 +93,11 @@ namespace Disposable.Data.Access.Database
                 throw new InvalidOperationException(string.Format("{0} does not contain a public default constructor.", typeT.Name));
             }
 
-            var mapper = ObjectMapper.Value;
-            
-            var method = mapper.GetType()
+            var method = typeof(Mapper)
                                .GetMethod(isEnumerable ? "GetMany" : "GetOne", new[] { typeof(IDataReader) })
                                .MakeGenericMethod(typeToBind);
 
-            return (T)method.Invoke(mapper, new object[] { ToIDataReader(values) });
+            return (T)method.Invoke(null, new object[] { ToIDataReader(values) });
         }
     }
 }

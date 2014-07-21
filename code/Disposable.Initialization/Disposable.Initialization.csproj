@@ -69,9 +69,9 @@
       <Project>{818c082c-4696-44f2-ae09-97b1a6886191}</Project>
       <Name>Disposable.Data.Access</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Disposable.Data.ObjectMapping\Disposable.Data.ObjectMapping.csproj">
+    <ProjectReference Include="..\Disposable.Data.Map\Disposable.Data.Map.csproj">
       <Project>{9b69086a-67c7-464d-9848-786abb6827b8}</Project>
-      <Name>Disposable.Data.ObjectMapping</Name>
+      <Name>Disposable.Data.Map</Name>
     </ProjectReference>
     <ProjectReference Include="..\Disposable.Data.Security\Disposable.Data.Security.csproj">
       <Project>{803C1789-CA8F-46F4-86DF-164524353639}</Project>

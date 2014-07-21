@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Disposable.Data.ObjectMapping.Attributes
+namespace Disposable.Data.Map.Attributes
 {
     /// <summary>
     /// Fields or Properties flagged with this attribute will not be automatically mapped.

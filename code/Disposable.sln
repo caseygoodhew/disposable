@@ -71,7 +71,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Data.Packages", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Data.Common", "Disposable.Data.Common\Disposable.Data.Common.csproj", "{8E85F9DF-7C2E-4968-8AD4-E043CC40A8B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Data.ObjectMapping", "Disposable.Data.ObjectMapping\Disposable.Data.ObjectMapping.csproj", "{9B69086A-67C7-464D-9848-786ABB6827B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Data.Map", "Disposable.Data.Map\Disposable.Data.Map.csproj", "{9B69086A-67C7-464D-9848-786ABB6827B8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Text", "Disposable.Text\Disposable.Text.csproj", "{76512F6F-32C6-47E8-A6A0-FFE807549F9F}"
 EndProject

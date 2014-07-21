@@ -4,19 +4,19 @@ using System.Data;
 
 using Disposable.Text;
 
-namespace Disposable.Data.ObjectMapping
+namespace Disposable.Data.Map.Data
 {
     /// <summary>
-    /// Provides partial implementation framework of IDataReader to be used for <see cref="ObjectMapping"/> services.
+    /// Provides partial implementation framework of IDataReader to be used for <see cref="Disposable.Data.ObjectMapping"/> services.
     /// </summary>
-    internal abstract class MapperDataReader : IDataReader
+    internal abstract class DataSourceReader : IDataReader
     {
         private readonly Lazy<Dictionary<string, int>> lazyOrdinalDictionary;
         
         /// <summary>
-        /// Initializes a new instance of the <see cref="MapperDataReader"/> class.
+        /// Initializes a new instance of the <see cref="DataSourceReader"/> class.
         /// </summary>
-        protected MapperDataReader()
+        protected DataSourceReader()
         {
             lazyOrdinalDictionary = new Lazy<Dictionary<string, int>>(() => BuildOrdinalDictionary(this));
         }
@@ -342,13 +342,13 @@ namespace Disposable.Data.ObjectMapping
         /// <returns>true if there are more rows; otherwise, false.</returns>
         internal abstract bool InternalRead();
 
-        private static Dictionary<string, int> BuildOrdinalDictionary(MapperDataReader mapperDataReader)
+        private static Dictionary<string, int> BuildOrdinalDictionary(DataSourceReader dataSourceReader)
         {
             var dict = new Dictionary<string, int>();
 
-            for (var i = 0; i < mapperDataReader.FieldCount; i++)
+            for (var i = 0; i < dataSourceReader.FieldCount; i++)
             {
-                var name = mapperDataReader.GetName(i);
+                var name = dataSourceReader.GetName(i);
                 var phrase = new Phrase(name);
 
                 dict[name] = i;

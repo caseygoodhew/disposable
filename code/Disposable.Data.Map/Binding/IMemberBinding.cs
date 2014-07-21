@@ -1,15 +1,15 @@
-﻿namespace Disposable.Data.ObjectMapping
+﻿namespace Disposable.Data.Map.Binding
 {
     /// <summary>
     /// Interface to interact with minimally decorated MemberInfo instances.
     /// </summary>
     /// <typeparam name="TObject">The member owner type.</typeparam>
-    internal interface IMemberMapper<in TObject> where TObject : class
+    internal interface IMemberBinding<in TObject> where TObject : class
     {
         /// <summary>
         /// Gets the member name;
         /// </summary>
-        string MemberName { get; }
+        string Name { get; }
 
         /// <summary>
         /// Sets the value of the member against a given object.

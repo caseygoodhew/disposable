@@ -7,8 +7,8 @@
     <ProjectGuid>{9B69086A-67C7-464D-9848-786ABB6827B8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Disposable.Data.ObjectMapping</RootNamespace>
-    <AssemblyName>Disposable.Data.ObjectMapping</AssemblyName>
+    <RootNamespace>Disposable.Data.Map</RootNamespace>
+    <AssemblyName>Disposable.Data.Map</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,23 +39,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\BeginMappingAttribute.cs" />
-    <Compile Include="Attributes\EndMappingAttribute.cs" />
+    <Compile Include="Attributes\BeginMapAttribute.cs" />
+    <Compile Include="Attributes\EndMapAttribute.cs" />
     <Compile Include="Attributes\MapAsAttribute.cs" />
     <Compile Include="Attributes\NoMapAttribute.cs" />
-    <Compile Include="MapperDataReaderPartialTypeBinding.cs" />
-    <Compile Include="MapperIDataReaderAdapter.cs" />
-    <Compile Include="MapperDataTableAdapter.cs" />
-    <Compile Include="MapperDataReader.cs" />
-    <Compile Include="TypeBinding.cs" />
-    <Compile Include="IMemberMapper.cs" />
-    <Compile Include="ITypeBinding.cs" />
-    <Compile Include="IObjectMapper.cs" />
-    <Compile Include="MemberMapper.cs" />
-    <Compile Include="ObjectMapper.cs" />
-    <Compile Include="ObjectMapperException.cs" />
+    <Compile Include="Binding\PropertyBinding.cs" />
+    <Compile Include="Binding\FieldBinding.cs" />
+    <Compile Include="Mapper.cs" />
+    <Compile Include="Data\DataSourceReaderMapper.cs" />
+    <Compile Include="Data\DataReaderMapper.cs" />
+    <Compile Include="Binding\ITypeBindingFactory.cs" />
+    <Compile Include="Binding\PartialTypeBinding.cs" />
+    <Compile Include="Data\DataReaderAdapter.cs" />
+    <Compile Include="Data\DataTableAdapter.cs" />
+    <Compile Include="Data\DataSourceReader.cs" />
+    <Compile Include="Binding\TypeBinding.cs" />
+    <Compile Include="Binding\IMemberBinding.cs" />
+    <Compile Include="Binding\ITypeBinding.cs" />
+    <Compile Include="Data\IDataSourceMapper.cs" />
+    <Compile Include="Binding\MemberBinding.cs" />
+    <Compile Include="Data\DataSetMapper.cs" />
+    <Compile Include="MapperException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration.cs" />
+    <Compile Include="Binding\TypeBindingFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Disposable.Common\Disposable.Common.csproj">

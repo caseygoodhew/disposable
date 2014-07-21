@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Disposable.Data.ObjectMapping.Attributes
+namespace Disposable.Data.Map.Attributes
 {
     /// <summary>
     /// Fields or Properties flagged with this attribute can specify an alternative mapping name.

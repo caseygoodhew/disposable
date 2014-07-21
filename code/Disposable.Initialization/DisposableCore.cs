@@ -22,10 +22,9 @@ namespace Disposable.Initialization
             }
 
             var registrar = locator.BaseRegistrar;
-
             
             Data.Access.Registration.Register(registrar);
-            Data.ObjectMapping.Registration.Register(registrar);
+            Data.Map.Registration.Register(registrar);
             Data.Packages.Registration.Register(registrar);
             Data.Security.Registration.Register(registrar);
             
