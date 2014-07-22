@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Data;
 
-namespace Disposable.Data.Map.Data
+namespace Disposable.Data.Map.DataSource
 {
     /// <summary>
-    /// <see cref="IDataReader"/> to <see cref="DataSourceReader"/> adapter.
+    /// <see cref="DataTable"/> to <see cref="DataSourceReader"/> adapter.
     /// </summary>
-    internal sealed class DataReaderAdapter : DataSourceReader
+    internal sealed class DataTableAdapter : DataSourceReader
     {
-        private readonly IDataReader dataReader;
+        private readonly DataTable dataTable;
+
+        private int index;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataReaderAdapter"/> class.
+        /// Initializes a new instance of the <see cref="DataTableAdapter"/> class.
         /// </summary>
-        /// <param name="reader">The underlying <see cref="IDataReader"/></param>
-        internal DataReaderAdapter(IDataReader reader)
+        /// <param name="table">The underlying <see cref="DataTable"/></param>
+        internal DataTableAdapter(DataTable table)
         {
-            dataReader = reader;
+            dataTable = table;
         }
 
         /// <summary>
@@ -26,7 +28,7 @@ namespace Disposable.Data.Map.Data
         {
             get
             {
-                return dataReader.FieldCount;
+                return dataTable.Columns.Count;
             }
         }
 
@@ -37,7 +39,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The name of the field or the empty string (""), if there is no value to return.</returns>
         public override string GetName(int i)
         {
-            return dataReader.GetName(i);
+            return dataTable.Columns[i].ColumnName;
         }
 
         /// <summary>
@@ -47,7 +49,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The data type information for the specified field.</returns>
         public override string GetDataTypeName(int i)
         {
-            return dataReader.GetDataTypeName(i);
+            return dataTable.Columns[i].DataType.Name;
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The <see cref="Type"/> information corresponding to the type of <see cref="Object"/> that would be returned from <see cref="DataSourceReader.GetValue"/>. </returns>
         public override Type GetFieldType(int i)
         {
-            return dataReader.GetFieldType(i);
+            return dataTable.Columns[i].DataType;
         }
 
         /// <summary>
@@ -67,7 +69,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The <see cref="Object"/> which will contain the field value upon return.</returns>
         public override object GetValue(int i)
         {
-            return dataReader.GetValue(i);
+            return dataTable.Rows[index][i];
         }
 
         /// <summary>
@@ -77,7 +79,14 @@ namespace Disposable.Data.Map.Data
         /// <returns>The number of instances of <see cref="Object"/> in the array.</returns>
         public override int GetValues(object[] values)
         {
-            return dataReader.GetValues(values);
+            var count = Math.Min(values.Length, dataTable.Columns.Count);
+            
+            for (var i = 0; i < count; i++)
+            {
+                values[0] = GetValue(i);
+            }
+
+            return count;
         }
 
         /// <summary>
@@ -87,7 +96,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The value of the column.</returns>
         public override bool GetBoolean(int i)
         {
-            return dataReader.GetBoolean(i);
+            return Convert.ToBoolean(GetValue(i));
         }
 
         /// <summary>
@@ -97,7 +106,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The value of the column.</returns>
         public override byte GetByte(int i)
         {
-            return dataReader.GetByte(i);
+            return Convert.ToByte(GetValue(i));
         }
 
         /// <summary>
@@ -107,7 +116,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The value of the column.</returns>
         public override char GetChar(int i)
         {
-            return dataReader.GetChar(i);
+            return Convert.ToChar(GetValue(i));
         }
 
         /// <summary>
@@ -117,7 +126,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The value of the column.</returns>
         public override short GetInt16(int i)
         {
-            return dataReader.GetInt16(i);
+            return Convert.ToInt16(GetValue(i));
         }
 
         /// <summary>
@@ -127,7 +136,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The value of the column.</returns>
         public override int GetInt32(int i)
         {
-            return dataReader.GetInt32(i);
+            return Convert.ToInt32(GetValue(i));
         }
 
         /// <summary>
@@ -137,7 +146,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The value of the column.</returns>
         public override long GetInt64(int i)
         {
-            return dataReader.GetInt64(i);
+            return Convert.ToInt64(GetValue(i));
         }
 
         /// <summary>
@@ -147,7 +156,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The value of the column.</returns>
         public override float GetFloat(int i)
         {
-            return dataReader.GetFloat(i);
+            return Convert.ToSingle(GetValue(i));
         }
 
         /// <summary>
@@ -157,7 +166,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The value of the column.</returns>
         public override double GetDouble(int i)
         {
-            return dataReader.GetDouble(i);
+            return Convert.ToDouble(GetValue(i));
         }
 
         /// <summary>
@@ -167,7 +176,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The value of the column.</returns>
         public override string GetString(int i)
         {
-            return dataReader.GetString(i);
+            return Convert.ToString(GetValue(i));
         }
 
         /// <summary>
@@ -177,7 +186,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The value of the column.</returns>
         public override decimal GetDecimal(int i)
         {
-            return dataReader.GetDecimal(i);
+            return Convert.ToDecimal(GetValue(i));
         }
 
         /// <summary>
@@ -187,7 +196,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>The value of the column.</returns>
         public override DateTime GetDateTime(int i)
         {
-            return dataReader.GetDateTime(i);
+            return Convert.ToDateTime(GetValue(i));
         }
 
         /// <summary>
@@ -197,7 +206,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>true if the specified field is set to null; otherwise, false.</returns>
         public override bool IsDBNull(int i)
         {
-            return dataReader.IsDBNull(i);
+            return dataTable.Rows[index].IsNull(i);
         }
 
         /// <summary>
@@ -206,7 +215,7 @@ namespace Disposable.Data.Map.Data
         /// <returns>A <see cref="DataTable"/> that describes the column metadata.</returns>
         public override DataTable GetSchemaTable()
         {
-            return dataReader.GetSchemaTable();
+            return dataTable;
         }
 
         /// <summary>
@@ -215,7 +224,8 @@ namespace Disposable.Data.Map.Data
         /// <returns>true if there are more rows; otherwise, false.</returns>
         internal override bool InternalRead()
         {
-            return dataReader.Read();
+            index++;
+            return index >= dataTable.Rows.Count;
         }
     }
 }

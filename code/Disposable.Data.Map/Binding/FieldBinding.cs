@@ -3,7 +3,7 @@
 namespace Disposable.Data.Map.Binding
 {
     /// <summary>
-    /// Minimally decorated MemberInfo instances.
+    /// Binds to a Field of the given generic type and provides mapping decoration.
     /// </summary>
     /// <typeparam name="TObject">The member owner type.</typeparam>
     internal class FieldBinding<TObject> : MemberBinding<TObject> where TObject : class
@@ -11,7 +11,7 @@ namespace Disposable.Data.Map.Binding
         private readonly FieldInfo fieldInfo;
         
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemberBinding{TObject}"/> class.
+        /// Initializes a new instance of the <see cref="FieldBinding{TObject}"/> class.
         /// </summary>
         /// <param name="fieldInfo">The underlying <see cref="FieldInfo"/>.</param>
         internal FieldBinding(FieldInfo fieldInfo) : base(fieldInfo, fieldInfo.FieldType)
@@ -20,9 +20,9 @@ namespace Disposable.Data.Map.Binding
         }
 
         /// <summary>
-        /// Sets the value of the member against the given object.
+        /// Sets the field value of the given object.
         /// </summary>
-        /// <param name="obj">The object to set the member value against.</param>
+        /// <param name="obj">The object to set the field value against.</param>
         /// <param name="value">The value to set.</param>
         public override void SetValue(TObject obj, object value)
         {

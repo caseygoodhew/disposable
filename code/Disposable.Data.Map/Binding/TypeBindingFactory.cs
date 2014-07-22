@@ -1,18 +1,18 @@
 using Disposable.Common.ServiceLocator;
-using Disposable.Data.Map.Data;
+using Disposable.Data.Map.DataSource;
 
 namespace Disposable.Data.Map.Binding
 {
     /// <summary>
-    /// Factory to create to cache and retrieve <see cref="ITypeBinding{T}"/>s.
+    /// Factory to create, cache and retrieve <see cref="ITypeBinding{T}"/> instances.
     /// </summary>
     internal class TypeBindingFactory : ITypeBindingFactory
     {
         /// <summary>
-        /// Gets an <see cref="ITypeBinding{T}"/> that is bound to the given generic type.
+        /// Gets an <see cref="ITypeBinding{T}"/> instance that is bound to the given generic type.
         /// </summary>
         /// <typeparam name="T">The generic type to bind.</typeparam>
-        /// <returns>The <see cref="ITypeBinding{T}"/> for the generic type.</returns>
+        /// <returns>An <see cref="ITypeBinding{T}"/> instance that is bound to the given generic type.</returns>
         public ITypeBinding<T> Get<T>() where T : class
         {
             ITypeBinding<T> typeBinding;
@@ -26,12 +26,13 @@ namespace Disposable.Data.Map.Binding
         }
 
         /// <summary>
-        /// Gets an <see cref="ITypeBinding{T}"/> that is bound to the given generic type and reduced to the 
-        /// relavent <see cref="IMemberBindingBinding{TObject}"/>s that can be mapped to the to the given <see cref="DataSourceReader"/>.
+        /// Gets an <see cref="ITypeBinding{T}"/> instance that is bound to the given generic type 
+        /// and reduced to the relevant <see cref="IMemberBinding{TObject}"/>s that can possibly be 
+        /// mapped to the to the given <see cref="DataSourceReader"/>.
         /// </summary>
         /// <typeparam name="T">The generic type to bind.</typeparam>
-        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> to be used as a hint to reduce the visible <see cref="IMemberBindingBinding{TObject}"/>s.</param>
-        /// <returns>The <see cref="ITypeBinding{T}"/> for the generic type.</returns>
+        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> to be used as a hint to reduce the visible <see cref="IMemberBinding{TObject}"/>s.</param>
+        /// <returns>A reduced <see cref="ITypeBinding{T}"/> instance that is bound to the given generic type.</returns>
         public ITypeBinding<T> Get<T>(DataSourceReader dataSourceReader) where T : class
         {
             return new PartialTypeBinding<T>(Get<T>(), dataSourceReader);

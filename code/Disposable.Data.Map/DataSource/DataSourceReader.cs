@@ -4,7 +4,7 @@ using System.Data;
 
 using Disposable.Text;
 
-namespace Disposable.Data.Map.Data
+namespace Disposable.Data.Map.DataSource
 {
     /// <summary>
     /// Provides partial implementation framework of IDataReader to be used for <see cref="Disposable.Data.ObjectMapping"/> services.

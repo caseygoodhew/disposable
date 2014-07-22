@@ -4,7 +4,6 @@ using System.Data;
 using System.Linq;
 using Disposable.Common.Extensions;
 using Disposable.Data.Map;
-using Disposable.Data.Map.Data;
 
 namespace Disposable.Data.Access.Database
 {
@@ -17,7 +16,7 @@ namespace Disposable.Data.Access.Database
         /// Converts an object set to a well known data type.
         /// Valid types are any value type, DataSet, IDataReader or IEnumerable{IDataReader}.
         /// These types expect that the <see cref="values"/> parameter will contain an appropriate number of elements to satisfy the data type being returned.
-        /// Any other type will be passed to the registered <see cref="IDataSourceMapper{TDataSource}"/> which will perform its own validation as needed.
+        /// Any other type will be passed to the registered data source mapper which will perform its own validation as needed.
         /// </summary>
         /// <typeparam name="T">The type to map to.</typeparam>
         /// <param name="values">The values to convert.</param>

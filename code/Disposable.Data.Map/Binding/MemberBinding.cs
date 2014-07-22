@@ -7,19 +7,17 @@ using Disposable.Data.Map.Attributes;
 namespace Disposable.Data.Map.Binding
 {
     /// <summary>
-    /// Minimally decorated MemberInfo instances.
+    /// Base class to bind a Member of the given generic type and provides mapping decoration.
     /// </summary>
     /// <typeparam name="TObject">The member owner type.</typeparam>
     internal abstract class MemberBinding<TObject> : IMemberBinding<TObject> where TObject : class
     {
-        protected readonly Type MemberDataType;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MemberBinding{TObject}"/> class.
         /// </summary>
         /// <param name="memberInfo">The underlying <see cref="MemberInfo"/>.</param>
-        /// <param name="memberDataType">The underlying member data type.</param>
-        protected MemberBinding(MemberInfo memberInfo, Type memberDataType)
+        /// <param name="dataType">The underlying member data type.</param>
+        protected MemberBinding(MemberInfo memberInfo, Type dataType)
         {
             if (memberInfo == null)
             {
@@ -27,24 +25,14 @@ namespace Disposable.Data.Map.Binding
             }
             
             Name = ReadMapAsAttribute(memberInfo) ?? memberInfo.Name;
-            MemberDataType = memberDataType;
+            DataType = dataType;
         }
 
-        public static MemberBinding<TObject> Create(MemberInfo memberInfo)
-        {
-            if (memberInfo is FieldInfo)
-            {
-                return new FieldBinding<TObject>(memberInfo as FieldInfo);
-            }
-            
-            if (memberInfo is PropertyInfo)
-            {
-                return new PropertyBinding<TObject>(memberInfo as PropertyInfo);
-            }
-            
-            throw new ArgumentOutOfRangeException("memberInfo");
-        }
-        
+        /// <summary>
+        /// Gets the member data type.
+        /// </summary>
+        public Type DataType { get; private set; }
+
         /// <summary>
         /// Gets the member name.
         /// </summary>

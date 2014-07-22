@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Disposable.Data.Map.Data;
+using Disposable.Data.Map.DataSource;
 
 namespace Disposable.Data.Map
 {

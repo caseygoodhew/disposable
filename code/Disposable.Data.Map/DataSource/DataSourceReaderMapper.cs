@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 
 using Disposable.Common.ServiceLocator;
 using Disposable.Data.Map.Binding;
 
-namespace Disposable.Data.Map.Data
+namespace Disposable.Data.Map.DataSource
 {
     /// <summary>
-    /// Mapper object to map to <see cref="DataSet"/>s and <see cref="IDataReader"/>s.
+    /// Maps a <see cref="DataSourceReader"/> to a generic type.
     /// </summary>
     internal class DataSourceReaderMapper : IDataSourceMapper<DataSourceReader>
     {
         private static readonly Lazy<ITypeBindingFactory> TypeBindingFactory = 
             new Lazy<ITypeBindingFactory>(() => Locator.Current.Instance<ITypeBindingFactory>());
-        
+
+        /// <summary>
+        /// Maps exactly one record from a <see cref="DataSourceReader"/>.
+        /// </summary>
+        /// <typeparam name="T">The generic type to map to.</typeparam>
+        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> to use to map the object.</param>
+        /// <returns>A single object generated from the mapped <see cref="DataSourceReader"/>.</returns>
         public T GetOne<T>(DataSourceReader dataSourceReader) where T : class, new()
         {
             var objectBinding = TypeBindingFactory.Value.Get<T>(dataSourceReader);
@@ -36,6 +41,12 @@ namespace Disposable.Data.Map.Data
             return firstObj;
         }
 
+        /// <summary>
+        /// Maps all records from a <see cref="DataSourceReader"/>.
+        /// </summary>
+        /// <typeparam name="T">The generic type to map to.</typeparam>
+        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> to use to map the object.</param>
+        /// <returns>Multiple object generated from the mapped <see cref="DataSourceReader"/>.</returns>
         public IEnumerable<T> GetMany<T>(DataSourceReader dataSourceReader) where T : class, new()
         {
             var objectBinding = TypeBindingFactory.Value.Get<T>(dataSourceReader);

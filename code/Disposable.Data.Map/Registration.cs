@@ -2,7 +2,7 @@
 
 using Disposable.Common.ServiceLocator;
 using Disposable.Data.Map.Binding;
-using Disposable.Data.Map.Data;
+using Disposable.Data.Map.DataSource;
 
 namespace Disposable.Data.Map
 {
@@ -18,6 +18,8 @@ namespace Disposable.Data.Map
         public static void Register(IRegistrar registrar)
         {
             registrar.Register<ITypeBindingFactory>(() => new TypeBindingFactory());
+
+            registrar.Register<IMemberBindingFactory>(() => new MemberBindingFactory());
             
             registrar.Register<IDataSourceMapper<DataSet>>(() => new DataSetMapper());
             registrar.Register<IDataSourceMapper<IDataReader>>(() => new DataReaderMapper());

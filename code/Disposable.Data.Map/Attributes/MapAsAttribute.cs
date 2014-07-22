@@ -16,7 +16,7 @@ namespace Disposable.Data.Map.Attributes
         /// <summary>
         /// Initializes a new instance of the <see cref="MapAsAttribute"/> class.
         /// </summary>
-        /// <param name="name">The member name to use for automatic object mapping.</param>
+        /// <param name="name">The name to use for automatic object mapping of this member.</param>
         public MapAsAttribute(string name)
         {
             Name = name;

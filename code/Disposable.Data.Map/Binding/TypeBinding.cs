@@ -5,17 +5,21 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 
+using Disposable.Common.ServiceLocator;
 using Disposable.Data.Map.Attributes;
-using Disposable.Data.Map.Data;
+using Disposable.Data.Map.DataSource;
 
 namespace Disposable.Data.Map.Binding
 {
     /// <summary>
-    /// Provides type mapping services and <see cref="IMemberBinding{TObject}"/> enumeration.
+    /// Generic type binding and mapping decoration with <see cref="IMemberBinding{TObject}"/> enumeration.
     /// </summary>
-    /// <typeparam name="TObject">The type to map.</typeparam>
+    /// <typeparam name="TObject">The type to bind to.</typeparam>
     internal class TypeBinding<TObject> : ITypeBinding<TObject> where TObject : class
     {
+        private readonly Lazy<IMemberBindingFactory> memberBindingFactory = 
+            new Lazy<IMemberBindingFactory>(() => Locator.Current.Instance<IMemberBindingFactory>());
+        
         private readonly IEnumerable<IMemberBinding<TObject>> members;
 
         private readonly List<MethodInfo> beginMappingMethods;
@@ -31,7 +35,7 @@ namespace Disposable.Data.Map.Binding
             
             members = objType.GetMembers(BindingFlags.NonPublic)
                              .Where(x => !x.GetCustomAttributes(typeof(NoMapAttribute), true).Any())
-                             .Select(MemberBinding<TObject>.Create);
+                             .Select(memberBindingFactory.Value.Get<TObject>);
 
             beginMappingMethods = GetTypeMappingMethods<BeginMapAttribute>(objType).ToList();
 
@@ -57,7 +61,7 @@ namespace Disposable.Data.Map.Binding
         }
 
         /// <summary>
-        /// Called before any data is automatically mapped against the object.
+        /// Called before automatic mapping begins.
         /// </summary>
         /// <param name="obj">The object that is being mapped to.</param>
         /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> that contains the data to map.</param>
@@ -67,7 +71,7 @@ namespace Disposable.Data.Map.Binding
         }
 
         /// <summary>
-        /// Called after all data is automatically mapped against the object.
+        /// Called before automatic mapping begins.
         /// </summary>
         /// <param name="obj">The object that is being mapped to.</param>
         /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> that contains the data to map.</param>
@@ -88,7 +92,7 @@ namespace Disposable.Data.Map.Binding
             methods.ForEach(x => x.Invoke(obj, parameters));
         }
 
-        private static IEnumerable<MethodInfo> GetTypeMappingMethods<T>(Type objType) where T : Attribute
+        private static IEnumerable<MethodInfo> GetTypeMappingMethods<T>(IReflect objType) where T : Attribute
         {
             return objType.GetMethods(BindingFlags.NonPublic)
                           .Where(x => x.GetCustomAttribute<T>(true) != null)

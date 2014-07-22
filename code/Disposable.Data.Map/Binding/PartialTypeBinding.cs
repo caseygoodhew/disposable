@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Disposable.Data.Map.Data;
+using Disposable.Data.Map.DataSource;
 
 namespace Disposable.Data.Map.Binding
 {
     /// <summary>
-    /// Provides partial type mapping services and <see cref="IMemberBinding{TObject}"/> enumeration based on which methods can actually be mapped to <see cref="DataSourceReader"/> ordinals.
+    /// Generic type binding and mapping decoration with partial <see cref="IMemberBinding{TObject}"/> enumeration.
     /// </summary>
-    /// <typeparam name="TObject">The type to map.</typeparam>
+    /// <typeparam name="TObject">The type to bind to.</typeparam>
     internal class PartialTypeBinding<TObject> : ITypeBinding<TObject> where TObject : class
     {
         private readonly IEnumerable<IMemberBinding<TObject>> members;
@@ -20,7 +20,7 @@ namespace Disposable.Data.Map.Binding
         /// Initializes a new instance of the <see cref="PartialTypeBinding{TObject}"/> class.
         /// </summary>
         /// <param name="sourceTypeBinding">An <see cref="ITypeBinding{TObject}"/> instance that provides a binding source.</param>
-        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> to bind against.</param>
+        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> to reduce against.</param>
         internal PartialTypeBinding(ITypeBinding<TObject> sourceTypeBinding, DataSourceReader dataSourceReader)
         {
             members = sourceTypeBinding.Where(x => dataSourceReader.HasOrdinal(x.Name));
