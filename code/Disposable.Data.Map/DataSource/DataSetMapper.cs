@@ -11,8 +11,8 @@ namespace Disposable.Data.Map.DataSource
     /// </summary>
     internal class DataSetMapper : IDataSourceMapper<DataSet>
     {
-        private readonly Lazy<IDataSourceMapper<DataSourceReader>> mapperDataReaderObjectMapper = 
-            new Lazy<IDataSourceMapper<DataSourceReader>>(() => Locator.Current.Instance<IDataSourceMapper<DataSourceReader>>());
+        private readonly Lazy<IDataSourceMapper<IDataSourceReader>> dataSourceReaderMapper =
+            new Lazy<IDataSourceMapper<IDataSourceReader>>(() => Locator.Current.Instance<IDataSourceMapper<IDataSourceReader>>());
         
         /// <summary>
         /// Maps exactly one record from a <see cref="DataSet"/>.
@@ -22,7 +22,7 @@ namespace Disposable.Data.Map.DataSource
         /// <returns>A single object generated from the mapped <see cref="DataSet"/>.</returns>
         public TObject GetOne<TObject>(DataSet dataSet) where TObject : class, new()
         {
-            return mapperDataReaderObjectMapper.Value.GetOne<TObject>(new DataTableAdapter(dataSet.Tables[0]));
+            return dataSourceReaderMapper.Value.GetOne<TObject>(new DataTableAdapter(dataSet.Tables[0]));
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Disposable.Data.Map.DataSource
         /// <returns>Multiple object generated from the mapped <see cref="DataSet"/>.</returns>
         public IEnumerable<TObject> GetMany<TObject>(DataSet dataSet) where TObject : class, new()
         {
-            return mapperDataReaderObjectMapper.Value.GetMany<TObject>(new DataTableAdapter(dataSet.Tables[0]));
+            return dataSourceReaderMapper.Value.GetMany<TObject>(new DataTableAdapter(dataSet.Tables[0]));
         }
     }
 }

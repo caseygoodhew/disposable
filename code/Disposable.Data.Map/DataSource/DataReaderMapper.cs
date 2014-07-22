@@ -11,7 +11,7 @@ namespace Disposable.Data.Map.DataSource
     /// </summary>
     internal class DataReaderMapper : IDataSourceMapper<IDataReader>
     {
-        private readonly Lazy<IDataSourceMapper<DataSourceReader>> mapperDataReaderObjectMapper =
+        private readonly Lazy<IDataSourceMapper<DataSourceReader>> dataSourceReaderMapper =
             new Lazy<IDataSourceMapper<DataSourceReader>>(() => Locator.Current.Instance<IDataSourceMapper<DataSourceReader>>());
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Disposable.Data.Map.DataSource
         /// <returns>A single object generated from the mapped <see cref="IDataReader"/>.</returns>
         public TObject GetOne<TObject>(IDataReader dataReader) where TObject : class, new()
         {
-            return mapperDataReaderObjectMapper.Value.GetOne<TObject>(new DataReaderAdapter(dataReader));
+            return dataSourceReaderMapper.Value.GetOne<TObject>(new DataReaderAdapter(dataReader));
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Disposable.Data.Map.DataSource
         /// <returns>Multiple object generated from the mapped <see cref="IDataReader"/>.</returns>
         public IEnumerable<TObject> GetMany<TObject>(IDataReader dataReader) where TObject : class, new()
         {
-            return mapperDataReaderObjectMapper.Value.GetMany<TObject>(new DataReaderAdapter(dataReader)); 
+            return dataSourceReaderMapper.Value.GetMany<TObject>(new DataReaderAdapter(dataReader)); 
         }
     }
 }

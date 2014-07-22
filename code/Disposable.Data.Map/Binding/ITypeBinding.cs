@@ -14,14 +14,14 @@ namespace Disposable.Data.Map.Binding
         /// Called before automatic mapping begins.
         /// </summary>
         /// <param name="obj">The object that is being mapped to.</param>
-        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> that contains the data to map.</param>
-        void BeginMapping(TObject obj, DataSourceReader dataSourceReader);
+        /// <param name="dataSourceReader">The <see cref="IDataSourceReader"/> that contains the data to map.</param>
+        void BeginMapping(TObject obj, IDataSourceReader dataSourceReader);
 
         /// <summary>
         /// Called before automatic mapping completes.
         /// </summary>
         /// <param name="obj">The object that is being mapped to.</param>
-        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> that contains the data to map.</param>
-        void EndMapping(TObject obj, DataSourceReader dataSourceReader);
+        /// <param name="dataSourceReader">The <see cref="IDataSourceReader"/> that contains the data to map.</param>
+        void EndMapping(TObject obj, IDataSourceReader dataSourceReader);
     }
 }

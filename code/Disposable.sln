@@ -1,7 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Security.DataAccess.Test", "Disposable.Security.DataAccess.Test\Disposable.Security.DataAccess.Test.csproj", "{18C554D8-BBDF-49C0-B551-88FBF9C26C31}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{DEB84ABA-03CF-4902-B354-914A60E94765}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Web", "Disposable.Web\Disposable.Web.csproj", "{960A5BFF-37AD-4DC1-BB7B-68918462B4A0}"
@@ -77,6 +75,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Text", "Disposab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Text.Test", "Disposable.Text.Test\Disposable.Text.Test.csproj", "{E3CB3565-61EC-4965-8705-B7CC94267D7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Data.Common.Test", "Disposable.Data.Common.Test\Disposable.Data.Common.Test.csproj", "{E1A7109A-BB0E-4360-94BF-1788BFB8CD04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,18 +87,6 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{18C554D8-BBDF-49C0-B551-88FBF9C26C31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18C554D8-BBDF-49C0-B551-88FBF9C26C31}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18C554D8-BBDF-49C0-B551-88FBF9C26C31}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{18C554D8-BBDF-49C0-B551-88FBF9C26C31}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{18C554D8-BBDF-49C0-B551-88FBF9C26C31}.Debug|x64.ActiveCfg = Debug|x64
-		{18C554D8-BBDF-49C0-B551-88FBF9C26C31}.Debug|x64.Build.0 = Debug|x64
-		{18C554D8-BBDF-49C0-B551-88FBF9C26C31}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18C554D8-BBDF-49C0-B551-88FBF9C26C31}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18C554D8-BBDF-49C0-B551-88FBF9C26C31}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{18C554D8-BBDF-49C0-B551-88FBF9C26C31}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{18C554D8-BBDF-49C0-B551-88FBF9C26C31}.Release|x64.ActiveCfg = Release|x64
-		{18C554D8-BBDF-49C0-B551-88FBF9C26C31}.Release|x64.Build.0 = Release|x64
 		{960A5BFF-37AD-4DC1-BB7B-68918462B4A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{960A5BFF-37AD-4DC1-BB7B-68918462B4A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{960A5BFF-37AD-4DC1-BB7B-68918462B4A0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -307,6 +295,16 @@ Global
 		{E3CB3565-61EC-4965-8705-B7CC94267D7D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E3CB3565-61EC-4965-8705-B7CC94267D7D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E3CB3565-61EC-4965-8705-B7CC94267D7D}.Release|x64.ActiveCfg = Release|Any CPU
+		{E1A7109A-BB0E-4360-94BF-1788BFB8CD04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1A7109A-BB0E-4360-94BF-1788BFB8CD04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1A7109A-BB0E-4360-94BF-1788BFB8CD04}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E1A7109A-BB0E-4360-94BF-1788BFB8CD04}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E1A7109A-BB0E-4360-94BF-1788BFB8CD04}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E1A7109A-BB0E-4360-94BF-1788BFB8CD04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1A7109A-BB0E-4360-94BF-1788BFB8CD04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1A7109A-BB0E-4360-94BF-1788BFB8CD04}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E1A7109A-BB0E-4360-94BF-1788BFB8CD04}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E1A7109A-BB0E-4360-94BF-1788BFB8CD04}.Release|x64.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -343,7 +341,7 @@ Global
 		{1FF2CBDD-7F6E-4DDE-91D1-EBD5763E8018} = {31EC337A-F4C1-4C7A-BDE3-523729A561F4}
 		{76512F6F-32C6-47E8-A6A0-FFE807549F9F} = {31EC337A-F4C1-4C7A-BDE3-523729A561F4}
 		{960A5BFF-37AD-4DC1-BB7B-68918462B4A0} = {1431B21D-96B1-400D-893B-AABE794845C4}
-		{18C554D8-BBDF-49C0-B551-88FBF9C26C31} = {08F4DFC8-C6AC-4E91-9BF4-229F763984E6}
+		{E1A7109A-BB0E-4360-94BF-1788BFB8CD04} = {08F4DFC8-C6AC-4E91-9BF4-229F763984E6}
 		{6463CA27-FD7A-46B1-B2BA-02AE1EF91F04} = {7A556D17-60AE-468F-B91E-2A5CC41016FF}
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution

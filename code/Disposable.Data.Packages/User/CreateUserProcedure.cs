@@ -31,19 +31,19 @@ namespace Disposable.Data.Packages.User
         /// <summary>
         /// Throws or handles <see cref="ProgrammaticDatabaseExceptions"/> thrown by the underlying database.
         /// </summary>
-        /// <param name="programmaticDatabaseException">The normalized <see cref="ProgrammaticDatabaseException"/>.</param>
+        /// <param name="exceptionDescription">The <see cref="ProgrammaticDatabaseException"/> name.</param>
         /// <param name="underlyingDatabaseException">The <see cref="UnderlyingDatabaseException"/></param>
         /// <returns>
-        /// The <see cref="programmaticDatabaseException"/> that was handled, or <see cref="ProgrammaticDatabaseExceptions.Unhandled"/>.
+        /// The <see cref="exceptionDescription"/> that was handled, or <see cref="ProgrammaticDatabaseExceptions.Unhandled"/>.
         /// </returns>
-        public override ProgrammaticDatabaseExceptions Handle(ProgrammaticDatabaseExceptions programmaticDatabaseException, UnderlyingDatabaseException underlyingDatabaseException)
+        public override ExceptionDescription Handle(ExceptionDescription exceptionDescription, UnderlyingDatabaseException underlyingDatabaseException)
         {
-            if (programmaticDatabaseException == ProgrammaticDatabaseExceptions.DuplicateEmail)
+            if (exceptionDescription == ProgrammaticDatabaseExceptions.DuplicateEmail)
             {
                 throw new DuplicateEmailException(GetInputParameterValue(PackageConstants.InEmail).Value.ToString());
             }
 
-            return base.Handle(programmaticDatabaseException, underlyingDatabaseException);
+            return base.Handle(exceptionDescription, underlyingDatabaseException);
         }
 
         /// <summary>

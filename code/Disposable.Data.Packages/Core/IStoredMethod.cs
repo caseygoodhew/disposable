@@ -37,12 +37,14 @@ namespace Disposable.Data.Packages.Core
         /// Instructs an <see cref="IStoredMethod"/> to handle a <see cref="ProgrammaticDatabaseException"/> which 
         /// was thrown in the database when the <see cref="IStoredMethod"/> was invoked.
         /// </summary>
-        /// <param name="programmaticDatabaseException">The normalized <see cref="ProgrammaticDatabaseException"/>.</param>
+        /// <param name="exceptionDescription">The <see cref="ProgrammaticDatabaseException"/> name.</param>
         /// <param name="underlyingDatabaseException">The <see cref="UnderlyingDatabaseException"/></param>
         /// <returns>
         /// If the exception has been handled, this should be the same value that was passed into the method. 
         /// Returning any value other than this will result in an <see cref="UnhandledDatabaseException"/> being immediately thrown.
         /// </returns>
-        ProgrammaticDatabaseExceptions Handle(ProgrammaticDatabaseExceptions programmaticDatabaseException, UnderlyingDatabaseException underlyingDatabaseException);
+        ExceptionDescription Handle(
+            ExceptionDescription exceptionDescription,
+            UnderlyingDatabaseException underlyingDatabaseException);
     }
 }

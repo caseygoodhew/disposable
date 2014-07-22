@@ -39,9 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\ExceptionDescription.cs" />
+    <Compile Include="Exceptions\ProgrammaticDatabaseExceptions.cs" />
     <Compile Include="Exceptions\UnderlyingDatabaseException.cs" />
     <Compile Include="Exceptions\ProgrammaticDatabaseException.cs" />
-    <Compile Include="Exceptions\ProgrammaticDatabaseExceptions.cs" />
     <Compile Include="Exceptions\UnhandledDatabaseException.cs" />
     <Compile Include="Exceptions\UnknownDatabaseException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

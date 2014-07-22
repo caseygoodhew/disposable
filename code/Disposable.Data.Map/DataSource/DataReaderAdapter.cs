@@ -213,7 +213,7 @@ namespace Disposable.Data.Map.DataSource
         /// Advances the IDataReader to the next record.
         /// </summary>
         /// <returns>true if there are more rows; otherwise, false.</returns>
-        internal override bool InternalRead()
+        public override bool InternalRead()
         {
             return dataReader.Read();
         }

@@ -47,6 +47,7 @@
     <Compile Include="Binding\MemberBindingFactory.cs" />
     <Compile Include="Binding\PropertyBinding.cs" />
     <Compile Include="Binding\FieldBinding.cs" />
+    <Compile Include="DataSource\IDataSourceReader.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="DataSource\DataSourceReaderMapper.cs" />
     <Compile Include="DataSource\DataReaderMapper.cs" />

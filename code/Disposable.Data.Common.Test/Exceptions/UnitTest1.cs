@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Disposable.Security.DataAccess.Test
+namespace Disposable.Data.Common.Test.Exceptions
 {
     [TestClass]
     public class UnitTest1
@@ -9,7 +8,6 @@ namespace Disposable.Security.DataAccess.Test
         [TestMethod]
         public void TestMethod1()
         {
-
         }
     }
 }

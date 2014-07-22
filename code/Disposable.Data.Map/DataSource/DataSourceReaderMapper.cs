@@ -7,9 +7,9 @@ using Disposable.Data.Map.Binding;
 namespace Disposable.Data.Map.DataSource
 {
     /// <summary>
-    /// Maps a <see cref="DataSourceReader"/> to a generic type.
+    /// Maps a <see cref="IDataSourceReader"/> to a generic type.
     /// </summary>
-    internal class DataSourceReaderMapper : IDataSourceMapper<DataSourceReader>
+    internal class DataSourceReaderMapper : IDataSourceMapper<IDataSourceReader>
     {
         private static readonly Lazy<ITypeBindingFactory> TypeBindingFactory = 
             new Lazy<ITypeBindingFactory>(() => Locator.Current.Instance<ITypeBindingFactory>());
@@ -18,9 +18,9 @@ namespace Disposable.Data.Map.DataSource
         /// Maps exactly one record from a <see cref="DataSourceReader"/>.
         /// </summary>
         /// <typeparam name="T">The generic type to map to.</typeparam>
-        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> to use to map the object.</param>
-        /// <returns>A single object generated from the mapped <see cref="DataSourceReader"/>.</returns>
-        public T GetOne<T>(DataSourceReader dataSourceReader) where T : class, new()
+        /// <param name="dataSourceReader">The <see cref="IDataSourceReader"/> to use to map the object.</param>
+        /// <returns>A single object generated from the mapped <see cref="IDataSourceReader"/>.</returns>
+        public T GetOne<T>(IDataSourceReader dataSourceReader) where T : class, new()
         {
             var objectBinding = TypeBindingFactory.Value.Get<T>(dataSourceReader);
 
@@ -42,12 +42,12 @@ namespace Disposable.Data.Map.DataSource
         }
 
         /// <summary>
-        /// Maps all records from a <see cref="DataSourceReader"/>.
+        /// Maps all records from a <see cref="IDataSourceReader"/>.
         /// </summary>
         /// <typeparam name="T">The generic type to map to.</typeparam>
         /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> to use to map the object.</param>
         /// <returns>Multiple object generated from the mapped <see cref="DataSourceReader"/>.</returns>
-        public IEnumerable<T> GetMany<T>(DataSourceReader dataSourceReader) where T : class, new()
+        public IEnumerable<T> GetMany<T>(IDataSourceReader dataSourceReader) where T : class, new()
         {
             var objectBinding = TypeBindingFactory.Value.Get<T>(dataSourceReader);
 
@@ -62,14 +62,14 @@ namespace Disposable.Data.Map.DataSource
             return resultSet;
         }
 
-        private static T GetNext<T>(ITypeBinding<T> typeBinding, DataSourceReader dataSourceReader) where T : class, new()
+        private static T GetNext<T>(ITypeBinding<T> typeBinding, IDataSourceReader dataSourceReader) where T : class, new()
         {
             T obj;
             TryGetNext(typeBinding, dataSourceReader, out obj);
             return obj;
         }
 
-        private static bool TryGetNext<T>(ITypeBinding<T> typeBinding, DataSourceReader dataSourceReader, out T obj) where T : class, new()
+        private static bool TryGetNext<T>(ITypeBinding<T> typeBinding, IDataSourceReader dataSourceReader, out T obj) where T : class, new()
         {
             if (!dataSourceReader.InternalRead())
             {
@@ -84,7 +84,7 @@ namespace Disposable.Data.Map.DataSource
             return true;
         }
 
-        private static void Fill<T>(T obj, ITypeBinding<T> typeBinding, DataSourceReader dataSourceReader) where T : class, new()
+        private static void Fill<T>(T obj, ITypeBinding<T> typeBinding, IDataSourceReader dataSourceReader) where T : class, new()
         {
             typeBinding.BeginMapping(obj, dataSourceReader);
             

@@ -23,7 +23,7 @@ namespace Disposable.Data.Map
             
             registrar.Register<IDataSourceMapper<DataSet>>(() => new DataSetMapper());
             registrar.Register<IDataSourceMapper<IDataReader>>(() => new DataReaderMapper());
-            registrar.Register<IDataSourceMapper<DataSourceReader>>(() => new DataSourceReaderMapper());
+            registrar.Register<IDataSourceMapper<IDataSourceReader>>(() => new DataSourceReaderMapper());
         }
     }
 }

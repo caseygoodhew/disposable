@@ -73,12 +73,12 @@ namespace Disposable.Data.Packages.Core
         /// was thrown in the database when the <see cref="IStoredMethod"/> was invoked.
         /// This method should be overridden in derived classes that provide error handling.
         /// </summary>
-        /// <param name="programmaticDatabaseException">The normalized <see cref="ProgrammaticDatabaseException"/>.</param>
+        /// <param name="exceptionDescription">The <see cref="ProgrammaticDatabaseException"/> name.</param>
         /// <param name="underlyingDatabaseException">The <see cref="UnderlyingDatabaseException"/></param>
         /// <returns>
         /// <see cref="ProgrammaticDatabaseExceptions.Unhandled"/> if not overridden.
         /// </returns>
-        public virtual ProgrammaticDatabaseExceptions Handle(ProgrammaticDatabaseExceptions programmaticDatabaseException, UnderlyingDatabaseException underlyingDatabaseException)
+        public virtual ExceptionDescription Handle(ExceptionDescription exceptionDescription, UnderlyingDatabaseException underlyingDatabaseException)
         {
             return ProgrammaticDatabaseExceptions.Unhandled;
         }
@@ -89,11 +89,11 @@ namespace Disposable.Data.Packages.Core
         /// <param name="parameterValues">Key value dictionary of parameter names and values.</param>
         protected void SetInputParameterValues(IDictionary<string, object> parameterValues)
         {
-            var inputParameters = (this.inputParameters ?? Enumerable.Empty<IInputParameter>()).ToList();
+            var inputParams = (inputParameters ?? Enumerable.Empty<IInputParameter>()).ToList();
 
-            if (inputParameters.IsNullOrEmpty() && parameterValues.IsNullOrEmpty())
+            if (inputParams.IsNullOrEmpty() && parameterValues.IsNullOrEmpty())
             {
-                this.trimmedParameterValues = new List<InputParameterValue>();
+                trimmedParameterValues = new List<InputParameterValue>();
             }
             else
             {
@@ -102,7 +102,7 @@ namespace Disposable.Data.Packages.Core
                     x => x.Value,
                     StringComparer.InvariantCultureIgnoreCase);
 
-                var parameterDictionary = inputParameters.ToDictionary(
+                var parameterDictionary = inputParams.ToDictionary(
                     x => x.Name,
                     StringComparer.InvariantCultureIgnoreCase);
 
@@ -128,13 +128,14 @@ namespace Disposable.Data.Packages.Core
                     throw new ArgumentException(message, "parameterValues");
                 }
 
-                this.fullParameterValues =
+                fullParameterValues =
                     parameterDictionary.Select(
                         x =>
                         new InputParameterValue(
                             parameterDictionary[x.Key],
                             valueDictionary.ContainsKey(x.Key) ? valueDictionary[x.Key] : null)).ToList();
-                this.trimmedParameterValues =
+                
+                trimmedParameterValues =
                     valueDictionary.Select(x => new InputParameterValue(parameterDictionary[x.Key], x.Value)).ToList();
             }
         }

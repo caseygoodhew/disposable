@@ -7,9 +7,9 @@ using Disposable.Text;
 namespace Disposable.Data.Map.DataSource
 {
     /// <summary>
-    /// Provides partial implementation framework of IDataReader to be used for <see cref="Disposable.Data.ObjectMapping"/> services.
+    /// Provides partial implementation framework of IDataReader to be used for mapping services.
     /// </summary>
-    internal abstract class DataSourceReader : IDataReader
+    internal abstract class DataSourceReader : IDataSourceReader
     {
         private readonly Lazy<Dictionary<string, int>> lazyOrdinalDictionary;
         
@@ -340,7 +340,7 @@ namespace Disposable.Data.Map.DataSource
         /// Advances the IDataReader to the next record.
         /// </summary>
         /// <returns>true if there are more rows; otherwise, false.</returns>
-        internal abstract bool InternalRead();
+        public abstract bool InternalRead();
 
         private static Dictionary<string, int> BuildOrdinalDictionary(DataSourceReader dataSourceReader)
         {

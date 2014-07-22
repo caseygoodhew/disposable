@@ -28,12 +28,12 @@ namespace Disposable.Data.Map.Binding
         /// <summary>
         /// Gets an <see cref="ITypeBinding{T}"/> instance that is bound to the given generic type 
         /// and reduced to the relevant <see cref="IMemberBinding{TObject}"/>s that can possibly be 
-        /// mapped to the to the given <see cref="DataSourceReader"/>.
+        /// mapped to the to the given <see cref="IDataSourceReader"/>.
         /// </summary>
         /// <typeparam name="T">The generic type to bind.</typeparam>
-        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> to be used as a hint to reduce the visible <see cref="IMemberBinding{TObject}"/>s.</param>
+        /// <param name="dataSourceReader">The <see cref="IDataSourceReader"/> to be used as a hint to reduce the visible <see cref="IMemberBinding{TObject}"/>s.</param>
         /// <returns>A reduced <see cref="ITypeBinding{T}"/> instance that is bound to the given generic type.</returns>
-        public ITypeBinding<T> Get<T>(DataSourceReader dataSourceReader) where T : class
+        public ITypeBinding<T> Get<T>(IDataSourceReader dataSourceReader) where T : class
         {
             return new PartialTypeBinding<T>(Get<T>(), dataSourceReader);
         }

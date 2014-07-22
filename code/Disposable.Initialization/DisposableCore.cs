@@ -6,7 +6,7 @@ using Disposable.Validation;
 namespace Disposable.Initialization
 {
     /// <summary>
-    /// Singleton to register all core services with the serivce locator
+    /// Singleton to register all core services with the service locator.
     /// </summary>
     public class DisposableCore
     {
@@ -14,7 +14,7 @@ namespace Disposable.Initialization
 
         private DisposableCore()
         {
-            var locator = (Locator.Current as Locator);
+            var locator = Locator.Current as Locator;
             
             if (locator == null)
             {
@@ -37,8 +37,9 @@ namespace Disposable.Initialization
         }
 
         /// <summary>
-        /// 
+        /// Initializes the Core services.
         /// </summary>
+        /// <returns>Flag indicating that the core started successfully.</returns>
         public static bool Initialize()
         {
             return DisposableCoreInstance.Value != null;

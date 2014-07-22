@@ -20,8 +20,8 @@ namespace Disposable.Data.Map.Binding
         /// Initializes a new instance of the <see cref="PartialTypeBinding{TObject}"/> class.
         /// </summary>
         /// <param name="sourceTypeBinding">An <see cref="ITypeBinding{TObject}"/> instance that provides a binding source.</param>
-        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> to reduce against.</param>
-        internal PartialTypeBinding(ITypeBinding<TObject> sourceTypeBinding, DataSourceReader dataSourceReader)
+        /// <param name="dataSourceReader">The <see cref="IDataSourceReader"/> to reduce against.</param>
+        internal PartialTypeBinding(ITypeBinding<TObject> sourceTypeBinding, IDataSourceReader dataSourceReader)
         {
             members = sourceTypeBinding.Where(x => dataSourceReader.HasOrdinal(x.Name));
             underlyingTypeBinding = sourceTypeBinding;
@@ -49,8 +49,8 @@ namespace Disposable.Data.Map.Binding
         /// Called before any data is automatically mapped against the object.
         /// </summary>
         /// <param name="obj">The object that is being mapped to.</param>
-        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> that contains the data to map.</param>
-        public void BeginMapping(TObject obj, DataSourceReader dataSourceReader)
+        /// <param name="dataSourceReader">The <see cref="IDataSourceReader"/> that contains the data to map.</param>
+        public void BeginMapping(TObject obj, IDataSourceReader dataSourceReader)
         {
             underlyingTypeBinding.BeginMapping(obj, dataSourceReader);
         }
@@ -59,8 +59,8 @@ namespace Disposable.Data.Map.Binding
         /// Called after all data is automatically mapped against the object.
         /// </summary>
         /// <param name="obj">The object that is being mapped to.</param>
-        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> that contains the data to map.</param>
-        public void EndMapping(TObject obj, DataSourceReader dataSourceReader)
+        /// <param name="dataSourceReader">The <see cref="IDataSourceReader"/> that contains the data to map.</param>
+        public void EndMapping(TObject obj, IDataSourceReader dataSourceReader)
         {
             underlyingTypeBinding.EndMapping(obj, dataSourceReader);
         }

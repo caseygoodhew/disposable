@@ -64,8 +64,8 @@ namespace Disposable.Data.Map.Binding
         /// Called before automatic mapping begins.
         /// </summary>
         /// <param name="obj">The object that is being mapped to.</param>
-        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> that contains the data to map.</param>
-        public void BeginMapping(TObject obj, DataSourceReader dataSourceReader)
+        /// <param name="dataSourceReader">The <see cref="IDataSourceReader"/> that contains the data to map.</param>
+        public void BeginMapping(TObject obj, IDataSourceReader dataSourceReader)
         {
             InvokeTypeMappingMethods(beginMappingMethods, obj, dataSourceReader);
         }
@@ -74,13 +74,13 @@ namespace Disposable.Data.Map.Binding
         /// Called before automatic mapping begins.
         /// </summary>
         /// <param name="obj">The object that is being mapped to.</param>
-        /// <param name="dataSourceReader">The <see cref="DataSourceReader"/> that contains the data to map.</param>
-        public void EndMapping(TObject obj, DataSourceReader dataSourceReader)
+        /// <param name="dataSourceReader">The <see cref="IDataSourceReader"/> that contains the data to map.</param>
+        public void EndMapping(TObject obj, IDataSourceReader dataSourceReader)
         {
             InvokeTypeMappingMethods(endMappingMethods, obj, dataSourceReader);
         }
 
-        private static void InvokeTypeMappingMethods(List<MethodInfo> methods, TObject obj, DataSourceReader dataSourceReader)
+        private static void InvokeTypeMappingMethods(List<MethodInfo> methods, TObject obj, IDataSourceReader dataSourceReader)
         {
             if (methods == null || !methods.Any())
             {
