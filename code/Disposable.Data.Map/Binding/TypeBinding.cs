@@ -20,26 +20,34 @@ namespace Disposable.Data.Map.Binding
         private readonly Lazy<IMemberBindingFactory> memberBindingFactory = 
             new Lazy<IMemberBindingFactory>(() => Locator.Current.Instance<IMemberBindingFactory>());
         
-        private readonly IEnumerable<IMemberBinding<TObject>> members;
+        private readonly IList<IMemberBinding<TObject>> members;
 
         private readonly List<MethodInfo> beginMappingMethods;
         
         private readonly List<MethodInfo> endMappingMethods;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TypeBinding{TObject}"/> class.
         /// </summary>
         internal TypeBinding()
         {
             var objType = typeof(TObject);
+
+            var flags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
+
+            var fields = objType.GetFields(flags).Where(x => !x.IsPrivate);
+            var properties = objType.GetProperties(flags).Where(x => x.CanRead && x.CanWrite);
+           
+            members = Enumerable.Empty<MemberInfo>()
+                                .Concat(fields)
+                                .Concat(properties)
+                                .Where(x => !x.IsDefined(typeof(NoMapAttribute)))
+                                .Select(memberBindingFactory.Value.Get<TObject>)
+                                .ToList();
             
-            members = objType.GetMembers(BindingFlags.NonPublic)
-                             .Where(x => !x.GetCustomAttributes(typeof(NoMapAttribute), true).Any())
-                             .Select(memberBindingFactory.Value.Get<TObject>);
+            beginMappingMethods = GetTypeMappingMethods<BeforeMapAttribute>(objType).ToList();
 
-            beginMappingMethods = GetTypeMappingMethods<BeginMapAttribute>(objType).ToList();
-
-            endMappingMethods = GetTypeMappingMethods<EndMapAttribute>(objType).ToList();
+            endMappingMethods = GetTypeMappingMethods<AfterMapAttribute>(objType).ToList();
         }
 
         /// <summary>
@@ -71,7 +79,7 @@ namespace Disposable.Data.Map.Binding
         }
 
         /// <summary>
-        /// Called before automatic mapping begins.
+        /// Called after automatic mapping begins.
         /// </summary>
         /// <param name="obj">The object that is being mapped to.</param>
         /// <param name="dataSourceReader">The <see cref="IDataSourceReader"/> that contains the data to map.</param>
@@ -92,13 +100,28 @@ namespace Disposable.Data.Map.Binding
             methods.ForEach(x => x.Invoke(obj, parameters));
         }
 
-        private static IEnumerable<MethodInfo> GetTypeMappingMethods<T>(IReflect objType) where T : Attribute
+        private static IEnumerable<MethodInfo> GetTypeMappingMethods<TAttributeName>(Type objType) where TAttributeName : Attribute
         {
-            return objType.GetMethods(BindingFlags.NonPublic)
-                          .Where(x => x.GetCustomAttribute<T>(true) != null)
-                          .Where(x => x.ReturnType == typeof(void))
-                          .Where(x => x.GetParameters().Count() == 1)
-                          .Where(x => x.GetParameters().All(p => p.ParameterType.IsAssignableFrom(typeof(IDataReader))));
+            var result = objType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public )
+                                .Where(x => x.GetCustomAttribute<TAttributeName>(true) != null)
+                                .ToList();
+
+            if (result.Any(x => x.ReturnType != typeof(void)))
+            {
+                throw new FormatException(string.Format("{0} contains a method flagged with the {1} attribute that uses a return type other than 'void'.", objType.Name, typeof(TAttributeName).Name));
+            }
+
+            if (result.Any(x => x.GetParameters().Count() != 1))
+            {
+                throw new FormatException(string.Format("{0} contains a method flagged with the {1} attribute that does not take exactly one parameter.", objType.Name, typeof(TAttributeName).Name));
+            }
+
+            if (result.Any(x => x.GetParameters().Any(p => !p.ParameterType.IsAssignableFrom(typeof(IDataReader)))))
+            {
+                throw new FormatException(string.Format("{0} contains a method flagged with the {1} attribute that has a parameter than is not assignable from IDataReader.", objType.Name, typeof(TAttributeName).Name));
+            }
+
+            return result;
         }
     }
 }

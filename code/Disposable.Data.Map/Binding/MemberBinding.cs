@@ -23,6 +23,16 @@ namespace Disposable.Data.Map.Binding
             {
                 throw new ArgumentNullException("memberInfo");
             }
+
+            if (memberInfo.DeclaringType == null)
+            {
+                throw new InvalidOperationException("DeclaringType not defined.");
+            }
+
+            if (!typeof(TObject).IsAssignableFrom(memberInfo.DeclaringType))
+            {
+                throw new InvalidOperationException(string.Format(@"{0} is not assignable from {1}.", typeof(TObject).Name, memberInfo.DeclaringType.Name));
+            }
             
             Name = ReadMapAsAttribute(memberInfo) ?? memberInfo.Name;
             DataType = dataType;

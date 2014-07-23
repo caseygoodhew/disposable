@@ -39,8 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\BeginMapAttribute.cs" />
-    <Compile Include="Attributes\EndMapAttribute.cs" />
+    <Compile Include="Attributes\BeforeMapAttribute.cs" />
+    <Compile Include="Attributes\AfterMapAttribute.cs" />
     <Compile Include="Attributes\MapAsAttribute.cs" />
     <Compile Include="Attributes\NoMapAttribute.cs" />
     <Compile Include="Binding\IMemberBindingFactory.cs" />
