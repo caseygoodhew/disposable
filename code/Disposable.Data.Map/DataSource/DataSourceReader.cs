@@ -62,7 +62,7 @@ namespace Disposable.Data.Map.DataSource
             }
         }
 
-        object IDataRecord.this[int i]
+        public object this[int i]
         {
             get
             {
@@ -70,7 +70,7 @@ namespace Disposable.Data.Map.DataSource
             }
         }
 
-        object IDataRecord.this[string name]
+        public object this[string name]
         {
             get
             {
@@ -303,7 +303,7 @@ namespace Disposable.Data.Map.DataSource
         }
 
         /// <summary>
-        /// Tries to get the index of the named field.=
+        /// Tries to get the index of the named field.
         /// </summary>
         /// <param name="name">The name of the field to find.</param>
         /// <param name="ordinal">The index of the named field.</param>
