@@ -16,8 +16,7 @@ namespace Disposable.Data.Map.Binding
         /// Initializes a new instance of the <see cref="MemberBinding{TObject}"/> class.
         /// </summary>
         /// <param name="memberInfo">The underlying <see cref="MemberInfo"/>.</param>
-        /// <param name="dataType">The underlying member data type.</param>
-        protected MemberBinding(MemberInfo memberInfo, Type dataType)
+        protected MemberBinding(MemberInfo memberInfo)
         {
             if (memberInfo == null)
             {
@@ -35,13 +34,12 @@ namespace Disposable.Data.Map.Binding
             }
             
             Name = ReadMapAsAttribute(memberInfo) ?? memberInfo.Name;
-            DataType = dataType;
         }
 
         /// <summary>
         /// Gets the member data type.
         /// </summary>
-        public Type DataType { get; private set; }
+        public abstract Type DataType { get; }
 
         /// <summary>
         /// Gets the member name.
@@ -54,11 +52,6 @@ namespace Disposable.Data.Map.Binding
         /// <param name="obj">The object to set the member value against.</param>
         /// <param name="value">The value to set.</param>
         public abstract void SetValue(TObject obj, object value);
-
-        private static object ConvertTo(object value, Type toType)
-        {
-            throw new NotImplementedException();
-        }
 
         private static string ReadMapAsAttribute(MemberInfo memberInfo)
         {

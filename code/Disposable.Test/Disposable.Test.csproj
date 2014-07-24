@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\GetEnumeratorTest.cs" />
     <Compile Include="Common\ServiceLocator\LocatorExtensions.cs" />
     <Compile Include="MultiThreaded.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

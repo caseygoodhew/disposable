@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
+using Disposable.Data.Map.Attributes;
 using Disposable.Data.Map.Binding;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -32,6 +33,12 @@ namespace Disposable.Data.Map.Test.Binding
         }
 
         private class AnotherSampleClass { }
+
+        private class MapAsSampleClass
+        {
+            [MapAs("SuperProperty")]
+            public int Property { get; set; }
+        }
         
         [TestMethod]
         public void PropertyBinding_AgainstPublicProperty_Succeeds()
@@ -110,7 +117,7 @@ namespace Disposable.Data.Map.Test.Binding
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void PropertyBinding_WithNullPropertyInfo_Throws()
         {
             new PropertyBinding<SampleClass>(null);
@@ -144,6 +151,20 @@ namespace Disposable.Data.Map.Test.Binding
             var propertyName = "PublicInt";
             var sampleObj = new SampleClass();
             var binding = new PropertyBinding<AnotherSampleClass>(typeof(SampleClass).GetProperty(propertyName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public ));
+        }
+
+        [TestMethod]
+        public void PropertyBinding_UsingMapAsAttribute_UsesMapAsName()
+        {
+            // Arrange
+            var propertyName = "Property";
+            var mapAsName = "SuperProperty";
+
+            // Act
+            var binding = new PropertyBinding<MapAsSampleClass>(typeof(MapAsSampleClass).GetProperty(propertyName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public));
+            
+            // Assert
+            Assert.AreEqual(mapAsName, binding.Name);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace Disposable.Data.Map.Binding
 {
@@ -14,9 +15,18 @@ namespace Disposable.Data.Map.Binding
         /// Initializes a new instance of the <see cref="FieldBinding{TObject}"/> class.
         /// </summary>
         /// <param name="fieldInfo">The underlying <see cref="FieldInfo"/>.</param>
-        internal FieldBinding(FieldInfo fieldInfo) : base(fieldInfo, fieldInfo.FieldType)
+        internal FieldBinding(FieldInfo fieldInfo) : base(fieldInfo)
         {
             this.fieldInfo = fieldInfo;
+        }
+
+
+        /// <summary>
+        /// Gets the field data type.
+        /// </summary>
+        public override Type DataType
+        {
+            get { return fieldInfo.FieldType; }
         }
 
         /// <summary>

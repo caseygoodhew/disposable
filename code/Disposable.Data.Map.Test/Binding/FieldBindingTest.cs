@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
+using Disposable.Data.Map.Attributes;
 using Disposable.Data.Map.Binding;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -32,6 +33,12 @@ namespace Disposable.Data.Map.Test.Binding
         }
 
         private class AnotherSampleClass { }
+
+        private class MapAsSampleClass
+        {
+            [MapAs("SuperField")]
+            public int Field;
+        }
 
         [TestMethod]
         public void FieldBinding_AgainstPublicField_Succeeds()
@@ -110,7 +117,7 @@ namespace Disposable.Data.Map.Test.Binding
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void FieldBinding_WithNullFieldInfo_Throws()
         {
             new FieldBinding<SampleClass>(null);
@@ -139,11 +146,25 @@ namespace Disposable.Data.Map.Test.Binding
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void PropertyBinding_WithMismatchGenericTypeToPropertyInfoDeclaringType_Throws()
+        public void FieldBinding_WithMismatchGenericTypeToPropertyInfoDeclaringType_Throws()
         {
             var fieldName = "PublicInt";
             var sampleObj = new SampleClass();
             var binding = new FieldBinding<AnotherSampleClass>(typeof(SampleClass).GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public ));
+        }
+
+        [TestMethod]
+        public void FieldBinding_UsingMapAsAttribute_UsesMapAsName()
+        {
+            // Arrange
+            var fieldName = "Field";
+            var mapAsName = "SuperField";
+
+            // Act
+            var binding = new FieldBinding<MapAsSampleClass>(typeof(MapAsSampleClass).GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public));
+
+            // Assert
+            Assert.AreEqual(mapAsName, binding.Name);
         }
     }
 }

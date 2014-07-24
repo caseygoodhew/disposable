@@ -7,6 +7,7 @@ using Disposable.Common.ServiceLocator;
 using Disposable.Data.Map.Attributes;
 using Disposable.Data.Map.Binding;
 using Disposable.Data.Map.DataSource;
+using Disposable.Test.Common;
 using Disposable.Test.Common.ServiceLocator;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -229,6 +230,13 @@ namespace Disposable.Data.Map.Test.Binding
             var binding = new TypeBinding<EmptyClassSuccess>();
             binding.BeginMapping(obj, reader);
             binding.EndMapping(obj, reader);
+        }
+
+        [TestMethod]
+        public void PartialTypeBinding_IEnumerableGetEnumerator_Succeeds()
+        {
+            var binding = new TypeBinding<EmptyClassSuccess>();
+            binding.TestGetEnumerator();
         }
     }
 }

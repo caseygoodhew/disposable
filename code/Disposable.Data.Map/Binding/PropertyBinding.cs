@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace Disposable.Data.Map.Binding
 {
@@ -14,9 +15,17 @@ namespace Disposable.Data.Map.Binding
         /// Initializes a new instance of the <see cref="PropertyBinding{TObject}"/> class.
         /// </summary>
         /// <param name="propertyInfo">The underlying <see cref="PropertyInfo"/>.</param>
-        internal PropertyBinding(PropertyInfo propertyInfo) : base(propertyInfo, propertyInfo.PropertyType)
+        internal PropertyBinding(PropertyInfo propertyInfo) : base(propertyInfo)
         {
             this.propertyInfo = propertyInfo;
+        }
+
+        /// <summary>
+        /// Gets the property data type.
+        /// </summary>
+        public override Type DataType
+        {
+            get { return propertyInfo.PropertyType; }
         }
 
         /// <summary>
