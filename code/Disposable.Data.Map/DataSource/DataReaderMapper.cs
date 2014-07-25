@@ -11,8 +11,8 @@ namespace Disposable.Data.Map.DataSource
     /// </summary>
     internal class DataReaderMapper : IDataSourceMapper<IDataReader>
     {
-        private readonly Lazy<IDataSourceMapper<DataSourceReader>> dataSourceReaderMapper =
-            new Lazy<IDataSourceMapper<DataSourceReader>>(() => Locator.Current.Instance<IDataSourceMapper<DataSourceReader>>());
+        private readonly Lazy<IDataSourceMapper<IDataSourceReader>> dataSourceReaderMapper =
+            new Lazy<IDataSourceMapper<IDataSourceReader>>(() => Locator.Current.Instance<IDataSourceMapper<IDataSourceReader>>());
 
         /// <summary>
         /// Maps exactly one record from a <see cref="IDataReader"/>.
