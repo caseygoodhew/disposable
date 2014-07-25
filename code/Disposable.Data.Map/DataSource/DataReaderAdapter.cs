@@ -6,7 +6,7 @@ namespace Disposable.Data.Map.DataSource
     /// <summary>
     /// <see cref="IDataReader"/> to <see cref="DataSourceReader"/> adapter.
     /// </summary>
-    internal sealed class DataReaderAdapter : DataSourceReader
+    internal class DataReaderAdapter : DataSourceReader
     {
         private readonly IDataReader dataReader;
 

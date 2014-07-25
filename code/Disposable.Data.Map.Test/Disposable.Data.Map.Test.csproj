@@ -64,6 +64,8 @@
     <Compile Include="Binding\TypeBindingFactoryTest.cs" />
     <Compile Include="Binding\MemberBindingTest.cs" />
     <Compile Include="Binding\PartialTypeBindingTest.cs" />
+    <Compile Include="DataSource\DataTableAdapterTest.cs" />
+    <Compile Include="DataSource\DataSourceReaderTest.cs" />
     <Compile Include="DataSource\DataReaderAdapterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

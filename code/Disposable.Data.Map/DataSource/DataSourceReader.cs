@@ -66,7 +66,7 @@ namespace Disposable.Data.Map.DataSource
         {
             get
             {
-                throw new NotImplementedException();
+                return GetValue(i);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Disposable.Data.Map.DataSource
         {
             get
             {
-                throw new NotImplementedException();
+                return this[GetOrdinal(name)];
             }
         }
 
