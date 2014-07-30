@@ -2,9 +2,9 @@
 
 namespace Disposable.Test.Common
 {
-    public static class GetEnumeratorTest
+    internal static class GetEnumeratorTest
     {
-        public static void TestGetEnumerator(this IEnumerable source)
+        internal static void TestGetEnumerator(this IEnumerable source)
         {
             if (source != null)
             {

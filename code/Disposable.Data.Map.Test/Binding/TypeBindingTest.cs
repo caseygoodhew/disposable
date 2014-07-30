@@ -17,6 +17,7 @@ namespace Disposable.Data.Map.Test.Binding
     [TestClass]
     public class TypeBindingTest
     {
+#pragma warning disable 169
         private class SomeClass
         {
             public int Property { get; set; }
@@ -99,6 +100,7 @@ namespace Disposable.Data.Map.Test.Binding
             [AfterMap]
             public void Method(int value) { }
         }
+#pragma warning restore 169
 
         [TestInitialize]
         public void Initialize()

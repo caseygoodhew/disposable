@@ -72,6 +72,7 @@
     <Compile Include="DataSource\DataReaderMapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MapperTest.cs" />
+    <Compile Include="RegistrationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Disposable.Common\Disposable.Common.csproj">

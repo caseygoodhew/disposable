@@ -8,7 +8,7 @@ namespace Disposable.Common.ServiceLocator
     /// </summary>
     public class BaseRegistrar : IRegistrar, ILocator
     {
-        private readonly Dictionary<Type, Func<object>> services = new Dictionary<Type, Func<object>>();
+        protected readonly Dictionary<Type, Func<object>> services = new Dictionary<Type, Func<object>>();
         
         /// <summary>
         /// Registers a locator function for type T
@@ -18,12 +18,12 @@ namespace Disposable.Common.ServiceLocator
         /// <exception cref="ServiceAlreadyRegisteredException">Thrown when a locator function for the given generic type T is already registered</exception>
         public void Register<T>(Func<T> locatorFunc) where T : class
         {
-            if (IsRegistered<T>())
+            if (services.ContainsKey(typeof(T)))
             {
                 throw new ServiceAlreadyRegisteredException(typeof(T));
             }
 
-            this.services[typeof(T)] = locatorFunc;
+            services[typeof(T)] = locatorFunc;
         }
 
         /// <summary>
@@ -41,9 +41,9 @@ namespace Disposable.Common.ServiceLocator
         /// </summary>
         /// <param name="type">The type to look for</param>
         /// <returns>true if the <see cref="type"/> is registered</returns>
-        public bool IsRegistered(Type type)
+        public virtual bool IsRegistered(Type type)
         {
-            return this.services.ContainsKey(type);
+            return services.ContainsKey(type);
         }
 
         /// <summary>
@@ -54,13 +54,7 @@ namespace Disposable.Common.ServiceLocator
         /// <exception cref="ServiceNotFoundException">Thrown when a locator function for the given generic type T is not found</exception>
         public T Instance<T>() where T : class
         {
-            T instance;
-            if (TryGetInstance(out instance))
-            {
-                return instance;
-            }
-
-            throw new ServiceNotFoundException(typeof(T));
+            return Instance(typeof(T)) as T;
         }
 
         /// <summary>
@@ -85,11 +79,12 @@ namespace Disposable.Common.ServiceLocator
         /// <typeparam name="T">The type to try to retrieve</typeparam>
         /// <param name="instance">The type instance if found</param>
         /// <returns>true if the type is found, otherwise false</returns>
-        public virtual bool TryGetInstance<T>(out T instance) where T : class
+        public bool TryGetInstance<T>(out T instance) where T : class
         {
-            if (IsRegistered<T>())
+            object obj;
+            if (TryGetInstance(typeof(T), out obj))
             {
-                instance = (T)this.services[typeof(T)]();
+                instance = obj as T;
                 return true;
             }
 
@@ -107,7 +102,7 @@ namespace Disposable.Common.ServiceLocator
         {
             if (IsRegistered(type))
             {
-                instance = this.services[type]();
+                instance = services[type]();
                 return true;
             }
 

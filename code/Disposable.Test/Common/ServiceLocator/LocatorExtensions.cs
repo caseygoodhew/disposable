@@ -3,14 +3,14 @@ using Disposable.Common.ServiceLocator;
 
 namespace Disposable.Test.Common.ServiceLocator
 {
-    public static class LocatorExtensions
+    internal static class LocatorExtensions
     {
         public static void ResetRegsitrars(this Locator locator)
         {
             Guard.ArgumentNotNull(locator, "locator");
-            
+
             locator.BaseRegistrar = new BaseRegistrar();
-            locator.OverrideRegistrar = new OverrideRegistrar();
+            locator.OverrideRegistrar = new OverrideRegistrar(locator.BaseRegistrar);
         }
 
         public static void ResetRegsitrars(this ILocator iLocator)
@@ -18,6 +18,13 @@ namespace Disposable.Test.Common.ServiceLocator
             Guard.ArgumentNotNull(iLocator, "iLocator");
             
             (iLocator as Locator).ResetRegsitrars();
+        }
+
+        public static IRegistrar GetRegistrar(this Locator locator)
+        {
+            Guard.ArgumentNotNull(locator, "locator");
+
+            return locator.OverrideRegistrar;
         }
     }
 }

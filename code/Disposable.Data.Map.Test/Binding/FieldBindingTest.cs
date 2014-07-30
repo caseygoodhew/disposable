@@ -11,6 +11,8 @@ namespace Disposable.Data.Map.Test.Binding
     [TestClass]
     public class FieldBindingTest
     {
+#pragma warning disable 649
+
         private class SampleClass
         {
             public int PublicInt;
@@ -37,8 +39,10 @@ namespace Disposable.Data.Map.Test.Binding
         private class MapAsSampleClass
         {
             [MapAs("SuperField")]
+            
             public int Field;
         }
+#pragma warning restore 169
 
         [TestMethod]
         public void FieldBinding_AgainstPublicField_Succeeds()

@@ -7,27 +7,11 @@ namespace Disposable.Common.ServiceLocator
     /// </summary>
     public class OverrideRegistrar : BaseRegistrar
     {
-        /// <summary>
-        /// Tries to get the implementation of type T
-        /// </summary>
-        /// <typeparam name="T">The type to try to retrieve</typeparam>
-        /// <param name="instance">The type instance if found</param>
-        /// <returns>true if the type is found, otherwise false</returns>
-        public override bool TryGetInstance<T>(out T instance)
+        private readonly BaseRegistrar baseRegistrar;
+
+        public OverrideRegistrar(BaseRegistrar baseRegistrar)
         {
-            if (IsRegistered<T>())
-            {
-                return base.TryGetInstance(out instance);
-            }
-
-            var locator = Locator.Current as Locator;
-
-            if (locator == null)
-            {
-                throw new ServiceNotFoundException(typeof(T));
-            }
-
-            return locator.BaseRegistrar.TryGetInstance(out instance);
+            this.baseRegistrar = baseRegistrar;
         }
 
         /// <summary>
@@ -38,19 +22,22 @@ namespace Disposable.Common.ServiceLocator
         /// <returns>true if the type is found, otherwise false</returns>
         public override bool TryGetInstance(Type type, out object instance)
         {
-            if (IsRegistered(type))
+            if (services.ContainsKey(type))
             {
                 return base.TryGetInstance(type, out instance);
             }
 
-            var locator = Locator.Current as Locator;
+            return baseRegistrar.TryGetInstance(type, out instance);
+        }
 
-            if (locator == null)
-            {
-                throw new ServiceNotFoundException(type);
-            }
-
-            return locator.BaseRegistrar.TryGetInstance(type, out instance);
+        /// <summary>
+        /// Checks to see if a locator function for given <see cref="Type"/> is already registered
+        /// </summary>
+        /// <param name="type">The type to look for</param>
+        /// <returns>true if the <see cref="type"/> is registered</returns>
+        public override bool IsRegistered(Type type)
+        {
+            return services.ContainsKey(type) || baseRegistrar.IsRegistered(type);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Disposable.Common.ServiceLocator
         private Locator()
         {
             BaseRegistrar = new BaseRegistrar();
-            OverrideRegistrar = new OverrideRegistrar();
+            OverrideRegistrar = new OverrideRegistrar(BaseRegistrar);
         }
 
         /// <summary>

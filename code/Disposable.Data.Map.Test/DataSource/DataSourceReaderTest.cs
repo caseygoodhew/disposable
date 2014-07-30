@@ -12,8 +12,6 @@ namespace Disposable.Data.Map.Test.DataSource
     [TestClass]
     public class DataSourceReaderTest
     {
-        private int depth;
-
         [TestMethod]
         public void DataSourceReaderTest_GetOrdingalHasOrdinal_ReturnsExpected()
         {
