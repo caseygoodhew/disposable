@@ -23,37 +23,26 @@ namespace Disposable.Common.Extensions
         }
 
         /// <summary>
-        /// Concatenates a sequence as a string to a string.
+        /// Concatenates a sequence to a string using the default ToString method on each element.
         /// </summary>
         /// <typeparam name="TSource">The type of the elements of <paramref name="source"/>.</typeparam>
         /// <param name="source">The <see cref="T:System.Collections.Generic.IEnumerable`1"/> to concatenate.</param>
+        /// <param name="separator">A string that will be used to separate the parts.</param>
         /// <returns>The concatenated string.</returns>
-        public static string Concat<TSource>(this IEnumerable<TSource> source)
+        public static string Concat<TSource>(this IEnumerable<TSource> source, string separator = "")
         {
-            return source.Concat(x => x.ToString());
+            return Concat(source, x => x.ToString(), separator);
         }
-
+        
         /// <summary>
-        /// Concatenates a sequence as a string to a string.
-        /// </summary>
-        /// <typeparam name="TSource">The type of the elements of <paramref name="source"/>.</typeparam>
-        /// <param name="source">The <see cref="T:System.Collections.Generic.IEnumerable`1"/> to concatenate.</param>
-        /// <param name="toString">The delegate to use to convert the <see cref="source"/> elements to strings.</param>
-        /// <returns>The concatenated string.</returns>
-        public static string Concat<TSource>(this IEnumerable<TSource> source, Func<TSource, string> toString)
-        {
-            return Concat(source, toString, string.Empty);
-        }
-
-        /// <summary>
-        /// Concatenates a sequence as a string to a string.
+        /// Concatenates a sequence to a string using a custom ToString method on each element.
         /// </summary>
         /// <typeparam name="TSource">The type of the elements of <paramref name="source"/>.</typeparam>
         /// <param name="source">The <see cref="T:System.Collections.Generic.IEnumerable`1"/> to concatenate.</param>
         /// <param name="toString">The delegate to use to convert the <see cref="source"/> elements to strings.</param>
         /// <param name="separator">A string that will be used to separate the parts.</param>
         /// <returns>The concatenated string.</returns>
-        public static string Concat<TSource>(this IEnumerable<TSource> source, Func<TSource, string> toString, string separator)
+        public static string Concat<TSource>(this IEnumerable<TSource> source, Func<TSource, string> toString, string separator = "")
         {
             return source == null ? string.Empty : string.Join(separator, source.Select(toString));
         }

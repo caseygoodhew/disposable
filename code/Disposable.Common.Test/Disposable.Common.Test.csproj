@@ -74,6 +74,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Extensions\EnumerableExtensionsTest.cs" />
+    <Compile Include="Extensions\StringExtensionsTest.cs" />
     <Compile Include="ServiceLocator\LocatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -90,6 +92,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

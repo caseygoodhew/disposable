@@ -44,6 +44,36 @@ namespace Disposable.Common.Test.ServiceLocator
         }
 
         [TestMethod]
+        public void Locator_WithRegisteredService_ReturnsSerivce()
+        {
+            var locator = Locator.Current as Locator;
+            ILocator outLocator;
+            object outObject;
+            
+            Assert.IsFalse(locator.TryGetInstance(out outLocator));
+            Assert.IsFalse(locator.TryGetInstance(typeof(ILocator), out outObject));
+
+            locator.Register<ILocator>(() => locator);
+
+            Assert.AreSame(locator, locator.Instance<ILocator>());
+            Assert.AreSame(locator, locator.Instance(typeof(ILocator)));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ServiceNotFoundException))]
+        public void Locator_WithoutRegisteredService_ThrowsOnByGenericInstance()
+        {
+            Locator.Current.Instance<ILocator>();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ServiceNotFoundException))]
+        public void Locator_WithoutRegisteredService_ThrowsOnByTypeInstance()
+        {
+            Locator.Current.Instance(typeof(ILocator));
+        }
+
+        [TestMethod]
         public void BaseRegistrar_WithMoqInterface_Succeeds()
         {
             // Arrange
@@ -83,6 +113,7 @@ namespace Disposable.Common.Test.ServiceLocator
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ServiceNotFoundException))]
         public void ResetRegistrars_WithBaseRegistration_Succeeds()
         {
             // Arrange
@@ -98,17 +129,11 @@ namespace Disposable.Common.Test.ServiceLocator
             Assert.AreSame(testInterfaceMock.Object, firstResult);
             locator.ResetRegsitrars();
 
-            try
-            {
-                Locator.Current.Instance<ITestInterface>();
-                throw new InvalidOperationException();
-            }
-            catch (ServiceNotFoundException)
-            {
-            }
+            Locator.Current.Instance<ITestInterface>();
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ServiceNotFoundException))]
         public void ResetRegistrars_WithOverrideRegistration_Succeeds()
         {
             // Arrange
@@ -124,14 +149,7 @@ namespace Disposable.Common.Test.ServiceLocator
             Assert.AreSame(testInterfaceMock.Object, firstResult);
             locator.ResetRegsitrars();
 
-            try
-            {
-                Locator.Current.Instance<ITestInterface>();
-                throw new InvalidOperationException();
-            }
-            catch (ServiceNotFoundException)
-            {
-            }
+            Locator.Current.Instance<ITestInterface>();
         }
 
         [TestMethod]

@@ -1,4 +1,6 @@
 ﻿using System.Globalization;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Disposable.Common.Extensions
 {
@@ -19,7 +21,18 @@ namespace Disposable.Common.Extensions
                 return str;
             }
 
-            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str);
+            var parts = str.Split(' ');
+            return parts.Concat(ToFirstCharUpperRestLower, " ");
+        }
+
+        private static string ToFirstCharUpperRestLower(string str)
+        {
+            if (str.Length <= 1)
+            {
+                return str.ToUpper();
+            }
+            
+            return str.Substring(0, 1).ToUpper() + str.Substring(1).ToLower();
         }
     }
 }
