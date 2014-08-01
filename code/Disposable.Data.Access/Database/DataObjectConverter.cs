@@ -80,7 +80,7 @@ namespace Disposable.Data.Access.Database
             var typeToBind = typeT;
             var isEnumerable = false;
 
-            if (typeT.IsIEnumerable())
+            if (typeT.IsIEnumerable(true))
             {
                 isEnumerable = true;
                 typeToBind = typeT.GetGenericArguments()[0];

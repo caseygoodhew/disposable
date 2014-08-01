@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading;
 using Disposable.Common.ServiceLocator;
 using Disposable.Test;
-using Disposable.Test.Common.ServiceLocator;
+using Disposable.Test.Extensions;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 

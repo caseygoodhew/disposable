@@ -39,11 +39,13 @@ namespace Disposable.Common
         /// <typeparam name="T">The generic type to validate assignment against</typeparam>
         /// <param name="value">The value to validate</param>
         /// <param name="argumentName">The name of the argument</param>
-        public static void ArgumentIsType<T>(object value, string argumentName) where T : class
+        public static void ArgumentIsType<T>(object value, string argumentName)
         {
-            if (!value.GetType().IsAssignableFrom(typeof(T)))
+            ArgumentNotNull(value, argumentName);
+            
+            if (!(value is T))
             {
-                throw new ArgumentException(argumentName);
+                throw new ArgumentException(string.Format("Argument is not assignable from type {0}.", typeof(T).FullName), argumentName);
             }
         }
     }

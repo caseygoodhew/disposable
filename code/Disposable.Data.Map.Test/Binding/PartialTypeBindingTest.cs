@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 using Disposable.Data.Map.Binding;
 using Disposable.Data.Map.DataSource;
-using Disposable.Test.Common;
+using Disposable.Test.Runners;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -75,7 +75,7 @@ namespace Disposable.Data.Map.Test.Binding
         public void PartialTypeBinding_IEnumerableGetEnumerator_Succeeds()
         {
             var binding = new PartialTypeBinding<SomeClass>(sourceTypeBinding.Object, dataSourceReader.Object);
-            binding.TestGetEnumerator();
+            EnumeratorRunner.GetEnumerator(binding);
         }
 
         private static Mock<IMemberBinding<SomeClass>> CreateMockMemberBinding(string name)

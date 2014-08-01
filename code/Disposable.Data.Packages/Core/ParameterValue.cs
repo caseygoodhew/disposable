@@ -4,7 +4,7 @@
     /// Abstract implementation for a stored method parameter value.
     /// </summary>
     /// <typeparam name="T">The <see cref="IParameter"/> that the value corresponds to.</typeparam>
-    public abstract class ParameterValue<T> : IParameter where T : IParameter
+    public abstract class ParameterValue<T> : IParameterValue where T : IParameter
     {
         /// <summary>
         /// The underlying <see cref="IParameter"/>.
@@ -47,6 +47,6 @@
         /// <summary>
         /// Gets or sets the parameter value.
         /// </summary>
-        public object Value { get; set; }
+        public object Value { get; protected set; }
     }
 }

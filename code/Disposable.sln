@@ -77,6 +77,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Text.Test", "Dis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Data.Map.Test", "Disposable.Data.Map.Test\Disposable.Data.Map.Test.csproj", "{95C38EEB-06B1-4AEC-A423-E224F343D9C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Data.Packages.Test", "Disposable.Data.Packages.Test\Disposable.Data.Packages.Test.csproj", "{BF8F9EBF-46E1-4253-BFE5-9A07350EDA7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -305,6 +307,16 @@ Global
 		{95C38EEB-06B1-4AEC-A423-E224F343D9C9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{95C38EEB-06B1-4AEC-A423-E224F343D9C9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{95C38EEB-06B1-4AEC-A423-E224F343D9C9}.Release|x64.ActiveCfg = Release|Any CPU
+		{BF8F9EBF-46E1-4253-BFE5-9A07350EDA7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF8F9EBF-46E1-4253-BFE5-9A07350EDA7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF8F9EBF-46E1-4253-BFE5-9A07350EDA7B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BF8F9EBF-46E1-4253-BFE5-9A07350EDA7B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BF8F9EBF-46E1-4253-BFE5-9A07350EDA7B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BF8F9EBF-46E1-4253-BFE5-9A07350EDA7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF8F9EBF-46E1-4253-BFE5-9A07350EDA7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF8F9EBF-46E1-4253-BFE5-9A07350EDA7B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BF8F9EBF-46E1-4253-BFE5-9A07350EDA7B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BF8F9EBF-46E1-4253-BFE5-9A07350EDA7B}.Release|x64.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -343,6 +355,7 @@ Global
 		{E3CB3565-61EC-4965-8705-B7CC94267D7D} = {CAB106E3-339A-4A65-A5B2-E4C73FF49F6F}
 		{6463CA27-FD7A-46B1-B2BA-02AE1EF91F04} = {7A556D17-60AE-468F-B91E-2A5CC41016FF}
 		{95C38EEB-06B1-4AEC-A423-E224F343D9C9} = {08F4DFC8-C6AC-4E91-9BF4-229F763984E6}
+		{BF8F9EBF-46E1-4253-BFE5-9A07350EDA7B} = {08F4DFC8-C6AC-4E91-9BF4-229F763984E6}
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true

@@ -22,7 +22,7 @@ namespace Disposable.Common.ServiceLocator
         /// <returns>true if the type is found, otherwise false</returns>
         public override bool TryGetInstance(Type type, out object instance)
         {
-            if (services.ContainsKey(type))
+            if (Services.ContainsKey(type))
             {
                 return base.TryGetInstance(type, out instance);
             }
@@ -37,7 +37,7 @@ namespace Disposable.Common.ServiceLocator
         /// <returns>true if the <see cref="type"/> is registered</returns>
         public override bool IsRegistered(Type type)
         {
-            return services.ContainsKey(type) || baseRegistrar.IsRegistered(type);
+            return Services.ContainsKey(type) || baseRegistrar.IsRegistered(type);
         }
     }
 }

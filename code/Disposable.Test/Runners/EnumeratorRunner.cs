@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 
-namespace Disposable.Test.Common
+namespace Disposable.Test.Runners
 {
-    internal static class GetEnumeratorTest
+    internal static class EnumeratorRunner
     {
-        internal static void TestGetEnumerator(this IEnumerable source)
+        internal static void GetEnumerator(this IEnumerable source)
         {
             if (source != null)
             {

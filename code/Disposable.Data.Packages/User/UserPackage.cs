@@ -11,27 +11,11 @@ namespace Disposable.Data.Packages.User
         /// <summary>
         /// Initializes a new instance of the <see cref="UserPackage"/> class.
         /// </summary>
-        public UserPackage()
+        public UserPackage() : base(PackageConstants.Disposable, PackageConstants.UserPkg)
         {
-            Register(() => new AuthenticateUserProcedure(this));
-            Register(() => new CreateUserProcedure(this));
-            Register(() => new GetUserProcedure(this));
-        }
-
-        /// <summary>
-        /// Gets the package schema name.
-        /// </summary>
-        public override string Schema
-        {
-            get { return PackageConstants.Disposable; } 
-        }
-
-        /// <summary>
-        /// Gets the package name.
-        /// </summary>
-        public override string Name
-        {
-            get { return PackageConstants.UserPkg; } 
+            Add(() => new AuthenticateUserProcedure(this));
+            Add(() => new CreateUserProcedure(this));
+            Add(() => new GetUserProcedure(this));
         }
 
         /// <summary>
@@ -42,7 +26,7 @@ namespace Disposable.Data.Packages.User
         /// <returns>The <see cref="IStoredProcedure"/>.</returns>
         public IStoredProcedure AuthenticateUserProcedure(string email, string password)
         {
-            var procedure = Instance<AuthenticateUserProcedure>();
+            var procedure = Get<AuthenticateUserProcedure>();
             procedure.SetParameterValues(email, password);
             return procedure;
         }
@@ -56,7 +40,7 @@ namespace Disposable.Data.Packages.User
         /// <returns>The <see cref="IStoredProcedure"/>.</returns>
         public IStoredProcedure CreateUserProcedure(string email, string password, bool isApproved)
         {
-            var procedure = Instance<CreateUserProcedure>();
+            var procedure = Get<CreateUserProcedure>();
             procedure.SetParameterValues(email, password, isApproved);
             return procedure;
         }
@@ -69,7 +53,7 @@ namespace Disposable.Data.Packages.User
         [Obsolete("Will be removed once no longer used in MVC.")]
         public IStoredProcedure GetUserProcedure(string username)
         {
-            var procedure = Instance<GetUserProcedure>();
+            var procedure = Get<GetUserProcedure>();
             procedure.SetParameterValues(username);
             return procedure;
         }

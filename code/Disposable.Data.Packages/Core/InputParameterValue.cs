@@ -3,7 +3,7 @@
     /// <summary>
     /// <see cref="InputParameterValue"/> value.
     /// </summary>
-    public class InputParameterValue : ParameterValue<IInputParameter>, IInputParameter
+    public class InputParameterValue : ParameterValue<IInputParameter>, IInputParameterValue
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InputParameterValue" /> class.

@@ -8,7 +8,7 @@ namespace Disposable.Common.ServiceLocator
     /// </summary>
     public class BaseRegistrar : IRegistrar, ILocator
     {
-        protected readonly Dictionary<Type, Func<object>> services = new Dictionary<Type, Func<object>>();
+        protected readonly Dictionary<Type, Func<object>> Services = new Dictionary<Type, Func<object>>();
         
         /// <summary>
         /// Registers a locator function for type T
@@ -18,12 +18,12 @@ namespace Disposable.Common.ServiceLocator
         /// <exception cref="ServiceAlreadyRegisteredException">Thrown when a locator function for the given generic type T is already registered</exception>
         public void Register<T>(Func<T> locatorFunc) where T : class
         {
-            if (services.ContainsKey(typeof(T)))
+            if (Services.ContainsKey(typeof(T)))
             {
                 throw new ServiceAlreadyRegisteredException(typeof(T));
             }
 
-            services[typeof(T)] = locatorFunc;
+            Services[typeof(T)] = locatorFunc;
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Disposable.Common.ServiceLocator
         /// <returns>true if the <see cref="type"/> is registered</returns>
         public virtual bool IsRegistered(Type type)
         {
-            return services.ContainsKey(type);
+            return Services.ContainsKey(type);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Disposable.Common.ServiceLocator
         {
             if (IsRegistered(type))
             {
-                instance = services[type]();
+                instance = Services[type]();
                 return true;
             }
 

@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 
 using Disposable.Common.ServiceLocator;
-using Disposable.Data.Map.Binding;
-using Disposable.Data.Map.DataSource;
+using Disposable.Data.Packages.User;
 using Disposable.Test.Extensions;
 using Disposable.Test.Runners;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Disposable.Data.Map.Test
+namespace Disposable.Data.Packages.Test
 {
     [TestClass]
     public class RegistrationTest
@@ -20,18 +18,14 @@ namespace Disposable.Data.Map.Test
         {
             Locator.Current.ResetRegsitrars();
         }
-        
+
         [TestMethod]
         public void VerifyRegisters()
         {
             RegistrationRunner.VerifyRegisters(
                 new List<Type>
                     {
-                        typeof(ITypeBindingFactory),
-                        typeof(IMemberBindingFactory),
-                        typeof(IDataSourceMapper<DataSet>),
-                        typeof(IDataSourceMapper<IDataReader>),
-                        typeof(IDataSourceMapper<IDataSourceReader>),
+                        typeof(IUserPackage),
                     },
                 Registration.Register
             );

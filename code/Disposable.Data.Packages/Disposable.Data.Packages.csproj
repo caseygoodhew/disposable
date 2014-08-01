@@ -61,6 +61,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\IOutputParameterValue.cs" />
+    <Compile Include="Core\IInputParameterValue.cs" />
+    <Compile Include="Core\IParameterValue.cs" />
     <Compile Include="Core\StoredFunction.cs" />
     <Compile Include="Core\StoredMethod.cs" />
     <Compile Include="Core\IStoredMethod.cs" />

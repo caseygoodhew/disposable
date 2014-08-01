@@ -3,7 +3,7 @@ using System.Data;
 
 using Disposable.Common.ServiceLocator;
 using Disposable.Data.Map.DataSource;
-using Disposable.Test.Common.ServiceLocator;
+using Disposable.Test.Extensions;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

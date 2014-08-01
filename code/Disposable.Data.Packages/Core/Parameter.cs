@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-namespace Disposable.Data.Packages.Core
+﻿namespace Disposable.Data.Packages.Core
 {
     /// <summary>
     /// Abstract implementation for a stored method parameter.

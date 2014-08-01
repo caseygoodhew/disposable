@@ -1,7 +1,7 @@
 ﻿using Disposable.Common;
 using Disposable.Common.ServiceLocator;
 
-namespace Disposable.Test.Common.ServiceLocator
+namespace Disposable.Test.Extensions
 {
     internal static class LocatorExtensions
     {
