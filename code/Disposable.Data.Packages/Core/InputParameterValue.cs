@@ -24,5 +24,14 @@
                 return Parameter.Required;
             }
         }
+
+        /// <summary>
+        /// Gets the input parameter value as an <see cref="InputParameter"/>.
+        /// </summary>
+        /// <returns></returns>
+        public IInputParameter AsInputParameter()
+        {
+            return Parameter;
+        }
     }
 }

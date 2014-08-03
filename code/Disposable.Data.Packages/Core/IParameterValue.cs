@@ -16,8 +16,8 @@
         DataTypes DataType { get; }
 
         /// <summary>
-        /// Gets the parameter value.
+        /// Gets or sets the parameter value.
         /// </summary>
-        object Value { get; }
+        object Value { get; set; }
     }
 }

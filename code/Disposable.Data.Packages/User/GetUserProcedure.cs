@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+
 using Disposable.Data.Packages.Core;
 
 namespace Disposable.Data.Packages.User
@@ -27,12 +29,16 @@ namespace Disposable.Data.Packages.User
         /// </summary>
         /// <param name="username">The username of the user to get</param>
         [Obsolete("Will be removed once no longer used in MVC.")]
-        internal void SetParameterValues(string username)
+        internal IStoredMethodInstance CreateInstance(string username)
         {
-            this.SetInputParameterValues(new Dictionary<string, object>
+            var instance = CreateInstance();
+
+            instance.SetValues<IInputParameterValue>(new Dictionary<string, object>
             {
                 { PackageConstants.InUsername, username }
             });
+
+            return instance;
         }
     }
 }

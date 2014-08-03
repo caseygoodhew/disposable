@@ -29,21 +29,25 @@ namespace Disposable.Data.Packages.User
         }
 
         /// <summary>
-        /// Throws or handles <see cref="ProgrammaticDatabaseExceptions"/> thrown by the underlying database.
+        /// Instructs an <see cref="IStoredMethod"/> to handle a <see cref="ProgrammaticDatabaseException"/> which 
+        /// was thrown in the database when the <see cref="IStoredMethodInstance"/> was invoked.
         /// </summary>
-        /// <param name="exceptionDescription">The <see cref="ProgrammaticDatabaseException"/> name.</param>
+        /// <param name="storedMethodInstance">The <see cref="IStoredMethodInstance"/> that was running at the time of error generation.</param>
+        /// <param name="exceptionDescription">The <see cref="ExceptionDescription"/> of the error to handle.</param>
         /// <param name="underlyingDatabaseException">The <see cref="UnderlyingDatabaseException"/></param>
         /// <returns>
-        /// The <see cref="exceptionDescription"/> that was handled, or <see cref="ProgrammaticDatabaseExceptions.Unhandled"/>.
+        /// If the exception has been handled, this should be the same value that was passed into the method. 
+        /// Returning any value other than this will result in an <see cref="UnhandledDatabaseException"/> being immediately thrown.
         /// </returns>
-        public override ExceptionDescription Handle(ExceptionDescription exceptionDescription, UnderlyingDatabaseException underlyingDatabaseException)
+        public override ExceptionDescription Handle(IStoredMethodInstance storedMethodInstance, ExceptionDescription exceptionDescription, UnderlyingDatabaseException underlyingDatabaseException)
         {
             if (exceptionDescription == ProgrammaticDatabaseExceptions.DuplicateEmail)
             {
-                throw new DuplicateEmailException(GetInputParameterValue(PackageConstants.InEmail).Value.ToString());
+                var email = storedMethodInstance.GetValue<IInputParameterValue>(PackageConstants.InEmail).ToString();
+                throw new DuplicateEmailException(email);
             }
 
-            return base.Handle(exceptionDescription, underlyingDatabaseException);
+            return base.Handle(storedMethodInstance, exceptionDescription, underlyingDatabaseException);
         }
 
         /// <summary>
@@ -52,14 +56,18 @@ namespace Disposable.Data.Packages.User
         /// <param name="email">The email to authenticate</param>
         /// <param name="password">The password to authenticate</param>
         /// <param name="isApproved">Flag indicating if the user should be created in an approved state</param>
-        internal void SetParameterValues(string email, string password, bool isApproved)
+        internal IStoredMethodInstance CreateInstance(string email, string password, bool isApproved)
         {
-            this.SetInputParameterValues(new Dictionary<string, object>
+            var instance = CreateInstance();
+
+            instance.SetValues<IInputParameterValue>(new Dictionary<string, object>
             {
                 { PackageConstants.InEmail, email },
                 { PackageConstants.InPassword, password },
                 { PackageConstants.InApproved, isApproved }
             });
+
+            return instance;
         }
     }
 }

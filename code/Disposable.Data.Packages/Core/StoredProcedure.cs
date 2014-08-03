@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace Disposable.Data.Packages.Core
@@ -6,7 +8,7 @@ namespace Disposable.Data.Packages.Core
     /// <summary>
     /// Abstract class defining the required attributes to call a stored procedure.
     /// </summary>
-    internal abstract class StoredProcedure : StoredMethod, IStoredProcedure
+    public abstract class StoredProcedure : StoredMethod
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StoredProcedure"/> class.
@@ -15,25 +17,12 @@ namespace Disposable.Data.Packages.Core
         /// <param name="name">The name of the procedure.</param>
         /// <param name="parameters">The list of <see cref="IInputParameter"/>s and <see cref="IOutputParameter"/>s in the package declaration.</param>
         protected StoredProcedure(IPackage package, string name, params IParameter[] parameters)
-            : base(package, name, parameters.Where(x => x is IInputParameter).Cast<IInputParameter>().ToArray())
+            : base(package, name,  parameters)
         {
-            OutputParameters = parameters.Where(x => x is IOutputParameter)
-                             .Cast<IOutputParameter>()
-                             .ToList();
-        }
-
-        /// <summary>
-        /// Gets the list of <see cref="IOutputParameter"/>s of the procedure.
-        /// </summary>
-        internal IList<IOutputParameter> OutputParameters { get; private set; }
-
-        /// <summary>
-        /// Gets the output parameter values that will be used to call the stored procedure.
-        /// </summary>
-        /// <returns>A list of the output parameters.</returns>
-        public IList<OutputParameterValue> GetOutputParameterValues()
-        {
-            return OutputParameters.Select(x => new OutputParameterValue(x)).ToList();
+            if (OutputParameters.Any(x => x.Direction != ParameterDirection.Output))
+            {
+                throw new ArgumentException("All output parameter directions must be ParameterDirection.Output.", "parameters");
+            }
         }
     }
 }

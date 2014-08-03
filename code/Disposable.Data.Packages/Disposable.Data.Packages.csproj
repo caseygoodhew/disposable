@@ -64,10 +64,10 @@
     <Compile Include="Core\IOutputParameterValue.cs" />
     <Compile Include="Core\IInputParameterValue.cs" />
     <Compile Include="Core\IParameterValue.cs" />
+    <Compile Include="Core\IStoredMethodInstance.cs" />
     <Compile Include="Core\StoredFunction.cs" />
     <Compile Include="Core\StoredMethod.cs" />
     <Compile Include="Core\IStoredMethod.cs" />
-    <Compile Include="Core\IStoredFunction.cs" />
     <Compile Include="Core\OutputParameterValue.cs" />
     <Compile Include="Core\InputParameterValue.cs" />
     <Compile Include="Core\IOutputParameter.cs" />
@@ -76,11 +76,11 @@
     <Compile Include="Core\DataTypes.cs" />
     <Compile Include="Core\InputParameter.cs" />
     <Compile Include="Core\IPackage.cs" />
-    <Compile Include="Core\IStoredProcedure.cs" />
     <Compile Include="Core\OutputParameter.cs" />
     <Compile Include="Core\Package.cs" />
     <Compile Include="Core\Parameter.cs" />
     <Compile Include="Core\ParameterValue.cs" />
+    <Compile Include="Core\StoredMethodInstance.cs" />
     <Compile Include="Core\StoredProcedure.cs" />
     <Compile Include="PackageConstants.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>

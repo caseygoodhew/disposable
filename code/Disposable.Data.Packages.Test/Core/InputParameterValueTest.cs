@@ -24,6 +24,7 @@ namespace Disposable.Data.Packages.Test.Core
             Assert.AreEqual(dataType, parameterValue.DataType);
             Assert.AreEqual(required, parameterValue.Required);
             Assert.AreEqual(value, parameterValue.Value);
+            Assert.AreSame(parameter, parameterValue.AsInputParameter());
         }
     }
 }

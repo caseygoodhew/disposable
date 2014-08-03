@@ -1,35 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Disposable.Common.Extensions;
 using Disposable.Data.Common.Exceptions;
 
 namespace Disposable.Data.Packages.Core
 {
     /// <summary>
     /// Abstract class defining the common attributes required to call a stored method.
+    /// This class should not be directly extended. Prefer <see cref="StoredProcedure"/> or <see cref="StoredFunction"/> instead.
     /// </summary>
-    internal abstract class StoredMethod : IStoredMethod
+    public abstract class StoredMethod : IStoredMethod
     {
-        private readonly IList<IInputParameter> inputParameters;
-
-        private IList<InputParameterValue> lastFullParameterValues;
+        protected readonly IList<IInputParameter> InputParameters;
         
-        private IList<InputParameterValue> fullParameterValues;
-
-        private IList<InputParameterValue> trimmedParameterValues;
+        protected readonly IList<IOutputParameter> OutputParameters;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StoredMethod"/> class.
         /// </summary>
         /// <param name="package">The <see cref="IPackage"/> that contains the procedure.</param>
         /// <param name="name">The name of the procedure.</param>
-        /// <param name="inputParameters">The list of <see cref="IInputParameter"/>s in the package declaration.</param>
-        protected StoredMethod(IPackage package, string name, params IInputParameter[] inputParameters)
+        /// <param name="parameters">The list of <see cref="IParameter"/>s in the package declaration.</param>
+        protected StoredMethod(IPackage package, string name, params IParameter[] parameters)
         {
             Package = package;
             Name = name;
-            this.inputParameters = inputParameters.ToList();
+            InputParameters = parameters.OfType<IInputParameter>().ToList();
+            OutputParameters = parameters.OfType<IOutputParameter>().ToList();
+
+            if (InputParameters.Count + OutputParameters.Count != parameters.Count())
+            {
+                throw new ArgumentException("Unknown parameter types in parameters. IInputParameters.Count + IOutputParameters.Count <> IParameters.Count");
+            }
         }
 
         /// <summary>
@@ -43,101 +45,31 @@ namespace Disposable.Data.Packages.Core
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the input parameter values.
-        /// </summary>
-        /// <param name="includeEmpty">Flag to include empty parameters.</param>
-        /// <returns>A list of <see cref="InputParameterValue"/></returns>
-        public IList<InputParameterValue> GetInputParameterValues(bool includeEmpty)
-        {
-            var parameters = includeEmpty ? this.fullParameterValues : this.trimmedParameterValues;
-
-            this.lastFullParameterValues = this.fullParameterValues;
-            this.trimmedParameterValues = null;
-            this.fullParameterValues = null;
-
-            return parameters;
-        }
-
-        /// <summary>
-        /// Gets an input parameter value.
-        /// </summary>
-        /// <param name="name">The name of the parameter to get.</param>
-        /// <returns>The <see cref="InputParameterValue"/></returns>
-        public InputParameterValue GetInputParameterValue(string name)
-        {
-            return (this.fullParameterValues ?? this.lastFullParameterValues).Single(x => x.Name == name);
-        }
-
-        /// <summary>
         /// Instructs an <see cref="IStoredMethod"/> to handle a <see cref="ProgrammaticDatabaseException"/> which 
-        /// was thrown in the database when the <see cref="IStoredMethod"/> was invoked.
-        /// This method should be overridden in derived classes that provide error handling.
+        /// was thrown in the database when the <see cref="IStoredMethodInstance"/> was invoked.
         /// </summary>
-        /// <param name="exceptionDescription">The <see cref="ProgrammaticDatabaseException"/> name.</param>
+        /// <param name="storedMethodInstance">The <see cref="IStoredMethodInstance"/> that was running at the time of error generation.</param>
+        /// <param name="exceptionDescription">The <see cref="ExceptionDescription"/> of the error to handle.</param>
         /// <param name="underlyingDatabaseException">The <see cref="UnderlyingDatabaseException"/></param>
         /// <returns>
-        /// <see cref="ProgrammaticDatabaseExceptions.Unhandled"/> if not overridden.
+        /// If the exception has been handled, this should be the same value that was passed into the method. 
+        /// Returning any value other than this will result in an <see cref="UnhandledDatabaseException"/> being immediately thrown.
         /// </returns>
-        public virtual ExceptionDescription Handle(ExceptionDescription exceptionDescription, UnderlyingDatabaseException underlyingDatabaseException)
+        public virtual ExceptionDescription Handle(
+            IStoredMethodInstance storedMethodInstance,
+            ExceptionDescription exceptionDescription,
+            UnderlyingDatabaseException underlyingDatabaseException)
         {
             return ProgrammaticDatabaseExceptions.Unhandled;
         }
 
         /// <summary>
-        /// Sets the parameter values by key value dictionary.
+        /// Creates a new <see cref="IStoredMethodInstance"/>.
         /// </summary>
-        /// <param name="parameterValues">Key value dictionary of parameter names and values.</param>
-        protected void SetInputParameterValues(IDictionary<string, object> parameterValues)
+        /// <returns>A new <see cref="IStoredMethodInstance"/>.</returns>
+        protected IStoredMethodInstance CreateInstance()
         {
-            var inputParams = (inputParameters ?? Enumerable.Empty<IInputParameter>()).ToList();
-
-            if (inputParams.IsNullOrEmpty() && parameterValues.IsNullOrEmpty())
-            {
-                trimmedParameterValues = new List<InputParameterValue>();
-            }
-            else
-            {
-                var valueDictionary = (parameterValues ?? new Dictionary<string, object>()).ToDictionary(
-                    x => x.Key,
-                    x => x.Value,
-                    StringComparer.InvariantCultureIgnoreCase);
-
-                var parameterDictionary = inputParams.ToDictionary(
-                    x => x.Name,
-                    StringComparer.InvariantCultureIgnoreCase);
-
-                var requiredParameters = parameterDictionary.Where(x => x.Value.Required).Select(x => x.Key).ToList();
-                var missingParameters = requiredParameters.Where(x => !valueDictionary.ContainsKey(x)).ToList();
-
-                if (missingParameters.Any())
-                {
-                    var message = string.Format(
-                        "The following parameterValues are required but were not supplied: {0}",
-                        string.Join(", ", missingParameters));
-                    throw new ArgumentException(message, "parameterValues");
-                }
-
-                var allParameters = parameterDictionary.Select(x => x.Key);
-                var extraParameters = valueDictionary.Where(x => !allParameters.Contains(x.Key)).ToList();
-
-                if (extraParameters.Any())
-                {
-                    var message = string.Format(
-                        "The following supplied parameterValues are not defined: {0}",
-                        string.Join(", ", extraParameters));
-                    throw new ArgumentException(message, "parameterValues");
-                }
-
-                fullParameterValues =
-                    parameterDictionary.Select(
-                        x =>
-                        new InputParameterValue(
-                            parameterDictionary[x.Key],
-                            valueDictionary.ContainsKey(x.Key) ? valueDictionary[x.Key] : null)).ToList();
-                
-                trimmedParameterValues =
-                    valueDictionary.Select(x => new InputParameterValue(parameterDictionary[x.Key], x.Value)).ToList();
-            }
+            return new StoredMethodInstance(this, InputParameters, OutputParameters);
         }
     }
 }

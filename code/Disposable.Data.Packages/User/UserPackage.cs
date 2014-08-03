@@ -24,11 +24,9 @@ namespace Disposable.Data.Packages.User
         /// <param name="email">The username to authenticate</param>
         /// <param name="password">The password to authenticate</param>
         /// <returns>The <see cref="IStoredProcedure"/>.</returns>
-        public IStoredProcedure AuthenticateUserProcedure(string email, string password)
+        public IStoredMethodInstance AuthenticateUserProcedure(string email, string password)
         {
-            var procedure = Get<AuthenticateUserProcedure>();
-            procedure.SetParameterValues(email, password);
-            return procedure;
+            return Get<AuthenticateUserProcedure>().CreateInstance(email, password);
         }
 
         /// <summary>
@@ -38,11 +36,9 @@ namespace Disposable.Data.Packages.User
         /// <param name="password">The password to authenticate</param>
         /// <param name="isApproved">Flag indicating if the user should be created in an approved state</param>
         /// <returns>The <see cref="IStoredProcedure"/>.</returns>
-        public IStoredProcedure CreateUserProcedure(string email, string password, bool isApproved)
+        public IStoredMethodInstance CreateUserProcedure(string email, string password, bool isApproved)
         {
-            var procedure = Get<CreateUserProcedure>();
-            procedure.SetParameterValues(email, password, isApproved);
-            return procedure;
+            return Get<CreateUserProcedure>().CreateInstance(email, password, isApproved);
         }
 
         /// <summary>
@@ -51,11 +47,9 @@ namespace Disposable.Data.Packages.User
         /// <param name="username">The username of the user to get</param>
         /// <returns>The <see cref="IStoredProcedure"/>.</returns>
         [Obsolete("Will be removed once no longer used in MVC.")]
-        public IStoredProcedure GetUserProcedure(string username)
+        public IStoredMethodInstance GetUserProcedure(string username)
         {
-            var procedure = Get<GetUserProcedure>();
-            procedure.SetParameterValues(username);
-            return procedure;
+            return Get<GetUserProcedure>().CreateInstance(username);
         }
     }
 }

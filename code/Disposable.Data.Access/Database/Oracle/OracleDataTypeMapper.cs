@@ -16,7 +16,7 @@ namespace Disposable.Data.Access.Database.Oracle
         /// </summary>
         /// <param name="parameter">The <see cref="IParameter"/> to map.</param>
         /// <returns>The <see cref="OracleDbType"/>.</returns>
-        internal static OracleDbType Map(IParameterValue parameter)
+        internal static OracleDbType Map(IParameter parameter)
         {
             //// http://stackoverflow.com/questions/1334574/c-sharp-datatypes-oracle-datatypes</remarks>
             switch (parameter.DataType)
@@ -48,7 +48,7 @@ namespace Disposable.Data.Access.Database.Oracle
         /// <param name="inputParameter">The <see cref="IInputParameter"/> for the corresponding <see cref="value"/>.</param>
         /// <param name="value">The value to map.</param>
         /// <returns>The oracle compatible value.</returns>
-        internal static object Map(IInputParameterValue inputParameter, object value)
+        internal static object Map(IInputParameter inputParameter, object value)
         {
             if (value == null)
             {

@@ -47,6 +47,6 @@
         /// <summary>
         /// Gets or sets the parameter value.
         /// </summary>
-        public object Value { get; protected set; }
+        public object Value { get; set; }
     }
 }

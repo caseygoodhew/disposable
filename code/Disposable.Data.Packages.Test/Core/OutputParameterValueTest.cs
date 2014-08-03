@@ -22,6 +22,7 @@ namespace Disposable.Data.Packages.Test.Core
             Assert.AreEqual(name, parameterValue.Name);
             Assert.AreEqual(dataType, parameterValue.DataType);
             Assert.AreEqual(value, parameterValue.Value);
+            Assert.AreSame(parameter, parameterValue.AsOutputParameter());
         }
     }
 }

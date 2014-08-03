@@ -14,8 +14,8 @@ namespace Disposable.Data.Access.Database.Oracle
         /// Relay method to convert and rethrow a custom oracle exceptions to an <see cref="IStoredMethod"/>
         /// </summary>
         /// <param name="oracleException">The <see cref="OracleException"/> to rethrow.</param>
-        /// <param name="storedMethod">The <see cref="IStoredMethod"/> which invoked the <see cref="OracleException"/>.</param>
-        internal static void Throw(OracleException oracleException, IStoredMethod storedMethod)
+        /// <param name="storedMethodInstance">The <see cref="IStoredMethodInstance"/> which invoked the <see cref="OracleException"/>.</param>
+        internal static void Throw(OracleException oracleException, IStoredMethodInstance storedMethodInstance)
         {
             var underlyingException = new UnderlyingOracleException(oracleException);
 
@@ -25,7 +25,7 @@ namespace Disposable.Data.Access.Database.Oracle
             switch (oe)
             {
                 case OracleExceptions.DuplicateEmail:
-                    isHandled = storedMethod.Handle(ProgrammaticDatabaseExceptions.DuplicateEmail, underlyingException) == ProgrammaticDatabaseExceptions.DuplicateEmail;
+                    isHandled = storedMethodInstance.Handle(ProgrammaticDatabaseExceptions.DuplicateEmail, underlyingException) == ProgrammaticDatabaseExceptions.DuplicateEmail;
                     break;
 
                 default:

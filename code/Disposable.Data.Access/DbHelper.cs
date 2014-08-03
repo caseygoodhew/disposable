@@ -56,9 +56,9 @@ namespace Disposable.Data.Access
         /// </summary>
         /// <typeparam name="TResult">The required return type.</typeparam>
         /// <typeparam name="TInput">Typically reference type which implements <see cref="IPackage"/> but could be any reference type that can generate a <see cref="IStoredMethod"/> reference type.</typeparam>
-        /// <param name="spGenerator">A function which can provide a <see cref="IStoredMethod"/> reference type.</param>
+        /// <param name="spGenerator">A function which can provide a <see cref="IStoredMethodInstance"/> reference type.</param>
         /// <returns>An object of the type requested.</returns>
-        public TResult ReturnValue<TResult, TInput>(Func<TInput, IStoredMethod> spGenerator) where TInput : class
+        public TResult ReturnValue<TResult, TInput>(Func<TInput, IStoredMethodInstance> spGenerator) where TInput : class
         {
             var storedMethod = spGenerator.Invoke(Locator.Current.Instance<TInput>());
 
@@ -81,9 +81,9 @@ namespace Disposable.Data.Access
         /// </summary>
         /// <typeparam name="TInput">Typically reference type which implements <see cref="IPackage"/> but could be any reference type that can generate a <see cref="IStoredMethod"/> reference type.</typeparam>
         /// <typeparam name="TOut1">The required out type.</typeparam>
-        /// <param name="spGenerator">A function which can provide a <see cref="IStoredMethod"/> reference type.</param>
+        /// <param name="spGenerator">A function which can provide a <see cref="IStoredMethodInstance"/> reference type.</param>
         /// <param name="out1">An object of the type requested.</param>
-        public void Run<TInput, TOut1>(Func<TInput, IStoredMethod> spGenerator, out TOut1 out1) where TInput : class
+        public void Run<TInput, TOut1>(Func<TInput, IStoredMethodInstance> spGenerator, out TOut1 out1) where TInput : class
         {
             var storedMethod = spGenerator.Invoke(Locator.Current.Instance<TInput>());
 
@@ -107,10 +107,10 @@ namespace Disposable.Data.Access
         /// <typeparam name="TInput">Typically reference type which implements <see cref="IPackage"/> but could be any reference type that can generate a <see cref="IStoredMethod"/> reference type.</typeparam>
         /// <typeparam name="TOut1">The first required out type.</typeparam>
         /// <typeparam name="TOut2">The second required out type.</typeparam>
-        /// <param name="spGenerator">A function which can provide a <see cref="IStoredMethod"/> reference type.</param>
+        /// <param name="spGenerator">A function which can provide a <see cref="IStoredMethodInstance"/> reference type.</param>
         /// <param name="out1">The first object of the type requested.</param>
         /// <param name="out2">The second object of the type requested.</param>
-        public void Run<TInput, TOut1, TOut2>(Func<TInput, IStoredMethod> spGenerator, out TOut1 out1, out TOut2 out2) where TInput : class
+        public void Run<TInput, TOut1, TOut2>(Func<TInput, IStoredMethodInstance> spGenerator, out TOut1 out1, out TOut2 out2) where TInput : class
         {
             var storedMethod = spGenerator.Invoke(Locator.Current.Instance<TInput>());
 

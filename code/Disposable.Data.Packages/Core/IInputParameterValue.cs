@@ -9,5 +9,11 @@
         /// Gets a value indicating whether if the parameter is required.
         /// </summary>
         bool Required { get; }
+
+        /// <summary>
+        /// Gets the input parameter value as an <see cref="InputParameter"/>.
+        /// </summary>
+        /// <returns></returns>
+        IInputParameter AsInputParameter();
     }
 }

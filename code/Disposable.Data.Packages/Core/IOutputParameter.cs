@@ -1,9 +1,15 @@
-﻿namespace Disposable.Data.Packages.Core
+﻿using System.Data;
+
+namespace Disposable.Data.Packages.Core
 {
     /// <summary>
     /// Interface for a stored method output parameter.
     /// </summary>
     public interface IOutputParameter : IParameter
     {
+        /// <summary>
+        /// The <see cref="Direction"/> of the output parameter.
+        /// </summary>
+        ParameterDirection Direction { get; }
     }
 }

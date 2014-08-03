@@ -28,13 +28,17 @@ namespace Disposable.Data.Packages.User
         /// </summary>
         /// <param name="email">The username to authenticate</param>
         /// <param name="password">The password to authenticate</param>
-        internal void SetParameterValues(string email, string password)
+        internal IStoredMethodInstance CreateInstance(string email, string password)
         {
-            this.SetInputParameterValues(new Dictionary<string, object>
+            var instance = CreateInstance();
+            
+            instance.SetValues<IInputParameterValue>(new Dictionary<string, object>
             {
                 { PackageConstants.InEmail, email },
                 { PackageConstants.InPassword, password }
             });
+
+            return instance;
         }
     }
 }
