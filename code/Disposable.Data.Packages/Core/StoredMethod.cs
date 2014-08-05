@@ -28,14 +28,14 @@ namespace Disposable.Data.Packages.Core
             InputParameters = parameters.OfType<IInputParameter>().ToList();
             OutputParameters = parameters.OfType<IOutputParameter>().ToList();
 
-            if (InputParameters.Count + OutputParameters.Count != parameters.Count())
+            if (InputParameters.Count + OutputParameters.Count != parameters.Length)
             {
                 throw new ArgumentException("Unknown parameter types in parameters. IInputParameters.Count + IOutputParameters.Count <> IParameters.Count");
             }
         }
 
         /// <summary>
-        /// Gets the <see cref="IPackage"/> which owns the <see cref="IStoredProcedure"/>
+        /// Gets the <see cref="IPackage"/> which owns the <see cref="IStoredMethod"/>
         /// </summary>
         public IPackage Package { get; private set; }
 

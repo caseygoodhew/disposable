@@ -11,7 +11,7 @@ namespace Disposable.Data.Access.Database.Oracle
     internal static class OracleExceptionAdapter
     {
         /// <summary>
-        /// Relay method to convert and rethrow a custom oracle exceptions to an <see cref="IStoredMethod"/>
+        /// Relay method to convert and rethrow a custom oracle exceptions to an <see cref="IStoredMethodInstance"/>
         /// </summary>
         /// <param name="oracleException">The <see cref="OracleException"/> to rethrow.</param>
         /// <param name="storedMethodInstance">The <see cref="IStoredMethodInstance"/> which invoked the <see cref="OracleException"/>.</param>

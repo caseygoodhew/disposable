@@ -21,7 +21,7 @@ namespace Disposable.Data.Access
         /// </code>
         /// </summary>
         /// <typeparam name="TResult">The required return type.</typeparam>
-        /// <typeparam name="TInput">Typically reference type which implements <see cref="IPackage"/> but could be any reference type that can generate a <see cref="IStoredMethod"/> reference type.</typeparam>
+        /// <typeparam name="TInput">Typically reference type which implements <see cref="IPackage"/> but could be any reference type that can generate a <see cref="IStoredMethodInstance"/> reference type.</typeparam>
         /// <param name="spGenerator">A function which can provide a <see cref="IStoredMethodInstance"/> reference type.</param>
         /// <returns>An object of the type requested.</returns>
         TResult ReturnValue<TResult, TInput>(Func<TInput, IStoredMethodInstance> spGenerator) where TInput : class;
@@ -38,7 +38,7 @@ namespace Disposable.Data.Access
         /// IEnumerable{ConcreteClass}
         /// </code>
         /// </summary>
-        /// <typeparam name="TInput">Typically reference type which implements <see cref="IPackage"/> but could be any reference type that can generate a <see cref="IStoredMethod"/> reference type.</typeparam>
+        /// <typeparam name="TInput">Typically reference type which implements <see cref="IPackage"/> but could be any reference type that can generate a <see cref="IStoredMethodInstance"/> reference type.</typeparam>
         /// <typeparam name="TOut1">The required out type.</typeparam>
         /// <param name="spGenerator">A function which can provide a <see cref="IStoredMethodInstance"/> reference type.</param>
         /// <param name="out1">An object of the type requested.</param>
@@ -56,7 +56,7 @@ namespace Disposable.Data.Access
         /// IEnumerable{ConcreteClass}
         /// </code>
         /// </summary>
-        /// <typeparam name="TInput">Typically reference type which implements <see cref="IPackage"/> but could be any reference type that can generate a <see cref="IStoredMethod"/> reference type.</typeparam>
+        /// <typeparam name="TInput">Typically reference type which implements <see cref="IPackage"/> but could be any reference type that can generate a <see cref="IStoredMethodInstance"/> reference type.</typeparam>
         /// <typeparam name="TOut1">The first required out type.</typeparam>
         /// <typeparam name="TOut2">The second required out type.</typeparam>
         /// <param name="spGenerator">A function which can provide a <see cref="IStoredMethodInstance"/> reference type.</param>

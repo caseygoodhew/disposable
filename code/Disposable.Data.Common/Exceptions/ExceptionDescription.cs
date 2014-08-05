@@ -2,9 +2,6 @@
 
 namespace Disposable.Data.Common.Exceptions
 {
-    /// <summary>
-    /// Contains an
-    /// </summary>
     public class ExceptionDescription : IComparable<ExceptionDescription>, IComparable<string>
     {
         public readonly string Name;
