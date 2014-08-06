@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Disposable.Common;
 using Disposable.Data.Common.Exceptions;
 
 namespace Disposable.Data.Packages.Core
@@ -14,14 +15,36 @@ namespace Disposable.Data.Packages.Core
 
         private readonly IList<IOutputParameterValue> outputParameterValues;
 
+        public StoredMethodInstance(IStoredMethod storedMethod) : this(storedMethod, null, null)
+        {
+        }
+
+        public StoredMethodInstance(IStoredMethod storedMethod, IEnumerable<IInputParameter> inputParameters)
+            : this(storedMethod, inputParameters, null)
+        {
+        }
+
+        public StoredMethodInstance(IStoredMethod storedMethod, IEnumerable<IOutputParameter> outputParameters)
+            : this(storedMethod, null, outputParameters)
+        {
+        }
+
         public StoredMethodInstance(
             IStoredMethod storedMethod,
-            IList<IInputParameter> inputParameters,
-            IList<IOutputParameter> outputParameters)
+            IEnumerable<IInputParameter> inputParameters,
+            IEnumerable<IOutputParameter> outputParameters)
         {
+            Guard.ArgumentNotNull(storedMethod, "storedMethod");
+            
             this.storedMethod = storedMethod;
-            inputParameterValues = inputParameters.Select(x => new InputParameterValue(x) as IInputParameterValue).ToList();
-            outputParameterValues = outputParameters.Select(x => new OutputParameterValue(x) as IOutputParameterValue).ToList();
+
+            inputParameterValues = inputParameters == null
+                                       ? new List<IInputParameterValue>()
+                                       : inputParameters.Select(x => new InputParameterValue(x) as IInputParameterValue).ToList();
+
+            outputParameterValues = outputParameters == null
+                                        ? new List<IOutputParameterValue>()
+                                        : outputParameters.Select(x => new OutputParameterValue(x) as IOutputParameterValue).ToList();
         }
 
         /// <summary>
