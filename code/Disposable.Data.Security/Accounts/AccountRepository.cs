@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Disposable.Data.Access;
+using Disposable.Data.Security.Packages.User;
+using System;
 using System.Data;
-using Disposable.Data.Access;
-using Disposable.Data.Packages.Core;
-using Disposable.Data.Packages.User;
-using Disposable.Security.Accounts;
 
 namespace Disposable.Data.Security.Accounts
 {

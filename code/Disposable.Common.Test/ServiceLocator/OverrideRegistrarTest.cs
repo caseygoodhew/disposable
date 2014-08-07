@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 using Disposable.Common.ServiceLocator;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;

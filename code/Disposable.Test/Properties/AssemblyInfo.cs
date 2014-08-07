@@ -36,6 +36,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: InternalsVisibleTo("Disposable.Common.Test")]
+[assembly: InternalsVisibleTo("Disposable.Data.Test")]
 [assembly: InternalsVisibleTo("Disposable.Data.Map.Test")]
-[assembly: InternalsVisibleTo("Disposable.Data.Packages.Test")]
+[assembly: InternalsVisibleTo("Disposable.Data.Security.Test")]
+[assembly: InternalsVisibleTo("Disposable.Text.Test")]
 

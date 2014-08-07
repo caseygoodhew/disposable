@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Disposable.Common.ServiceLocator;
+﻿using Disposable.Common.ServiceLocator;
 using Disposable.Data.Access;
 using Disposable.Data.Security.Accounts;
 using Disposable.Data.Security.Accounts.Exceptions;
+using System;
+using System.Collections.Generic;
 
 namespace Disposable.Security.Accounts
 {

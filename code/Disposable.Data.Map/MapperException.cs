@@ -1,6 +1,5 @@
-﻿using System;
-
-using Disposable.Data.Map.DataSource;
+﻿using Disposable.Data.Map.DataSource;
+using System;
 
 namespace Disposable.Data.Map
 {

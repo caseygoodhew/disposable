@@ -1,13 +1,9 @@
-﻿using System;
-using System.Data;
-
-using Disposable.Common.ServiceLocator;
+﻿using Disposable.Common.ServiceLocator;
 using Disposable.Data.Map.DataSource;
 using Disposable.Test.Extensions;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using Moq;
+using System.Data;
 
 namespace Disposable.Data.Map.Test
 {

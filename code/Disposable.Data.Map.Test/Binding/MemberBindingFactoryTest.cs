@@ -1,9 +1,7 @@
-﻿using System;
-using System.Reflection;
-
-using Disposable.Data.Map.Binding;
-
+﻿using Disposable.Data.Map.Binding;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Reflection;
 
 namespace Disposable.Data.Map.Test.Binding
 {

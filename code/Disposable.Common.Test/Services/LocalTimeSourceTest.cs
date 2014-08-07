@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
-
-using Disposable.Common.Services;
-
+﻿using Disposable.Common.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
-using Moq;
 
 namespace Disposable.Common.Test.Services
 {

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Disposable.Web.Models;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
-using Disposable.Web.Models;
 
 namespace Disposable.Web.Filters
 {

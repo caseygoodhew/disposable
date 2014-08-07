@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Runtime.InteropServices;
-
-using Disposable.Common.ServiceLocator;
+﻿using Disposable.Common.ServiceLocator;
 using Disposable.Data.Map.Binding;
 using Disposable.Data.Map.DataSource;
 using Disposable.Test.Extensions;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace Disposable.Data.Map.Test.DataSource
 {

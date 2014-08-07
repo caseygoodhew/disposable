@@ -1,5 +1,5 @@
-﻿using System;
-using Disposable.Data.Common.Exceptions;
+﻿using Disposable.Data.Database.Exceptions;
+using System;
 
 namespace Disposable.Data.Security.Accounts.Exceptions
 {

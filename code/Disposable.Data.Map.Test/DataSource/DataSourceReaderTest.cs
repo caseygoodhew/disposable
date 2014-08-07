@@ -1,11 +1,8 @@
-﻿using System;
-using System.Linq;
-
-using Disposable.Data.Map.DataSource;
-
+﻿using Disposable.Data.Map.DataSource;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using Moq;
+using System;
+using System.Linq;
 
 namespace Disposable.Data.Map.Test.DataSource
 {

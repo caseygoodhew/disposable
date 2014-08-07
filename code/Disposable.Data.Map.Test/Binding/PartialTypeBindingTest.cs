@@ -1,17 +1,10 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-
-using Disposable.Data.Map.Binding;
+﻿using Disposable.Data.Map.Binding;
 using Disposable.Data.Map.DataSource;
 using Disposable.Test.Runners;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using Moq;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Disposable.Data.Map.Test.Binding
 {

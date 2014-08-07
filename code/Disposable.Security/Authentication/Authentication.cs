@@ -1,7 +1,7 @@
-﻿using System;
-using Disposable.Common.ServiceLocator;
+﻿using Disposable.Common.ServiceLocator;
 using Disposable.Data.Access;
 using Disposable.Data.Security.Accounts;
+using System;
 
 namespace Disposable.Security.Authentication
 {

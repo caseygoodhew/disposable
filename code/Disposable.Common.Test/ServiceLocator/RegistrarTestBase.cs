@@ -1,8 +1,6 @@
-﻿using System;
-
-using Disposable.Common.ServiceLocator;
-
+﻿using Disposable.Common.ServiceLocator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Disposable.Common.Test.ServiceLocator
 {

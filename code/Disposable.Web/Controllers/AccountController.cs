@@ -1,16 +1,14 @@
-﻿using System;
+﻿using Disposable.ViewModels.UserAccounts;
+using Disposable.Web.Models;
+using DotNetOpenAuth.AspNet;
+using Microsoft.Web.WebPages.OAuth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using Disposable.ViewModels.UserAccounts;
-using DotNetOpenAuth.AspNet;
-using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using Disposable.Web.Filters;
-using Disposable.Web.Models;
 
 namespace Disposable.Web.Controllers
 {

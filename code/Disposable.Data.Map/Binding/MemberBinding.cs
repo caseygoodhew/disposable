@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Disposable.Data.Map.Attributes;
+using System;
 using System.Linq;
 using System.Reflection;
-
-using Disposable.Data.Map.Attributes;
 
 namespace Disposable.Data.Map.Binding
 {

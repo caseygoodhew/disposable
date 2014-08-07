@@ -1,8 +1,7 @@
-﻿using System.Collections;
+﻿using Disposable.Data.Map.DataSource;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
-using Disposable.Data.Map.DataSource;
 
 namespace Disposable.Data.Map.Binding
 {

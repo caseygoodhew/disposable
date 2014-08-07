@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
+﻿using Disposable.Web.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Disposable.Web;
-using Disposable.Web.Controllers;
+using System.Web.Mvc;
 
 namespace Disposable.Web.Tests.Controllers
 {

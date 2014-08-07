@@ -50,11 +50,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DisposableCore.cs" />
@@ -65,9 +60,9 @@
       <Project>{1FF2CBDD-7F6E-4DDE-91D1-EBD5763E8018}</Project>
       <Name>Disposable.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Disposable.Data.Access\Disposable.Data.Access.csproj">
+    <ProjectReference Include="..\Disposable.Data\Disposable.Data.csproj">
       <Project>{818c082c-4696-44f2-ae09-97b1a6886191}</Project>
-      <Name>Disposable.Data.Access</Name>
+      <Name>Disposable.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Disposable.Data.Map\Disposable.Data.Map.csproj">
       <Project>{9b69086a-67c7-464d-9848-786abb6827b8}</Project>
@@ -76,10 +71,6 @@
     <ProjectReference Include="..\Disposable.Data.Security\Disposable.Data.Security.csproj">
       <Project>{803C1789-CA8F-46F4-86DF-164524353639}</Project>
       <Name>Disposable.Data.Security</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Disposable.Data.Packages\Disposable.Data.Packages.csproj">
-      <Project>{6F6B6C9C-C821-4773-98F1-B3CD247EBFD3}</Project>
-      <Name>Disposable.Data.Packages</Name>
     </ProjectReference>
     <ProjectReference Include="..\Disposable.Security\Disposable.Security.csproj">
       <Project>{EF86A53A-1A9A-45F9-8D77-BE0FD92E16CA}</Project>

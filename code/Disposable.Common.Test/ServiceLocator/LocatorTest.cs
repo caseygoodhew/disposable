@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Disposable.Common.ServiceLocator;
+using Disposable.Test;
+using Disposable.Test.Extensions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Disposable.Common.ServiceLocator;
-using Disposable.Test;
-using Disposable.Test.Extensions;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 
 namespace Disposable.Common.Test.ServiceLocator
 {

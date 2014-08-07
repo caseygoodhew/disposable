@@ -1,9 +1,8 @@
-﻿using System;
-using System.Data;
-using Disposable.Common.ServiceLocator;
+﻿using Disposable.Common.ServiceLocator;
 using Disposable.Security.Policies;
 using Disposable.ViewModels.UserAccounts;
 using FluentValidation;
+using System;
 
 namespace Disposable.Validation.UserAccounts
 {

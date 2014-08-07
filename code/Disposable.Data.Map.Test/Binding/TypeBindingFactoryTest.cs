@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 using Disposable.Common.ServiceLocator;
 using Disposable.Data.Map.Binding;
 using Disposable.Data.Map.DataSource;

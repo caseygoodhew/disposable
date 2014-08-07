@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 using Disposable.Common.Extensions;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;

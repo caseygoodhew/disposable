@@ -1,5 +1,6 @@
 ﻿using Disposable.Common.ServiceLocator;
 using Disposable.Data.Security.Accounts;
+using Disposable.Data.Security.Packages.User;
 
 namespace Disposable.Data.Security
 {
@@ -15,6 +16,8 @@ namespace Disposable.Data.Security
         public static void Register(IRegistrar registrar)
         {
             registrar.Register<IAccountRepository>(() => new AccountRepository());
+
+            registrar.Register<IUserPackage>(() => new UserPackage());
         }
     }
 }

@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Disposable.Common.ServiceLocator;
+using Disposable.Data.Map.Attributes;
+using Disposable.Data.Map.DataSource;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-
-using Disposable.Common.ServiceLocator;
-using Disposable.Data.Map.Attributes;
-using Disposable.Data.Map.DataSource;
 
 namespace Disposable.Data.Map.Binding
 {

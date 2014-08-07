@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Disposable.Common.Extensions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
-using Disposable.Common.Extensions;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Disposable.Common.Test.Extensions
 {

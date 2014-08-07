@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-
-using Disposable.Data.Map.DataSource;
+﻿using Disposable.Data.Map.DataSource;
+using System.Collections.Generic;
 
 namespace Disposable.Data.Map.Binding
 {

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Disposable.Common.ServiceLocator;
+﻿using Disposable.Common.ServiceLocator;
 using Disposable.Data.Map.Binding;
+using System;
+using System.Collections.Generic;
 
 namespace Disposable.Data.Map.DataSource
 {

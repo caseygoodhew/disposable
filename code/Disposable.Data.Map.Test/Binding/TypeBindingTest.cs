@@ -1,16 +1,13 @@
-﻿using System;
-using System.Data;
-using System.Linq;
-
-using Disposable.Common;
-using Disposable.Common.ServiceLocator;
+﻿using Disposable.Common.ServiceLocator;
 using Disposable.Data.Map.Attributes;
 using Disposable.Data.Map.Binding;
 using Disposable.Data.Map.DataSource;
 using Disposable.Test.Extensions;
 using Disposable.Test.Runners;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Data;
+using System.Linq;
 
 namespace Disposable.Data.Map.Test.Binding
 {

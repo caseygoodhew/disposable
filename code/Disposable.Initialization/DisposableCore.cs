@@ -1,7 +1,7 @@
-﻿using System;
-using Disposable.Common.ServiceLocator;
+﻿using Disposable.Common.ServiceLocator;
 using Disposable.Common.Services;
 using Disposable.Validation;
+using System;
 
 namespace Disposable.Initialization
 {
@@ -23,9 +23,8 @@ namespace Disposable.Initialization
 
             var registrar = locator.BaseRegistrar;
             
-            Data.Access.Registration.Register(registrar);
+            Data.Registration.Register(registrar);
             Data.Map.Registration.Register(registrar);
-            Data.Packages.Registration.Register(registrar);
             Data.Security.Registration.Register(registrar);
             
             Security.Registration.Register(registrar);

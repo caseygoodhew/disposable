@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Disposable.Text;
+using System;
 using System.Collections.Generic;
 using System.Data;
-
-using Disposable.Text;
 
 namespace Disposable.Data.Map.DataSource
 {

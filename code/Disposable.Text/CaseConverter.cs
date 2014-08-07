@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Disposable.Common.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using Disposable.Common.Extensions;
 
 namespace Disposable.Text
 {

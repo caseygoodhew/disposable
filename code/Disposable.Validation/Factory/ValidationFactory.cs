@@ -1,6 +1,6 @@
-﻿using System;
-using Disposable.Common.ServiceLocator;
+﻿using Disposable.Common.ServiceLocator;
 using FluentValidation;
+using System;
 
 namespace Disposable.Validation.Factory
 {
