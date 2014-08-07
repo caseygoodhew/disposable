@@ -170,5 +170,16 @@ namespace Disposable.Data.Packages.Test.Core
             Assert.AreEqual(inputParamValue, instance.GetValue<IInputParameterValue>(inputParamName).Value);
             instance.SetValue<IInputParameterValue>(inputParamName, inputParamValue);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void GetValues_UsingIParameterValueGenericType_Throws()
+        {
+            var storedMethod = new Mock<IStoredMethod>().Object;
+
+            var instance = new StoredMethodInstance(storedMethod);
+
+            instance.GetValues<IParameterValue>(true);
+        }
     }
 }
