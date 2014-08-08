@@ -1,11 +1,14 @@
 ﻿using Disposable.Common;
 using Disposable.Common.ServiceLocator;
 using Disposable.Initialization;
-using Disposable.Web.Validation;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+
+using Disposable.Validation.Factory;
+
+using FluentValidation.Mvc;
 
 namespace Disposable.Web
 {
@@ -24,14 +27,11 @@ namespace Disposable.Web
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 			AuthConfig.RegisterAuth();
 
-            
-            //FluentValidation.Mvc.FluentValidationModelValidatorProvider.Configure();
-            
-		    DisposableCore.Initialize();
+            DisposableCore.Initialize();
             
 		    var locator = Locator.Current as Locator;
-            
-            Registration.Register(locator);
+
+            FluentValidationModelValidatorProvider.Configure(x => x.ValidatorFactory = new ValidatorFactory());
             locator.Register<IApplication>(() => new Application("DISPOSABLE APP NAME", "DISPOSABLE APP DESCRIPTION"));
 		}
 	}

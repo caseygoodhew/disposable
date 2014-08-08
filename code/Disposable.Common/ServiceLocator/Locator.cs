@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Disposable.Common.ServiceLocator
 {
@@ -8,6 +9,8 @@ namespace Disposable.Common.ServiceLocator
     public class Locator : ILocator
     {
         private static readonly Lazy<ILocator> LocatorInstance = new Lazy<ILocator>(() => new Locator());
+
+        private bool _initialized;
 
         private Locator()
         {
@@ -26,6 +29,23 @@ namespace Disposable.Common.ServiceLocator
             }
         }
 
+        /// <summary>
+        /// This method allows an external service to call into this function one time only in order to register it's services with the base service locator.
+        /// </summary>
+        /// <param name="initializers">The list of initializsers to call.</param>
+        public void Initialize(params Action<IRegistrar>[] initializers)
+        {
+            if (_initialized)
+            {
+                throw new InvalidOperationException("Already initialized");
+            }
+
+            // flag as initialized early to prevent Actions from recalling Initialize (malicious or accidental endless loop)
+            _initialized = true;
+
+            initializers.ToList().ForEach(x => x.Invoke(BaseRegistrar));
+        }
+        
         /// <summary>
         /// Gets or sets the base registrar
         /// </summary>

@@ -45,6 +45,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentValidation.5.0.0.1\lib\Net40\FluentValidation.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation.Mvc, Version=5.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FluentValidation.MVC4.5.0.0.1\lib\Net40\FluentValidation.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data.Entity" />
@@ -368,6 +372,10 @@
       <Project>{AD0557DC-5DC6-438D-977D-D7771E99CEF5}</Project>
       <Name>Disposable.Initialization</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Disposable.Validation\Disposable.Validation.csproj">
+      <Project>{89764B07-6937-4F2C-B876-991E1C879C44}</Project>
+      <Name>Disposable.Validation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Disposable.ViewModels\Disposable.ViewModels.csproj">
       <Project>{51E2008F-9BC3-40F2-8C1D-A79F3D525BA7}</Project>
       <Name>Disposable.ViewModels</Name>
@@ -375,10 +383,6 @@
     <ProjectReference Include="..\Disposable.Web.Security\Disposable.Web.Security.csproj">
       <Project>{5cbc8c39-de0f-4cff-a902-4b0c3991641a}</Project>
       <Name>Disposable.Web.Security</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Disposable.Web.Validation\Disposable.Web.Validation.csproj">
-      <Project>{83B4335E-F368-4F30-8772-963965A5CA4C}</Project>
-      <Name>Disposable.Web.Validation</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

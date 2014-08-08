@@ -16,7 +16,7 @@ namespace Disposable.Web.Validation
         public static void Register(ILocator locator)
         {
             // TODO: Is this correct? (it's not using the locator)
-            FluentValidationModelValidatorProvider.Configure(x => x.ValidatorFactory = new ValidationFactory());
+            FluentValidationModelValidatorProvider.Configure(x => x.ValidatorFactory = new ValidatorFactory());
         }
     }
 }

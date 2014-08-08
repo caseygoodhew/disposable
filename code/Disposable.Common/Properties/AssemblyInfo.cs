@@ -35,8 +35,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-[assembly: InternalsVisibleTo("Disposable.Initialization")]
-
 [assembly: InternalsVisibleTo("Disposable.Test")]
 [assembly: InternalsVisibleTo("Disposable.Common.Test")]
 [assembly: InternalsVisibleTo("InternalsVisible.ToDynamicProxyGenAssembly2")]

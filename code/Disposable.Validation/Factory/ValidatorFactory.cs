@@ -7,7 +7,7 @@ namespace Disposable.Validation.Factory
     /// <summary>
     /// 
     /// </summary>
-    public class ValidationFactory : ValidatorFactoryBase
+    public class ValidatorFactory : ValidatorFactoryBase
     {
         /// <summary>
         /// 

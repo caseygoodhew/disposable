@@ -58,6 +58,7 @@
     <Compile Include="Guard.cs" />
     <Compile Include="IApplication.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Registration.cs" />
     <Compile Include="ServiceLocator\BaseRegistrar.cs" />
     <Compile Include="ServiceLocator\OverrideRegistrar.cs" />
     <Compile Include="ServiceLocator\ServiceAlreadyRegisteredException.cs" />

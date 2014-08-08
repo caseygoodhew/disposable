@@ -1,6 +1,5 @@
 ﻿using Disposable.Common.ServiceLocator;
 using Disposable.Common.Services;
-using Disposable.Validation;
 using System;
 
 namespace Disposable.Initialization
@@ -21,18 +20,14 @@ namespace Disposable.Initialization
                 throw new InvalidOperationException();
             }
 
-            var registrar = locator.BaseRegistrar;
-            
-            Data.Registration.Register(registrar);
-            Data.Map.Registration.Register(registrar);
-            Data.Security.Registration.Register(registrar);
-            
-            Security.Registration.Register(registrar);
-            
-            Registration.Register(registrar);
-
-            // misc
-            registrar.Register<ITimeSource>(() => new LocalTimeSource());
+            locator.Initialize(
+                Data.Registration.Register,
+                Data.Map.Registration.Register,
+                Data.Security.Registration.Register,
+                Security.Registration.Register,
+                Validation.Registration.Register,
+                Common.Registration.Register
+            );
         }
 
         /// <summary>
