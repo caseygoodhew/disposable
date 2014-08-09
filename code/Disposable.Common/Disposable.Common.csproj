@@ -53,6 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
+    <Compile Include="Conversion\ConverterFactory.cs" />
+    <Compile Include="Conversion\FunctionalConverter.cs" />
+    <Compile Include="Conversion\IConvert.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Guard.cs" />
