@@ -1,0 +1,9 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@Html.Disposable(x => x.Component(c => c.Class().Class())) </h2>
+<h2>@Html.Disposable(x => x.Field(f => f.Class().Label())) </h2>
+<h2>@Html.Disposable(x => x.TextBox(c => c.Class().Label().Rows())) </h2>
+
