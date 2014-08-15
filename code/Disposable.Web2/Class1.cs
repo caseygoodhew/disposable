@@ -39,17 +39,17 @@ namespace Disposable.Web2
 
     public static class FieldParameterExtensions
     {
-        public static TComponentParameter Label<TComponentParameter>(this TComponentParameter obj) where TComponentParameter : FieldParameter, new()
+        public static TComponentParameter Label<TComponentParameter>(this TComponentParameter obj, string value) where TComponentParameter : FieldParameter, new()
         {
-            return ComponentParameterFacade.Chain(obj, "label");
+            return ComponentParameterFacade.Chain(obj, "label", value);
         }
     }
 
     public static class TextBoxParameterExtensions
     {
-        public static TComponentParameter Rows<TComponentParameter>(this TComponentParameter obj) where TComponentParameter : TextBoxParameter, new()
+        public static TComponentParameter Rows<TComponentParameter>(this TComponentParameter obj, int rowCount) where TComponentParameter : TextBoxParameter, new()
         {
-            return ComponentParameterFacade.Chain(obj, "rows");
+            return ComponentParameterFacade.Chain(obj, "rows", rowCount);
         }
     }
 }

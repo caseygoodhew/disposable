@@ -2,6 +2,16 @@ namespace Disposable.Web.Mvc
 {
     public class Component : IComponent
     {
-        protected internal string Parameters;
+        public Component() : this(new Element())
+        {
+            
+        }
+
+        protected Component(Element element)
+        {
+            Element = element;
+        }
+        
+        protected internal Element Element;
     }
 }

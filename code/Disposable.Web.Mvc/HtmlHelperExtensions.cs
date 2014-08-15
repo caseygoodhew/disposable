@@ -14,8 +14,8 @@ namespace Disposable.Web.Mvc
             {
                 throw new InvalidOperationException("component implements IComponent but is not derived from Component");
             }
-            
-            return new MvcHtmlString(component.GetType().Name + (component).Parameters);
+
+            return component.Element.ToMvcHtmlString();
         }
     }
 }
