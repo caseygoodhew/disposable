@@ -57,6 +57,7 @@
     <Compile Include="Conversion\ConvertToSelf.cs" />
     <Compile Include="Conversion\FunctionalConverter.cs" />
     <Compile Include="Conversion\IConvert.cs" />
+    <Compile Include="Extensions\GuardedValueExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Guard.cs" />
