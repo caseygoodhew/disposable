@@ -38,6 +38,60 @@ namespace Disposable.Caching.Test
         }
 
         [TestMethod]
+        public void ProviderCache_GetWithProvider_RegistersAndGets()
+        {
+            var instance = new SomeClass();
+            var callCount = 0;
+            Func<SomeClass> provider = () =>
+            {
+                callCount++;
+                return instance;
+            };
+
+            var cache = new ProviderCache();
+
+            Assert.AreSame(instance, cache.Get(provider));
+            Assert.AreEqual(1, callCount);
+
+            Assert.AreSame(instance, cache.Get(provider));
+            Assert.AreEqual(1, callCount);
+
+            Assert.AreSame(instance, cache.Get<SomeClass>());
+            Assert.AreEqual(1, callCount);
+        }
+
+        [TestMethod]
+        public void ProviderCache_GetWithProviderWhenAlreadyRegisteres_DoesntFetch()
+        {
+            var instanceOne = new SomeClass();
+            var callCountOne = 0;
+            Func<SomeClass> providerOne = () =>
+            {
+                callCountOne++;
+                return instanceOne;
+            };
+
+            var instanceTwo = new SomeClass();
+            var callCountTwo = 0;
+            Func<SomeClass> providerTwo = () =>
+            {
+                callCountTwo++;
+                return instanceTwo;
+            };
+
+            var cache = new ProviderCache();
+
+            cache.Register(providerOne);
+            
+            Assert.AreSame(instanceOne, cache.Get<SomeClass>());
+            Assert.AreEqual(1, callCountOne);
+
+            Assert.AreSame(instanceOne, cache.Get(providerTwo));
+            Assert.AreEqual(1, callCountOne);
+            Assert.AreEqual(0, callCountTwo);
+        }
+
+        [TestMethod]
         public void ProviderCache_WithMultipleGetsAndExpiry_Refreshes()
         {
             var instance = new SomeClass();

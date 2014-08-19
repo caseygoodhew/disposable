@@ -15,11 +15,12 @@ namespace Disposable.Caching
         void Register<T>(Func<T> providerFunc) where T : class;
 
         /// <summary>
-        /// Gets a cached item.
+        /// Gets a cached item. If the optional <see cref="providerFunc"/> is also passed, the system should get the register it if it is not already present.
         /// </summary>
         /// <typeparam name="T">The cache item key.</typeparam>
+        /// <param name="providerFunc">(Optional) A function which takes no parameters and returns an item to be stored in the cache.</param>
         /// <returns>The cached item.</returns>
-        T Get<T>() where T : class;
+        T Get<T>(Func<T> providerFunc = null) where T : class;
 
         /// <summary>
         /// Expires a single item in the cache. The item should be reloaded via the registered provider on the next call to <see cref="Get{T}"/>

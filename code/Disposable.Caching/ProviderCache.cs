@@ -16,9 +16,7 @@ namespace Disposable.Caching
 
         private readonly MemoryCache itemCache = new MemoryCache(_cacheName);
 
-        private readonly ReaderWriterLockSlim providerCacheLock = new ReaderWriterLockSlim();
-
-        private readonly ReaderWriterLockSlim itemCacheLock = new ReaderWriterLockSlim();
+        private readonly ReaderWriterLockSlim cacheLock = new ReaderWriterLockSlim();
         
         /// <summary>
         /// Registers a cache item provider.
@@ -32,82 +30,64 @@ namespace Disposable.Caching
                 throw new ArgumentNullException("providerFunc");
             }
             
-            var name = GetName<T>();
-
-            // full lock on the provider cache
-            providerCacheLock.EnterWriteLock();
+            // full lock 
+            cacheLock.EnterWriteLock();
 
             try
             {
-                if (providerCache.Contains(name))
-                {
-                    throw new AlreadyRegisteredException();
-                }
-
-                providerCache.Add(name, providerFunc, new CacheItemPolicy());
+                UnsafeRegister(providerFunc);
             }
             finally
             {
-                providerCacheLock.ExitWriteLock();
+                cacheLock.ExitWriteLock();
             }
-            
         }
 
         /// <summary>
-        /// Gets a cached item.
+        /// Gets a cached item. If the optional <see cref="providerFunc"/> is also passed, the system will get the register it if it is not already present.
         /// </summary>
         /// <typeparam name="T">The cache item key.</typeparam>
+        /// <param name="providerFunc">(Optional) A function which takes no parameters and returns an item to be stored in the cache.</param>
         /// <returns>The cached item.</returns>
-        public T Get<T>() where T : class
+        public T Get<T>(Func<T> providerFunc = null) where T : class
         {
-            var name = GetName<T>();
             T cachedItem;
-
-            // read lock on the item cache
-            itemCacheLock.EnterReadLock();
-
-            try
-            {
-                cachedItem = itemCache.Get(name) as T;
-            }
-            finally
-            {
-                itemCacheLock.ExitReadLock();
-            }
-
-            if (cachedItem != null)
-            {
-                return cachedItem;
-            }
             
-            // full lock on the provider cache (a read lock would allow multiple threads to invoke the provider so we must use a write lock)
-            providerCacheLock.EnterWriteLock();
+            // upgradable read lock
+            cacheLock.EnterUpgradeableReadLock();
+
             try
             {
-                var cachedProvider = providerCache.Get(name) as Func<T>;
+                cachedItem = UnsafeGetIfExists<T>();
 
-                if (cachedProvider != null)
+                if (cachedItem != null)
                 {
-                    var providedItem = cachedProvider.Invoke();
+                    return cachedItem;
+                }
 
-                    // full lock the item cache once we have the item to cache
-                    itemCacheLock.EnterWriteLock();
+                // full lock 
+                cacheLock.EnterWriteLock();
 
-                    try
+                try
+                {
+                    if (UnsafeHasProvider<T>())
                     {
-                        itemCache.Add(name, providedItem, new CacheItemPolicy());
+                        return UnsafeFetchAndCache<T>();
                     }
-                    finally
+                    else if (providerFunc != null)
                     {
-                        itemCacheLock.ExitWriteLock();
+                        UnsafeRegister(providerFunc);
+                        return UnsafeFetchAndCache<T>();
                     }
-
-                    return providedItem;
+                }
+                finally
+                {
+                    cacheLock.ExitWriteLock();
                 }
             }
             finally
             {
-                providerCacheLock.ExitWriteLock();
+                cacheLock.ExitUpgradeableReadLock();
             }
 
             throw new NotRegisteredException();
@@ -121,7 +101,7 @@ namespace Disposable.Caching
         {
             var name = GetName<T>();
 
-            itemCacheLock.EnterWriteLock();
+            cacheLock.EnterWriteLock();
             
             try
             {
@@ -129,7 +109,7 @@ namespace Disposable.Caching
             }
             finally 
             {
-                itemCacheLock.ExitWriteLock();   
+                cacheLock.ExitWriteLock();   
             }
         }
 
@@ -138,7 +118,7 @@ namespace Disposable.Caching
         /// </summary>
         public void ExpireAll()
         {
-            itemCacheLock.EnterWriteLock();
+            cacheLock.EnterWriteLock();
 
             try
             {
@@ -146,13 +126,51 @@ namespace Disposable.Caching
             }
             finally
             {
-                itemCacheLock.ExitWriteLock();
+                cacheLock.ExitWriteLock();
             }
         }
 
         private static string GetName<T>()
         {
             return typeof(T).FullName;
+        }
+
+        private bool UnsafeHasProvider<T>() where T : class
+        {
+            return providerCache.Contains(GetName<T>());
+        }
+        
+        private void UnsafeRegister<T>(Func<T> providerFunc) where T : class
+        {
+            var name = GetName<T>();
+            
+            if (providerCache.Contains(name))
+            {
+                throw new AlreadyRegisteredException();
+            }
+
+            providerCache.Add(name, providerFunc, new CacheItemPolicy());
+        }
+
+        private T UnsafeGetIfExists<T>() where T : class
+        {
+            return itemCache.Get(GetName<T>()) as T;
+        }
+
+        private T UnsafeFetchAndCache<T>() where T : class
+        {
+            var name = GetName<T>();
+
+            var cachedProvider = providerCache.Get(name) as Func<T>;
+
+            if (cachedProvider == null)
+            {
+                return null;
+            }
+
+            var providedItem = cachedProvider.Invoke();
+            itemCache.Add(name, providedItem, new CacheItemPolicy());
+            return providedItem;
         }
     }
 }
