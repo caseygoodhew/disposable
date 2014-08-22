@@ -9,32 +9,32 @@ namespace Disposable.Common.Conversion
 {
     public static class ConverterFactory
     {
-        public static TTo ConvertOne<TFrom, TTo>(TFrom fromType)
+        public static TTo ConvertOne<TFrom, TTo>(TFrom obj)
             where TFrom : class
             where TTo : class
         {
-            if (fromType == null)
+            if (obj == null)
             {
                 return null;
             }
 
             var converter = Locator.Current.Instance<IConvert<TFrom, TTo>>();
 
-            return converter.Convert(fromType);
+            return converter.Convert(obj);
         }
 
-        public static IEnumerable<TTo> ConvertMany<TFrom, TTo>(IEnumerable<TFrom> fromType)
+        public static IEnumerable<TTo> ConvertMany<TFrom, TTo>(IEnumerable<TFrom> obj)
             where TFrom : class
             where TTo : class
         {
-            if (fromType == null)
+            if (obj == null)
             {
                 return null;
             }
             
             var converter = Locator.Current.Instance<IConvert<TFrom, TTo>>();
 
-            return fromType.Select(converter.Convert);
+            return obj.Select(converter.Convert);
         }
 
         public static void Register<TFrom, TTo>(IRegistrar registrar, Func<TFrom, TTo> func)
