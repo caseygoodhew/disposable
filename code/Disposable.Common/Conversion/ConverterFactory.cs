@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,13 +13,25 @@ namespace Disposable.Common.Conversion
             where TFrom : class
             where TTo : class
         {
-            return Locator.Current.Instance<IConvert<TFrom, TTo>>().Convert(fromType);
+            if (fromType == null)
+            {
+                return null;
+            }
+
+            var converter = Locator.Current.Instance<IConvert<TFrom, TTo>>();
+
+            return converter.Convert(fromType);
         }
 
         public static IEnumerable<TTo> ConvertMany<TFrom, TTo>(IEnumerable<TFrom> fromType)
             where TFrom : class
             where TTo : class
         {
+            if (fromType == null)
+            {
+                return null;
+            }
+            
             var converter = Locator.Current.Instance<IConvert<TFrom, TTo>>();
 
             return fromType.Select(converter.Convert);
