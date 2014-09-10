@@ -48,5 +48,21 @@ namespace Disposable.Common
                 throw new ArgumentException(string.Format("Argument is not assignable from type {0}.", typeof(T).FullName), argumentName);
             }
         }
+
+        public static void ArgumentIsGreaterThan(int value, int minValue, string argumentName)
+        {
+            if (value <= minValue)
+            {
+                throw new ArgumentException(string.Format("Argument {0} is less than or equal to minimum value {1}.", value, minValue), argumentName);
+            }
+        }
+
+        public static void ArgumentIsGreaterThanOrEqualTo(int value, int minValue, string argumentName)
+        {
+            if (value < minValue)
+            {
+                throw new ArgumentException(string.Format("Argument {0} is less than minimum value {1}.", value, minValue), argumentName);
+            }
+        }
     }
 }
