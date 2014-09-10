@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Disposable.Web.Caching</id>
-        <version>1.0.0</version>
+        <version>1.0.3</version>
         <title>Disposable.Web.Caching</title>
         <authors>Disposable</authors>
         <owners>TwoOnThRun</owners>
@@ -15,14 +15,10 @@
         <copyright>Copyright 2014</copyright>
         <tags>Disposable</tags>
         <dependencies>
-            <dependency id="Disposable.Caching" version="1.0.1" />
+            <dependency id="Disposable.Caching" version="1.0.4" />
         </dependencies>
         <frameworkAssemblies>
             <frameworkAssembly assemblyName="System.Web" targetFramework="" />
         </frameworkAssemblies>
     </metadata>
-    <files>
-        <file src="bin\Debug\Disposable.Web.Caching.dll" target="bin\Debug\Disposable.Web.Caching.dll" />
-        <file src="bin\Debug\Disposable.Web.Caching.pdb" target="bin\Debug\Disposable.Web.Caching.pdb" />
-    </files>
 </package>

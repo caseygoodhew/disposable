@@ -6,7 +6,7 @@ using System.Threading;
 namespace Disposable.Caching
 {
     /// <summary>
-    /// Provides thread safe lazy loaded caching with implicit expriation.
+    /// Provides thread safe lazy loaded caching with implicit expiration.
     /// </summary>
     public class ProviderCache : IProviderCache
     {
@@ -17,13 +17,14 @@ namespace Disposable.Caching
         private readonly MemoryCache itemCache = new MemoryCache(_cacheName);
 
         private readonly ReaderWriterLockSlim cacheLock = new ReaderWriterLockSlim();
-        
+
         /// <summary>
         /// Registers a cache item provider.
         /// </summary>
         /// <typeparam name="T">The cache item key.</typeparam>
         /// <param name="providerFunc">A function which takes no parameters and returns an item to be stored in the cache.</param>
-        public void Register<T>(Func<T> providerFunc) where T : class
+        /// <param name="replaceExisting">Flag to indicate that an existing provider should be replaced.</param>
+        public void Register<T>(Func<T> providerFunc, bool replaceExisting = false) where T : class
         {
             if (providerFunc == null)
             {
@@ -32,9 +33,14 @@ namespace Disposable.Caching
             
             // full lock 
             cacheLock.EnterWriteLock();
-
+            
             try
             {
+                if (replaceExisting)
+                {
+                    UnsafeDeregister<T>();
+                }
+                
                 UnsafeRegister(providerFunc);
             }
             finally
@@ -44,23 +50,36 @@ namespace Disposable.Caching
         }
 
         /// <summary>
-        /// Gets a cached item. If the optional <see cref="providerFunc"/> is also passed, the system will get the register it if it is not already present.
+        /// Gets a cached item. If the optional <see cref="providerFunc"/> is also passed, the system should get the register it if it is not already present.
         /// </summary>
         /// <typeparam name="T">The cache item key.</typeparam>
         /// <param name="providerFunc">(Optional) A function which takes no parameters and returns an item to be stored in the cache.</param>
+        /// <param name="replaceExisting">
+        /// (Optional) 
+        /// If <see cref="providerFunc"/> IS NOT NULL, this flag indicate that an existing provider should be replaced. 
+        /// If <see cref="providerFunc"/> IS NULL, this flag indicates that than an existing item should be expired and refetched.
+        /// </param>
         /// <returns>The cached item.</returns>
-        public T Get<T>(Func<T> providerFunc = null) where T : class
+        public T Get<T>(Func<T> providerFunc = null, bool replaceExisting = false) where T : class
         {
-            T cachedItem;
-            
             // upgradable read lock
             cacheLock.EnterUpgradeableReadLock();
 
             try
             {
-                cachedItem = UnsafeGetIfExists<T>();
+                if (replaceExisting)
+                {
+                    UnsafeExpire<T>();
 
-                if (cachedItem != null)
+                    if (providerFunc != null)
+                    {
+                        UnsafeDeregister<T>();
+                    }
+                }
+                
+                T cachedItem;
+
+                if (UnsafeTryGet(out cachedItem))
                 {
                     return cachedItem;
                 }
@@ -94,18 +113,36 @@ namespace Disposable.Caching
         }
 
         /// <summary>
+        /// Tries to get an item from the cache if it exists.
+        /// </summary>
+        /// <typeparam name="T">The cache item key.</typeparam>
+        /// <param name="item">The cached item if it is present or null.</param>
+        /// <returns>Indicates if the <see cref="item"/> was found in the cache.</returns>
+        public bool TryGet<T>(out T item) where T : class
+        {
+            cacheLock.EnterReadLock();
+
+            try
+            {
+                return UnsafeTryGet(out item);
+            }
+            finally
+            {
+                cacheLock.ExitReadLock();
+            }
+        }
+
+        /// <summary>
         /// Expires a single item in the cache. The item will be reloaded via the registered provider on the next call to <see cref="Get{T}"/>
         /// </summary>
         /// <typeparam name="T">The cache item key.</typeparam>
         public void Expire<T>() where T : class
         {
-            var name = GetName<T>();
-
             cacheLock.EnterWriteLock();
             
             try
             {
-                itemCache.Remove(name);
+                UnsafeExpire<T>();
             }
             finally 
             {
@@ -139,11 +176,11 @@ namespace Disposable.Caching
         {
             return providerCache.Contains(GetName<T>());
         }
-        
+
         private void UnsafeRegister<T>(Func<T> providerFunc) where T : class
         {
             var name = GetName<T>();
-            
+
             if (providerCache.Contains(name))
             {
                 throw new AlreadyRegisteredException();
@@ -152,9 +189,28 @@ namespace Disposable.Caching
             providerCache.Add(name, providerFunc, new CacheItemPolicy());
         }
 
-        private T UnsafeGetIfExists<T>() where T : class
+        private void UnsafeDeregister<T>() where T : class
         {
-            return itemCache.Get(GetName<T>()) as T;
+            providerCache.Remove(GetName<T>());
+        }
+
+        private void UnsafeExpire<T>() where T : class
+        {
+            itemCache.Remove(GetName<T>());
+        }
+
+        private bool UnsafeTryGet<T>(out T item) where T : class
+        {
+            var name = GetName<T>();
+
+            if (itemCache.Contains(name))
+            {
+                item = itemCache.Get(GetName<T>()) as T;
+                return true;
+            }
+
+            item = null;
+            return false;
         }
 
         private T UnsafeFetchAndCache<T>() where T : class
@@ -163,6 +219,13 @@ namespace Disposable.Caching
 
             var cachedProvider = providerCache.Get(name) as Func<T>;
 
+            return UnsafeFetchAndCache(cachedProvider);
+        }
+
+        private T UnsafeFetchAndCache<T>(Func<T> cachedProvider) where T : class
+        {
+            var name = GetName<T>();
+            
             if (cachedProvider == null)
             {
                 return null;

@@ -58,10 +58,10 @@ namespace Disposable.Web.Caching.Test
             var requestCache = new RequestCache(providerCacheMock.Object);
 
             requestCache.Register(() => new RequestCacheTest());
-            providerCacheMock.Verify(x => x.Register(It.IsAny<Func<RequestCacheTest>>()), Times.Once);
+            providerCacheMock.Verify(x => x.Register(It.IsAny<Func<RequestCacheTest>>(), It.Is<bool>(v => !v)), Times.Once);
 
             requestCache.Get(() => new RequestCacheTest());
-            providerCacheMock.Verify(x => x.Get(It.IsAny<Func<RequestCacheTest>>()), Times.Once);
+            providerCacheMock.Verify(x => x.Get(It.IsAny<Func<RequestCacheTest>>(), It.Is<bool>(v => !v)), Times.Once);
 
             requestCache.Expire<RequestCacheTest>();
             providerCacheMock.Verify(x => x.Expire<RequestCacheTest>(), Times.Once);
@@ -69,8 +69,8 @@ namespace Disposable.Web.Caching.Test
             requestCache.ExpireAll();
             providerCacheMock.Verify(x => x.ExpireAll(), Times.Once);
 
-            providerCacheMock.Verify(x => x.Register(It.IsAny<Func<RequestCacheTest>>()), Times.Once);
-            providerCacheMock.Verify(x => x.Get(It.IsAny<Func<RequestCacheTest>>()), Times.Once);
+            providerCacheMock.Verify(x => x.Register(It.IsAny<Func<RequestCacheTest>>(), It.Is<bool>(v => !v)), Times.Once);
+            providerCacheMock.Verify(x => x.Get(It.IsAny<Func<RequestCacheTest>>(), It.Is<bool>(v => !v)), Times.Once);
             providerCacheMock.Verify(x => x.Expire<RequestCacheTest>(), Times.Once);
             providerCacheMock.Verify(x => x.ExpireAll(), Times.Once);
         }

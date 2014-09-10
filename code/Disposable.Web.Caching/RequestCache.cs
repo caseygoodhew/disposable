@@ -61,9 +61,10 @@ namespace Disposable.Web.Caching
         /// </summary>
         /// <typeparam name="T">The cache item key.</typeparam>
         /// <param name="providerFunc">A function which takes no parameters and returns an item to be stored in the cache.</param>
-        public void Register<T>(Func<T> providerFunc) where T : class
+        /// <param name="replaceExisting">Flag to indicate that an existing provider should be replaced.</param>
+        public void Register<T>(Func<T> providerFunc, bool replaceExisting = false) where T : class
         {
-            providerCache.Register(providerFunc);
+            providerCache.Register(providerFunc, replaceExisting);
         }
 
         /// <summary>
@@ -71,10 +72,26 @@ namespace Disposable.Web.Caching
         /// </summary>
         /// <typeparam name="T">The cache item key.</typeparam>
         /// <param name="providerFunc">(Optional) A function which takes no parameters and returns an item to be stored in the cache.</param>
+        /// <param name="replaceExisting">
+        /// (Optional) 
+        /// If <see cref="providerFunc"/> IS NOT NULL, this flag indicate that an existing provider should be replaced. 
+        /// If <see cref="providerFunc"/> IS NULL, this flag indicates that than an existing item should be expired and refetched.
+        /// </param>
         /// <returns>The cached item.</returns>
-        public T Get<T>(Func<T> providerFunc = null) where T : class
+        public T Get<T>(Func<T> providerFunc = null, bool replaceExisting = false) where T : class
         {
-            return providerCache.Get(providerFunc);
+            return providerCache.Get(providerFunc, replaceExisting);
+        }
+
+        /// <summary>
+        /// Tries to get an item from the cache if it exists.
+        /// </summary>
+        /// <typeparam name="T">The cache item key.</typeparam>
+        /// <param name="item">The cached item if it is present or null.</param>
+        /// <returns>Indicates if the <see cref="item"/> was found in the cache.</returns>
+        public bool TryGet<T>(out T item) where T : class
+        {
+            return providerCache.TryGet(out item);
         }
 
         /// <summary>
