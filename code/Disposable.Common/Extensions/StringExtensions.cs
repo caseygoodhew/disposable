@@ -1,4 +1,8 @@
 ﻿
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+
 namespace Disposable.Common.Extensions
 {
     /// <summary>
@@ -22,6 +26,37 @@ namespace Disposable.Common.Extensions
             return parts.Concat(ToFirstCharUpperRestLower, " ");
         }
 
+        public static string TidyWhiteSpace(this string str, int max = 3)
+        {
+            return str.Tidy("\r\n", max).Tidy(" ", max).Tidy("\t", max).Tidy("\v", max);
+        }
+        
+        public static string Tidy(this string str, string pattern, int max = 3)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return str;
+            }
+
+            Guard.ArgumentIsGreaterThanOrEqualTo(max, 0, "max");
+
+            var rePattern = "[" + pattern + "]";
+            
+            if (max == 0)
+            {
+                return new Regex(rePattern, RegexOptions.None).Replace(str, string.Empty);
+            }
+
+            return new Regex(rePattern + "{" + max + ",}", RegexOptions.None).Replace(str, pattern.Repeat(max - 1));
+        }
+
+        public static string Repeat(this string value, int times)
+        {
+            Guard.ArgumentIsGreaterThan(times, 0, "times");
+
+            return Enumerable.Repeat(value, times).Concat();
+        }
+        
         private static string ToFirstCharUpperRestLower(string str)
         {
             if (str.Length <= 1)
