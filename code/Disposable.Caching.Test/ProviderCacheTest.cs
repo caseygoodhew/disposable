@@ -195,5 +195,32 @@ namespace Disposable.Caching.Test
             // these tests need to be implemented
             throw new NotImplementedException();
         }
+
+        [TestMethod]
+        public void Multiple_ProviderCache_Isolates()
+        {
+            var instance = new SomeClass();
+            var callCount = 0;
+            Func<SomeClass> provider = () =>
+            {
+                callCount++;
+                return instance;
+            };
+            
+            var cacheOne = new ProviderCache();
+            var cacheTwo = new ProviderCache();
+
+            Assert.AreSame(instance, cacheOne.Get(provider));
+            Assert.AreEqual(1, callCount);
+
+            Assert.AreSame(instance, cacheOne.Get(provider));
+            Assert.AreEqual(1, callCount);
+
+            Assert.AreSame(instance, cacheTwo.Get(provider));
+            Assert.AreEqual(2, callCount);
+
+            Assert.AreSame(instance, cacheTwo.Get(provider));
+            Assert.AreEqual(2, callCount);
+        }
     }
 }
