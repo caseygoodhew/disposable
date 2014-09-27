@@ -18,7 +18,7 @@ namespace Disposable.Common.Conversion
                 return null;
             }
 
-            var converter = Locator.Current.Instance<IConvert<TFrom, TTo>>();
+            var converter = Locator.Get<IConvert<TFrom, TTo>>();
 
             return converter.Convert(obj);
         }
@@ -32,7 +32,7 @@ namespace Disposable.Common.Conversion
                 return null;
             }
             
-            var converter = Locator.Current.Instance<IConvert<TFrom, TTo>>();
+            var converter = Locator.Get<IConvert<TFrom, TTo>>();
 
             return obj.Select(converter.Convert);
         }

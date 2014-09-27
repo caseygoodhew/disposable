@@ -69,6 +69,26 @@ namespace Disposable.Common.ServiceLocator
         }
 
         /// <summary>
+        /// Gets the implementation of type T from the Current context.
+        /// </summary>
+        /// <typeparam name="T">The type to retrieve</typeparam>
+        /// <returns>The type instance</returns>
+        public static T Get<T>() where T : class
+        {
+            return Current.Instance<T>();
+        }
+
+        /// <summary>
+        /// Gets a new Lazy loader for the implementation of type T from the Current context.
+        /// </summary>
+        /// <typeparam name="T">The type to retrieve</typeparam>
+        /// <returns>The type instance</returns>
+        public static Lazy<T> Lazy<T>() where T : class
+        {
+            return new Lazy<T>(Get<T>);
+        }
+
+        /// <summary>
         /// Gets the implementation of a given <see cref="Type"/>
         /// </summary>
         /// <param name="type">The type to retrieve</param>
