@@ -6,11 +6,8 @@ namespace Disposable.MessagePipe
 {
     public class MessagePipe<TMessageTypeEnum> : IMessagePipe<TMessageTypeEnum> where TMessageTypeEnum : struct, IConvertible
     {
-        private readonly
-            Dictionary<TMessageTypeEnum, List<Action<IMessanger<TMessageTypeEnum>, MessageContext<TMessageTypeEnum>>>>
-            lookup =
-                new Dictionary
-                    <TMessageTypeEnum, List<Action<IMessanger<TMessageTypeEnum>, MessageContext<TMessageTypeEnum>>>>();
+        private readonly Dictionary<TMessageTypeEnum, List<Action<IMessanger<TMessageTypeEnum>>>> lookup =
+            new Dictionary<TMessageTypeEnum, List<Action<IMessanger<TMessageTypeEnum>>>>();
         
         public MessagePipe()
         {
@@ -20,16 +17,17 @@ namespace Disposable.MessagePipe
             }
         }
 
-        public void Register(TMessageTypeEnum messageType, Action<IMessanger<TMessageTypeEnum>, MessageContext<TMessageTypeEnum>> handler)
+        public void Register(TMessageTypeEnum messageType, Action<IMessanger<TMessageTypeEnum>> handler)
         {
             var list = GetListFor(messageType);
             list.Add(handler);
         }
 
-        public void Announce<TMessageContext>(TMessageContext messageContext) where TMessageContext : MessageContext<TMessageTypeEnum>
+        public void Announce<TMessageContext>(TMessageContext messageContext)
+            where TMessageContext : MessageContext<TMessageTypeEnum>
         {
             var list = GetListFor(messageContext.MessageType);
-            
+
             if (!list.Any())
             {
                 return;
@@ -39,14 +37,13 @@ namespace Disposable.MessagePipe
             messanger.Forward();
         }
 
-        private List<Action<IMessanger<TMessageTypeEnum>, MessageContext<TMessageTypeEnum>>> GetListFor(
-            TMessageTypeEnum messageType)
+        private List<Action<IMessanger<TMessageTypeEnum>>> GetListFor(TMessageTypeEnum messageType)
         {
-            List<Action<IMessanger<TMessageTypeEnum>, MessageContext<TMessageTypeEnum>>> list;
+            List<Action<IMessanger<TMessageTypeEnum>>> list;
 
             if (!lookup.TryGetValue(messageType, out list))
             {
-                list = new List<Action<IMessanger<TMessageTypeEnum>, MessageContext<TMessageTypeEnum>>>();
+                list = new List<Action<IMessanger<TMessageTypeEnum>>>();
                 lookup[messageType] = list;
             }
 

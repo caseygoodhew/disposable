@@ -14,8 +14,8 @@ namespace Disposable.MessagePipe
             if (!typeof(TMessageTypeEnum).IsEnum)
             {
                 throw new ArgumentException("TMessageTypeEnum must be an enumerated type");
-            } 
-            
+            }
+
             MessageType = messageType;
         }
     }
