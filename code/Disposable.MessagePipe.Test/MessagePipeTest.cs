@@ -26,17 +26,17 @@ namespace Disposable.MessagePipe.Test
             }
         }
 
-        private static void ForwardingMessageHandler(IMessanger<TestEnum> messanger)
+        private static void ForwardingMessageHandler(IMessenger<TestEnum> messenger)
         {
-            var context = messanger.GetContext<TestMessageContext>();
+            var context = messenger.GetContext<TestMessageContext>();
             context.ActionList.Add("Forward");
 
-            messanger.Forward();
+            messenger.Forward();
         }
 
-        private static void BlockingMessageHandler(IMessanger<TestEnum> messanger)
+        private static void BlockingMessageHandler(IMessenger<TestEnum> messenger)
         {
-            var context = messanger.GetContext<TestMessageContext>();
+            var context = messenger.GetContext<TestMessageContext>();
             context.ActionList.Add("Block");
         }
 
@@ -44,7 +44,7 @@ namespace Disposable.MessagePipe.Test
         public void MessasgePipe_WithMultipleRegistrations_Handles()
         {
             // arrange
-            var messagePipe = new MessagePipe<TestEnum>();
+            var messagePipe = new MessagePipe<TestEnum>(MessengerType.Stepping);
             messagePipe.Register(TestEnum.ValueOne, ForwardingMessageHandler);
             messagePipe.Register(TestEnum.ValueOne, ForwardingMessageHandler);
             messagePipe.Register(TestEnum.ValueOne, ForwardingMessageHandler);
@@ -73,7 +73,7 @@ namespace Disposable.MessagePipe.Test
         public void MessasgePipe_WithGenericEnumPhantom_Throws()
         {
             // Arrange, Act, Assert
-            var messagePipe = new MessagePipe<GenericEnumPhantom>();
+            var messagePipe = new MessagePipe<GenericEnumPhantom>(MessengerType.Stepping);
         }
 
         
