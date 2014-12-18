@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -55,6 +56,16 @@ namespace Disposable.Common.Extensions
             Guard.ArgumentIsGreaterThan(times, 0, "times");
 
             return Enumerable.Repeat(value, times).Concat();
+        }
+
+        public static string Default(this string value, string defaultValue)
+        {
+            return string.IsNullOrEmpty(value) ? defaultValue : value;
+        }
+
+        public static string Default(this object value, string defaultValue)
+        {
+            return (value ?? string.Empty).ToString().Default(defaultValue);
         }
         
         private static string ToFirstCharUpperRestLower(string str)

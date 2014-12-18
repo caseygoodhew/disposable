@@ -9,7 +9,8 @@ namespace Disposable.MessagePipe.Test
     {
         private enum TestEnum
         {
-            ValueOne
+            ValueOne,
+            ValueTwo
         }
 
         [TestMethod]
@@ -40,6 +41,22 @@ namespace Disposable.MessagePipe.Test
         {
             // Arrange, Act, Assert
             var context = new MessageContext<TestEnum?>(null);
+        }
+
+        [TestMethod]
+        public void MessageContext_ValidIsMessageType_ReturnsTrue()
+        {
+            // Arrange, Act, Assert
+            var context = new MessageContext<TestEnum>(TestEnum.ValueOne);
+            Assert.IsTrue(context.Is(TestEnum.ValueOne));
+        }
+
+        [TestMethod]
+        public void MessageContext_InvalidIsMessageType_ReturnsFalse()
+        {
+            // Arrange, Act, Assert
+            var context = new MessageContext<TestEnum>(TestEnum.ValueOne);
+            Assert.IsFalse(context.Is(TestEnum.ValueTwo));
         }
     }
 }

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Disposable.Test")]
+[assembly: AssemblyTitle("Disposable.MessagePipe.ServiceLocator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Disposable.Test")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyProduct("Disposable.MessagePipe.ServiceLocator")]
+[assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("74a3b585-542a-4c7b-a6bf-d6f886a428a7")]
+[assembly: Guid("59e7a95f-cf9e-445c-abee-654ca3e2178e")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -34,11 +34,3 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-
-[assembly: InternalsVisibleTo("Disposable.Common.Test")]
-[assembly: InternalsVisibleTo("Disposable.Data.Test")]
-[assembly: InternalsVisibleTo("Disposable.Data.Map.Test")]
-[assembly: InternalsVisibleTo("Disposable.Data.Security.Test")]
-[assembly: InternalsVisibleTo("Disposable.MessagePipe.ServiceLocator.Test")]
-[assembly: InternalsVisibleTo("Disposable.Text.Test")]
-

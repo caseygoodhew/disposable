@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Messenger.cs" />
     <Compile Include="MessengerType.cs" />
     <Compile Include="SteppingMessenger.cs" />
     <Compile Include="IMessagePipe.cs" />

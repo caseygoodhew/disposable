@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using Disposable.Test.Extensions;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Disposable.MessagePipe.Test
@@ -26,7 +28,7 @@ namespace Disposable.MessagePipe.Test
 
         private static void ForwardingMessageHandler(IMessenger<TestEnum> messenger)
         {
-            var context = messenger.GetContext<TestMessageContext>();
+            var context = messenger.GetContext<TestMessageContext>(EnumExtensions.GetValues<TestEnum>());
             context.ActionList.Add("Forward");
             
             messenger.Forward();
@@ -34,7 +36,7 @@ namespace Disposable.MessagePipe.Test
 
         private void BlockingMessageHandler(IMessenger<TestEnum> messenger)
         {
-            var context = messenger.GetContext<TestMessageContext>();
+            var context = messenger.GetContext<TestMessageContext>(EnumExtensions.GetValues<TestEnum>());
             context.ActionList.Add("Block");
         }
         
@@ -96,32 +98,7 @@ namespace Disposable.MessagePipe.Test
             // assert
             Assert.AreEqual(2, messageContext.ActionList.Count);
         }
-
-        [TestMethod]
-        public void Messenger_GetContext_ReturnSameObject()
-        {
-            // Arrange
-            var handlers = Enumerable.Empty<Action<IMessenger<TestEnum>>>().ToList();
-            var messageContext = new TestMessageContext(TestEnum.ValueOne);
-            var messenger = new SteppingMessenger<TestEnum>(handlers, messageContext);
-
-            // Act
-            var defaultTyping = messenger.GetContext();
-            var genericTyping = messenger.GetContext<TestMessageContext>();
-
-            // Assert
-            Assert.AreSame(messageContext, defaultTyping);
-            Assert.AreSame(defaultTyping, genericTyping);
-        }
         
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void Messenger_WithGenericEnumPhantom_Throws()
-        {
-            // Arrange, Act, Assert
-            var messenger = new SteppingMessenger<GenericEnumPhantom>(null, null);
-        }
-
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Messenger_WithNullHandlers_Throws()
@@ -129,16 +106,6 @@ namespace Disposable.MessagePipe.Test
             // Arrange, Act, Assert
             IList<Action<IMessenger<TestEnum>>> handlers = null;
             var messageContext = new TestMessageContext(TestEnum.ValueOne);
-            var messenger = new SteppingMessenger<TestEnum>(handlers, messageContext);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Messenger_WithNullContext_Throws()
-        {
-            // Arrange, Act, Assert
-            var handlers = Enumerable.Empty<Action<IMessenger<TestEnum>>>().ToList();
-            TestMessageContext messageContext = null;
             var messenger = new SteppingMessenger<TestEnum>(handlers, messageContext);
         }
     }

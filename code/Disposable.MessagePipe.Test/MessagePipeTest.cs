@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Disposable.Test.Extensions;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Disposable.MessagePipe.Test
@@ -28,7 +30,7 @@ namespace Disposable.MessagePipe.Test
 
         private static void ForwardingMessageHandler(IMessenger<TestEnum> messenger)
         {
-            var context = messenger.GetContext<TestMessageContext>();
+            var context = messenger.GetContext<TestMessageContext>(EnumExtensions.GetValues<TestEnum>());
             context.ActionList.Add("Forward");
 
             messenger.Forward();
@@ -36,7 +38,7 @@ namespace Disposable.MessagePipe.Test
 
         private static void BlockingMessageHandler(IMessenger<TestEnum> messenger)
         {
-            var context = messenger.GetContext<TestMessageContext>();
+            var context = messenger.GetContext<TestMessageContext>(EnumExtensions.GetValues<TestEnum>());
             context.ActionList.Add("Block");
         }
 
@@ -75,7 +77,5 @@ namespace Disposable.MessagePipe.Test
             // Arrange, Act, Assert
             var messagePipe = new MessagePipe<GenericEnumPhantom>(MessengerType.Stepping);
         }
-
-        
     }
 }

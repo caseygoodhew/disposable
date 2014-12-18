@@ -32,5 +32,15 @@ namespace Disposable.MessagePipe
 
             MessageType = messageType;
         }
+
+        /// <summary>
+        /// Verifies that the <see cref="MessageType"/> is the <see cref="expectedMessageType"/>.
+        /// </summary>
+        /// <param name="expectedMessageType"></param>
+        /// <returns></returns>
+        public bool Is(TMessageTypeEnum expectedMessageType)
+        {
+            return MessageType.Equals(expectedMessageType);
+        }
     }
 }
