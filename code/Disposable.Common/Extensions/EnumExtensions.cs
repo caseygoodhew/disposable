@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Disposable.Test.Extensions
+namespace Disposable.Common.Extensions
 {
     public static class EnumExtensions
     {

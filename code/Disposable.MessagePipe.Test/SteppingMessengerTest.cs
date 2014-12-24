@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using Disposable.Common.Extensions;
 using Disposable.Test.Extensions;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
