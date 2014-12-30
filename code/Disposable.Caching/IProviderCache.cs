@@ -43,8 +43,15 @@ namespace Disposable.Caching
         void Expire<T>() where T : class;
 
         /// <summary>
-        /// Expires all items in the cache. Items should be reloaded via their registered providers on the following calls to <see cref="Get{T}"/>
+        /// Expires all items in the cache. Items should be reloaded via their registered providers on the following calls to <see cref="Get{T}"/>. 
         /// </summary>
         void ExpireAll();
+
+        /// <summary>
+        /// Explicitly sets a cached item. It a value is already set, it will be replaced.
+        /// </summary>
+        /// <typeparam name="T">The cache item key.</typeparam>
+        /// <param name="item">The item to cache. Cannot be null.</param>
+        void Set<T>(T item) where T : class;
     }
 }

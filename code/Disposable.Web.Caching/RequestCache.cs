@@ -110,5 +110,10 @@ namespace Disposable.Web.Caching
         {
             providerCache.ExpireAll();
         }
+
+        public void Set<T>(T item) where T : class
+        {
+            providerCache.Set(item);
+        }
     }
 }

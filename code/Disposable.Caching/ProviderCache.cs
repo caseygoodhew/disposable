@@ -167,6 +167,21 @@ namespace Disposable.Caching
             }
         }
 
+        public void Set<T>(T item) where T : class
+        {
+            cacheLock.EnterWriteLock();
+
+            try
+            {
+                UnsafeExpire<T>();
+                UnsafeFetchAndCache(() => item);
+            }
+            finally
+            {
+                cacheLock.ExitWriteLock();
+            }
+        }
+
         private static string GetName<T>()
         {
             return typeof(T).FullName;
