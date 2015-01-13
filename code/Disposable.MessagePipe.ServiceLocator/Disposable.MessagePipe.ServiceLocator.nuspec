@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Disposable.MessagePipe</id>
-    <version>1.0.0</version>
+    <id>Disposable.MessagePipe.ServiceLocator</id>
+    <version>1.0.1</version>
     <title>Disposable.MessagePipe.ServiceLocator</title>
     <authors>Disposable</authors>
     <owners>TwoOnThRun</owners>
