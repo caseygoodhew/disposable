@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Disposable.MessagePipe.ServiceLocator</id>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <title>Disposable.MessagePipe.ServiceLocator</title>
     <authors>Disposable</authors>
     <owners>TwoOnThRun</owners>
@@ -15,8 +15,8 @@
     <copyright>Copyright 2014</copyright>
     <tags>Disposable</tags>
     <dependencies>
-		<dependency id="Disposable.MessagePipe" version="1.0.4" />
-		<dependency id="Disposable.Common" version="1.0.8" />
+		<dependency id="Disposable.MessagePipe" version="1.0.5" />
+		<dependency id="Disposable.Common" version="1.0.9" />
 	</dependencies>
   </metadata>
 </package>
