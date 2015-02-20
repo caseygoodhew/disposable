@@ -9,11 +9,11 @@ namespace Disposable.Common.Test.Services
     public class LocalTimeSourceTest
     {
         [TestMethod]
-        public void LocalTimeSource_Now_ReturnsDateTimeNow()
+        public void LocalTimeSource_Now_ReturnsDateTimeUtcNow()
         {
             ITimeSource timeSource = new LocalTimeSource();
             
-            var now =  DateTime.Now;
+            var now =  DateTime.UtcNow;
             var timeSourceNow = timeSource.Now;
 
             // we can't expect them to be equal as they're potentially captured at 

@@ -8,13 +8,13 @@ namespace Disposable.Common.Services
     public class LocalTimeSource : ITimeSource
     {
         /// <summary>
-        /// Gets the current date and time on the local server
+        /// Gets the current UTC date and time on the local server
         /// </summary>
         public DateTime Now
         {
             get
             {
-                return DateTime.Now;
+                return DateTime.UtcNow;
             }
         }
     }
