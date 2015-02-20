@@ -46,5 +46,17 @@ namespace Disposable.Common.Extensions
         {
             return source == null ? string.Empty : string.Join(separator, source.Select(toString));
         }
+
+        /// <summary>
+        /// Adds a single instance of TSource to the enumerable.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the elements of <paramref name="source"/>.</typeparam>
+        /// <param name="source">The <see cref="T:System.Collections.Generic.IEnumerable`1"/> to add the <paramref name="value"/> to.</param>
+        /// <param name="value">The value to add to the <paramref name="source"/>.</param>
+        /// <returns>The modified source enumerable.</returns>
+        public static IEnumerable<TSource> Add<TSource>(this IEnumerable<TSource> source, TSource value)
+        {
+            return source.Concat(new[] { value });
+        }
     }
 }
