@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Disposable.Common.Extensions
@@ -57,6 +58,32 @@ namespace Disposable.Common.Extensions
         public static IEnumerable<TSource> Add<TSource>(this IEnumerable<TSource> source, TSource value)
         {
             return source.Concat(new[] { value });
+        }
+
+        /// <summary>
+        /// Gets a random element from the enumerable.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the elements of <paramref name="source"/>.</typeparam>
+        /// <param name="source">>The <see cref="T:System.Collections.Generic.IEnumerable`1"/> to get the random element from</param>
+        /// <returns>A random element from the enumerable.</returns>
+        public static TSource Random<TSource>(this IEnumerable<TSource> source)
+        {
+            return source.RandomUsing(new Random());
+        }
+
+        /// <summary>
+        /// Gets a random element from the enumerable.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the elements of <paramref name="source"/>.</typeparam>
+        /// <param name="source">>The <see cref="T:System.Collections.Generic.IEnumerable`1"/> to get the random element from</param>
+        /// <param name="rand">The random value generator.</param>
+        /// <returns>A random element from the enumerable.</returns>
+        public static TSource RandomUsing<TSource>(this IEnumerable<TSource> source, Random rand)
+        {
+            Guard.ArgumentNotNull(source, "Enumerable");
+            
+            var enumerable = source as IList<TSource> ?? source.ToList();
+            return enumerable.ElementAt(rand.Next(0, enumerable.Count()));
         }
     }
 }
