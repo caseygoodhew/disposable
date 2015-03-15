@@ -99,6 +99,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.MessagePipe.Serv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.MessagePipe.ServiceLocator.Test", "Disposable.MessagePipe.ServiceLocator.Test\Disposable.MessagePipe.ServiceLocator.Test.csproj", "{6907D597-07D6-4C9F-96DE-A95E4E4B49FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Disposable.Web.Common", "Disposable.Web.Common\Disposable.Web.Common.csproj", "{36F859DB-92EF-4553-AED1-822882A384A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -409,6 +411,16 @@ Global
 		{6907D597-07D6-4C9F-96DE-A95E4E4B49FC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6907D597-07D6-4C9F-96DE-A95E4E4B49FC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6907D597-07D6-4C9F-96DE-A95E4E4B49FC}.Release|x64.ActiveCfg = Release|Any CPU
+		{36F859DB-92EF-4553-AED1-822882A384A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36F859DB-92EF-4553-AED1-822882A384A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36F859DB-92EF-4553-AED1-822882A384A4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{36F859DB-92EF-4553-AED1-822882A384A4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{36F859DB-92EF-4553-AED1-822882A384A4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{36F859DB-92EF-4553-AED1-822882A384A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36F859DB-92EF-4553-AED1-822882A384A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36F859DB-92EF-4553-AED1-822882A384A4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{36F859DB-92EF-4553-AED1-822882A384A4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{36F859DB-92EF-4553-AED1-822882A384A4}.Release|x64.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -457,6 +469,7 @@ Global
 		{88BF38E8-6E1A-464A-9CDF-4B5DF0E357AD} = {08F4DFC8-C6AC-4E91-9BF4-229F763984E6}
 		{86153B64-EDEB-4D29-9987-C94AF15432D7} = {EAA75437-AD80-4AE2-8E28-3BB5B8E46598}
 		{BCDB871A-0962-4C5C-A710-45D2FE4F4A57} = {EAA75437-AD80-4AE2-8E28-3BB5B8E46598}
+		{36F859DB-92EF-4553-AED1-822882A384A4} = {EAA75437-AD80-4AE2-8E28-3BB5B8E46598}
 		{E737C03B-5BD5-437D-B6EA-58A872469D24} = {FF2CAEE7-E8D2-4DA0-BCA6-CCB407E66C10}
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
